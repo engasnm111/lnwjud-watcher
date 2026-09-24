@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">LNWJUD Watcher</string>
+    <string name="title_activity_main">LNWJUD Watcher</string>
+    <string name="package_name">com.lnwjud.watcher</string>
+    <string name="custom_url_scheme">com.lnwjud.watcher</string>
+</resources>
