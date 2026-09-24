@@ -1,0 +1,39 @@
+# Architecture
+
+## Scope
+LNWJUD Watcher is a read-only monitoring client delivered from one codebase to Web/PWA, Android, and iOS. It connects to a lnwjud runtime through a versioned Watcher Protocol over HTTPS plus WebSocket.
+
+## Trust boundary
+
+```text
+lnwjud runtime (source of truth)
+  -> sanitized Watcher API /api/v1
+  -> HTTPS snapshot + WSS event stream
+  -> lnwjud-watcher
+       -> Web/PWA
+       -> Capacitor Android
+       -> Capacitor iOS
+```
+
+Watcher does not start tunnels and does not expose MCP. Remote access providers (Local/LAN, zrok, Cloudflare Tunnel, Tailscale Serve/Funnel, ngrok, Custom HTTPS) terminate in front of the Watcher API managed by lnwjud.
+
+## Layers
+- **domain**: stable monitoring entities and status vocabulary.
+- **data/protocol**: Zod schemas and protocol-version validation.
+- **data/transport**: HTTP snapshot and reconnecting WebSocket client.
+- **data/connections**: non-secret connection profiles; session-only access token handling.
+- **features**: Overview, Goals, Agents, Activity, Settings.
+- **shared**: layout, status components, formatting, and platform-neutral utilities.
+
+## Protocol rules
+1. Every snapshot includes `protocolVersion`, runtime version, stable instance identity, and server timestamp.
+2. Every stream event has an id, timestamp, kind, status, actor, summary, and optional sanitized evidence.
+3. Unknown event kinds are tolerated, but malformed envelopes are rejected.
+4. Protocol major-version mismatch fails closed with an actionable compatibility message.
+5. Progress is evidence-based from milestone counts; the client never invents completion percentages.
+6. "Analyzing" is observable summarized activity only; hidden chain-of-thought is never requested or displayed.
+
+## Release model
+- `main`: released/integrated history.
+- `dev`: active integration branch.
+- First release: `v0.1.0`; 1.0 is reserved for a stable protocol and signed mobile distribution path.

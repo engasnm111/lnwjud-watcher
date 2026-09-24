@@ -1,0 +1,29 @@
+node_modules/
+dist/
+coverage/
+.vite/
+.env
+.env.*
+!.env.example
+.serena/
+.DS_Store
+*.log
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+capacitor.config.js
+capacitor.config.d.ts
+
+# Capacitor / native build outputs
+android/.gradle/
+android/local.properties
+android/**/build/
+ios/App/Pods/
+ios/App/DerivedData/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
