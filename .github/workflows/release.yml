@@ -110,7 +110,11 @@ jobs:
       - name: Build signed Android release
         run: |
           chmod +x gradlew
-          export WATCHER_ANDROID_VERSION_CODE=$((1000000 + GITHUB_RUN_NUMBER))
+          VERSION=$(node -p "require('../package.json').version")
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+          BASE=$(( (MAJOR + 1) * 100000000 + MINOR * 1000000 + PATCH * 10000 ))
+          export WATCHER_ANDROID_VERSION_CODE=$(( BASE + GITHUB_RUN_NUMBER % 10000 ))
+          echo "Building Android versionName=$VERSION versionCode=$WATCHER_ANDROID_VERSION_CODE"
           ./gradlew assembleRelease
         working-directory: android
         env:

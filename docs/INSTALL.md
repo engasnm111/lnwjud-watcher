@@ -49,9 +49,9 @@ Never publish port **17891**.
 
 On LNWJUD v5.6.1+, that pairing URL opens a local UI with buttons to copy the Session token and local endpoint. Integrations can still request JSON with `?format=json`. Watcher Web/PWA remembers the token for 60 days in that browser; packaged Windows/macOS/Linux and Android/iOS builds keep it on that device across restarts until you clear the token in Settings.
 
-Watcher v0.1.0 checks the latest stable GitHub Release at startup, every 30 minutes, and when the app returns to the foreground. It compares both the semantic version and the release commit SHA, so a refreshed canonical `v0.1.0` build can be detected even when the visible version remains 0.1.0. Web/PWA refreshes to the newest service-worker build. Android opens the newest signed APK and uses an increasing internal `versionCode` so it can update over the older signed APK, but Android still requires the normal user install confirmation; Watcher cannot silently install an APK.
+Watcher v0.2.0 checks the latest stable GitHub Release at startup, every 30 minutes, and when the app returns to the foreground. A signed v0.1.0 Android build sees v0.2.0 as a normal semantic-version upgrade and opens the newest APK. v0.2.0 keeps the same signing identity and publishes a higher internal `versionCode`, so Android can install it over v0.1.0 after the normal user confirmation. Web/PWA refreshes to the newest service-worker build.
 
-**One-time note for early v0.1.0 APKs:** builds published before commit-SHA update detection cannot discover another release that still says v0.1.0. Install this refreshed v0.1.0 APK manually once; after that, future canonical v0.1.0 rebuilds can be detected by build SHA.
+**Update test:** install signed v0.1.0 first, open it while v0.2.0 is the latest GitHub Release, and Watcher should show the required update prompt. Android will still ask you to confirm installation; silent APK replacement is not allowed.
 
 ## 2. Windows — easiest desktop option
 
@@ -101,8 +101,9 @@ If your distribution reports an AppImage/FUSE error, use your distribution's cur
 4. Open the downloaded APK → Install.
 5. Start lnwjud Watcher.
 6. Because a phone cannot reach the PC through `127.0.0.1`, use a remote **HTTPS** provider URL plus the Watcher token.
+7. To add a home-screen widget: long-press the launcher → **Widgets** → **lnwjud Watcher** → choose **Status**, **Goal**, or **Agents**. Open Watcher at least once after installation so the widget has a cached snapshot.
 
-The current v0.1.0 APK is a GitHub release-signed build (not a Play Store package). v0.1.0 establishes the persistent signing identity used for future in-place APK updates.
+The current v0.2.0 APK is a GitHub release-signed build (not a Play Store package) and uses the same persistent signing identity as v0.1.0 with a higher internal versionCode. v0.2.0 also exposes three Android home-screen widgets: Status, Goal, and Agents.
 
 **About Android download/install warnings:** because this APK is sideloaded from GitHub instead of installed through Google Play, Chrome/Android/Play Protect may show an “unknown app” or potentially harmful-file warning. That warning is controlled by Android/the browser and cannot be removed by app code or by ordinary APK signing. Release signing proves update identity; it does not turn a GitHub download into a trusted store install. GitHub distribution remains free, but users may still need to approve **Install unknown apps**. Avoid disabling Play Protect globally. If you want a free path with no APK sideload prompt, use the hosted **Web/PWA** and add it to the Home Screen instead.
 
@@ -162,7 +163,7 @@ http://127.0.0.1:17891/api/v1/pair
 
 ตั้งแต่ LNWJUD v5.6.1 ลิงก์ Pairing นี้จะแสดงหน้า UI บนเครื่องให้กดคัดลอก Session token และ local endpoint ได้ง่ายขึ้น ส่วน integration ยังขอ JSON ได้ด้วย `?format=json` โดย Web/PWA จะจำ token ไว้ใน browser 60 วัน ส่วน Windows/macOS/Linux และ Android/iOS แบบแอปจะเก็บไว้ในเครื่องข้ามการปิดเปิด จนกว่าผู้ใช้จะล้าง token ใน Settings
 
-Watcher v0.1.0 จะเช็ก GitHub Release รุ่นล่าสุดตอนเปิดแอป ทุก 30 นาที และเมื่อกลับมาเปิดแอปอีกครั้ง หากมีรุ่นใหม่จะขึ้น modal บังคับอัปเดต; Web/PWA จะ refresh ไป build ใหม่ ส่วนแอป native/desktop จะเปิดไฟล์หรือหน้า GitHub Release ที่ตรงกับแพลตฟอร์มเพื่อให้ระบบปฏิบัติการยืนยันการติดตั้งตามปกติ
+Watcher v0.2.0 จะเช็ก GitHub Release รุ่นล่าสุดตอนเปิดแอป ทุก 30 นาที และเมื่อกลับมาเปิดแอปอีกครั้ง โดย APK v0.1.0 ที่เซ็นด้วย key เดิมจะมอง v0.2.0 เป็นเวอร์ชันใหม่ตามปกติและขึ้น modal ให้อัปเดต จากนั้น Android จะให้ผู้ใช้กดยืนยันติดตั้ง APK ใหม่เอง
 
 ## 2. Windows — ง่ายที่สุด
 
@@ -210,8 +211,9 @@ chmod +x lnwjud-watcher-linux-x64.AppImage
 4. แตะ APK → Install
 5. เปิด Watcher
 6. มือถือใช้ `127.0.0.1` ของคอมไม่ได้ ต้องใช้ HTTPS URL จาก Cloudflare/zrok/Tailscale/ngrok แล้วใส่ Watcher token
+7. ถ้าจะเพิ่ม Widget: กดค้างที่หน้า Home → **วิดเจ็ต / Widgets** → **lnwjud Watcher** → เลือก **สถานะ**, **Goal** หรือ **เอเจนต์** และควรเปิด Watcher อย่างน้อย 1 ครั้งหลังติดตั้งเพื่อให้มี snapshot ล่าสุดสำหรับ widget
 
-APK v0.1.0 เป็น GitHub release-signed build (ยังไม่ใช่ Play Store package) และใช้ signing key คงที่เพื่อให้เวอร์ชันถัดไปอัปเดตทับได้ด้วยลายเซ็นเดิม
+APK v0.2.0 เป็น GitHub release-signed build (ยังไม่ใช่ Play Store package) ใช้ signing key เดิมกับ v0.1.0 และมี internal versionCode สูงกว่า จึงติดตั้งทับ v0.1.0 ได้เมื่อผู้ใช้กดยืนยัน นอกจากนี้ v0.2.0 มี Home Screen Widget 3 แบบ: สถานะ, Goal และ Agents
 
 **เรื่องคำเตือนตอนดาวน์โหลด/ติดตั้ง Android:** เพราะ APK นี้เป็นการ sideload จาก GitHub ไม่ได้ติดตั้งผ่าน Google Play เบราว์เซอร์/Android/Play Protect อาจขึ้นคำเตือนว่าเป็นแอปจากแหล่งที่ไม่รู้จักหรือไฟล์อาจเป็นอันตราย คำเตือนนี้เป็นนโยบายของ Android/เบราว์เซอร์ จึงเอาออกด้วยโค้ดแอปหรือการเซ็น APK ปกติไม่ได้ การเซ็น Release ช่วยยืนยันตัวตนสำหรับการอัปเดต แต่ไม่ได้ทำให้ไฟล์ GitHub กลายเป็นแอปจาก Store การแจกผ่าน GitHub ยังใช้ฟรีได้ แต่ผู้ใช้ยังอาจต้องอนุญาต **Install unknown apps** และไม่ควรปิด Play Protect ทั้งระบบ ถ้าต้องการทางเลือกฟรีที่ไม่มีขั้นตอน sideload APK ให้ใช้ **Web/PWA** บน GitHub Pages แล้ว Add to Home Screen แทน
 

@@ -4,4 +4,22 @@
     <string name="title_activity_main">lnwjud Watcher</string>
     <string name="package_name">com.lnwjud.watcher</string>
     <string name="custom_url_scheme">com.lnwjud.watcher</string>
+    <string name="widget_status_name">Watcher · Status</string>
+    <string name="widget_goal_name">Watcher · Goal</string>
+    <string name="widget_agents_name">Watcher · Agents</string>
+    <string name="widget_working">Working</string>
+    <string name="widget_idle">Idle</string>
+    <string name="widget_offline">Offline</string>
+    <string name="widget_reconnecting">Reconnecting</string>
+    <string name="widget_no_work">No active work</string>
+    <string name="widget_last_work">Last work %1$s</string>
+    <string name="widget_status_age">Work %1$s · Sync %2$s</string>
+    <string name="widget_no_goal">No active goal</string>
+    <string name="widget_progress">Progress %1$s</string>
+    <string name="widget_agents">Agents</string>
+    <string name="widget_last_sync">Last sync %1$s</string>
+    <plurals name="widget_active_agents">
+        <item quantity="one">%d active</item>
+        <item quantity="other">%d active</item>
+    </plurals>
 </resources>

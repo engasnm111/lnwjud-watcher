@@ -16,6 +16,10 @@ describe('GitHub update policy', () => {
     expect(isNewerVersion('v0.9.9', '1.0.0')).toBe(false);
   });
 
+  it('detects the signed v0.1.0 to v0.2.0 release upgrade', () => {
+    expect(shouldOfferUpdate('v0.2.0', '0.1.0', null, 'old-build-sha')).toBe(true);
+  });
+
   it('detects a refreshed canonical build even when the public version remains v0.1.0', () => {
     expect(shouldOfferUpdate('v0.1.0', '0.1.0', 'new-build-sha', 'old-build-sha')).toBe(true);
     expect(shouldOfferUpdate('v0.1.0', '0.1.0', 'same-build-sha', 'same-build-sha')).toBe(false);

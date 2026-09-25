@@ -4,6 +4,19 @@
 
 # Changelog
 
+## 0.2.0 - 2026-09-26
+
+Mobile observability and signed Android upgrade release.
+
+- Added three Android home-screen widgets: Status, Goal, and Agents.
+- Widgets show current work, active goal/agent counts, milestone progress, latest activity age, and last-sync age from locally cached Watcher state.
+- Widget storage deliberately excludes the Watcher Session token.
+- Activity status/time and project/title areas now preserve explicit spacing on narrow screens; long commands, UUIDs, and paths wrap inside cards.
+- Activity remains progressive at 20 cards per batch over the runtime's bounded 100-event recent history.
+- Android public version is 0.2.0, using the same release-signing identity as v0.1.0 with a higher CI-generated internal versionCode for in-place signed upgrades.
+- v0.1.0 → v0.2.0 is a normal GitHub Release semantic-version update path; Android still requires user install confirmation.
+- iOS remains a Simulator release artifact; native physical-device WidgetKit distribution is not claimed in v0.2.0.
+
 ## 0.1.0 - 2026-09-26
 
 First canonical full release of lnwjud Watcher.

@@ -21,6 +21,7 @@ lnwjud runtime (source of truth)
        -> Electron Desktop
        -> Web/PWA
        -> Capacitor Android
+            -> local sanitized widget cache -> Android AppWidget providers
        -> Capacitor iOS
 ```
 
@@ -33,6 +34,7 @@ Watcher does not start tunnels and does not expose MCP. Remote access providers 
 - **data/connections**: non-secret connection profiles; session-only access token handling.
 - **features**: Overview, Goals, Agents, Activity, Settings.
 - **shared**: layout, status components, formatting, and platform-neutral utilities.
+- **Android widgets**: a tiny Capacitor bridge stores only sanitized display state in private SharedPreferences; AppWidget providers read that cache. The Watcher Session token is never copied into widget state.
 
 ## Protocol rules
 1. Every snapshot includes `protocolVersion`, runtime version, stable instance identity, server timestamp, and an additive `workspaces[]` read model covering every Active Project and its active Durable Goals.
@@ -45,4 +47,4 @@ Watcher does not start tunnels and does not expose MCP. Remote access providers 
 ## Release model
 - `main`: released/integrated history.
 - `dev`: active integration branch.
-- Current public release: `v0.1.0`; 1.0 is reserved for a stable protocol and signed mobile distribution path.
+- Current public release: `v0.2.0`; 1.0 is reserved for a stable protocol and signed mobile distribution path.

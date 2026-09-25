@@ -32,12 +32,12 @@ One shared React/TypeScript application ships as:
 
 - Desktop app (Windows portable EXE, macOS DMG, Linux AppImage);
 - Website / installable PWA;
-- Android via Capacitor;
+- Android via Capacitor, including read-only Status / Goal / Agents home-screen widgets backed by cached sanitized Watcher state;
 - iOS via Capacitor.
 
 ## Product boundary
 
-The current v0.1.0 release is monitoring only.
+The current v0.2.0 release is monitoring only.
 
 Watcher does not:
 

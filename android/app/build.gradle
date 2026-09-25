@@ -5,9 +5,10 @@ import groovy.json.JsonSlurper
 def watcherVersion = new JsonSlurper().parse(file('../../package.json')).version as String
 def watcherVersionParts = watcherVersion.tokenize('.').collect { it as Integer }
 def watcherVersionCodeOverride = System.getenv('WATCHER_ANDROID_VERSION_CODE')
+def watcherVersionCodeBase = (watcherVersionParts[0] + 1) * 100000000 + watcherVersionParts[1] * 1000000 + watcherVersionParts[2] * 10000
 def watcherVersionCode = watcherVersionCodeOverride
     ? watcherVersionCodeOverride as Integer
-    : watcherVersionParts[0] * 1000000 + watcherVersionParts[1] * 1000 + watcherVersionParts[2]
+    : watcherVersionCodeBase
 def watcherKeystore = System.getenv('WATCHER_ANDROID_KEYSTORE')
 
 android {

@@ -25,7 +25,7 @@
 </p>
 
 <h2 align="center">Download lnwjud Watcher</h2>
-<p align="center">One-click desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.1.0.</p>
+<p align="center">One-click desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.0.</p>
 
 <table align="center">
   <tr>
@@ -56,18 +56,20 @@
 
 ## Current version
 
-**lnwjud Watcher v0.1.0** is designed for **LNWJUD v5.6.1 or later**.
+**lnwjud Watcher v0.2.0** is designed for **LNWJUD v5.6.1 or later**.
 
-### What's new in v0.1.0
+### What's new in v0.2.0
 
 - **Parallel projects and goals:** one Watcher snapshot shows every Active Project and all active Durable Goals inside each project, so several jobs can run at the same time without the UI collapsing them into one “current goal”.
 - **Clearer runtime tracking:** Watcher distinguishes observable LNWJUD runtime work from ChatGPT thinking outside the runtime, shows active-operation count, and adds a live “last runtime work” age. Active goals with zero observable operations are shown as waiting, and agents/runtime are idle instead of falsely appearing to run.
 - **Richer Git status:** branch, current commit, clean/dirty state, changed-file count, latest commit subject, and latest commit time are shown on Overview.
 - **Copy-friendly pairing:** LNWJUD v5.6.1 turns `127.0.0.1:17891/api/v1/pair` into a local-only UI with one-click Session token copy while preserving JSON mode.
 - **Remembered pairing:** Web/PWA keeps the Session token for 60 days in browser-local storage. Packaged Desktop and mobile apps keep it on the device across restarts until you clear it in Settings.
-- **Mandatory update prompt:** Watcher checks the latest GitHub Release on startup, every 30 minutes, and when the app becomes visible. It also compares the release commit with the embedded build commit, so a refreshed canonical `v0.1.0` build can still be detected even when the public version string stays `0.1.0`.
+- **Android home-screen widgets:** v0.2.0 adds three launcher widgets — Status, Goal, and Agents — showing current work, active counts, the latest activity, and how long ago the last work/sync happened without exposing the Watcher token.
+- **Cleaner mobile Activity cards:** status/time and project/title blocks keep explicit spacing and long commands/IDs wrap safely on narrow screens.
+- **Mandatory update prompt:** Watcher checks the latest GitHub Release on startup, every 30 minutes, and when the app becomes visible. v0.1.0 → v0.2.0 is a normal semantic-version upgrade path, so users can directly test the signed APK update flow.
 - **Web/PWA update:** service-worker updates are refreshed automatically.
-- **Stable Android upgrade identity:** v0.1.0 uses a persistent release-signing identity plus a monotonically increasing internal Android `versionCode`, so refreshed `v0.1.0` APKs can install over older signed builds. Android still requires the normal user install confirmation; Watcher cannot silently replace an APK.
+- **Stable Android upgrade identity:** v0.2.0 keeps the same persistent signing identity and a higher internal Android `versionCode`, so it can install over the signed v0.1.0 APK. Android still requires the normal user install confirmation; Watcher cannot silently replace an APK.
 - **Progressive Activity feed:** Activity renders 20 cards at a time and automatically loads the next batch near the bottom (with a manual fallback button), while the runtime snapshot remains capped at 100 recent events.
 - **Desktop/Linux/macOS/iOS handoff:** the forced update modal opens the matching GitHub asset or release page. Platform security still requires the normal OS confirmation/signing flow; Watcher does not silently execute downloaded binaries.
 
