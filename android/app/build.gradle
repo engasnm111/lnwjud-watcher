@@ -1,14 +1,31 @@
 apply plugin: 'com.android.application'
 
+import groovy.json.JsonSlurper
+
+def watcherVersion = new JsonSlurper().parse(file('../../package.json')).version as String
+def watcherVersionParts = watcherVersion.tokenize('.').collect { it as Integer }
+def watcherVersionCode = watcherVersionParts[0] * 1000000 + watcherVersionParts[1] * 1000 + watcherVersionParts[2]
+def watcherKeystore = System.getenv('WATCHER_ANDROID_KEYSTORE')
+
 android {
+    signingConfigs {
+        release {
+            if (watcherKeystore) {
+                storeFile file(watcherKeystore)
+                storePassword System.getenv('WATCHER_ANDROID_STORE_PASSWORD')
+                keyAlias System.getenv('WATCHER_ANDROID_KEY_ALIAS')
+                keyPassword System.getenv('WATCHER_ANDROID_KEY_PASSWORD')
+            }
+        }
+    }
     namespace = "com.lnwjud.watcher"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.lnwjud.watcher"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode watcherVersionCode
+        versionName watcherVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -19,6 +36,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            if (watcherKeystore) signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

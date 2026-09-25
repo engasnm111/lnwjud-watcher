@@ -35,7 +35,7 @@ Watcher does not start tunnels and does not expose MCP. Remote access providers 
 - **shared**: layout, status components, formatting, and platform-neutral utilities.
 
 ## Protocol rules
-1. Every snapshot includes `protocolVersion`, runtime version, stable instance identity, and server timestamp.
+1. Every snapshot includes `protocolVersion`, runtime version, stable instance identity, server timestamp, and an additive `workspaces[]` read model covering every Active Project and its active Durable Goals.
 2. Every stream event has an id, timestamp, kind, status, actor, summary, and optional sanitized evidence.
 3. Unknown event kinds are tolerated, but malformed envelopes are rejected.
 4. Protocol major-version mismatch fails closed with an actionable compatibility message.
@@ -45,4 +45,4 @@ Watcher does not start tunnels and does not expose MCP. Remote access providers 
 ## Release model
 - `main`: released/integrated history.
 - `dev`: active integration branch.
-- Current public release: `v0.2.0` (first public release: `v0.1.0`); 1.0 is reserved for a stable protocol and signed mobile distribution path.
+- Current public release: `v0.3.0` (first public release: `v0.1.0`); 1.0 is reserved for a stable protocol and signed mobile distribution path.

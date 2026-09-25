@@ -12,6 +12,26 @@ describe('Watcher Protocol v1', () => {
     expect(() => parseSnapshot({ ...demoSnapshot, protocolVersion: 2 })).toThrow();
   });
 
+  it('preserves multiple active projects and goals in one protocol snapshot', () => {
+    const parsed = parseSnapshot(demoSnapshot);
+    expect(parsed.workspaces).toHaveLength(2);
+    expect(parsed.workspaces[1]?.goals).toHaveLength(2);
+    expect(parsed.workspaces.flatMap((workspace) => workspace.goals)).toHaveLength(3);
+  });
+
+  it('defaults additive observability fields for older protocol v1 runtimes', () => {
+    const legacySnapshot = { ...demoSnapshot, workspaces: undefined };
+    const legacy = {
+      ...legacySnapshot,
+      runtime: { version: demoSnapshot.runtime.version, status: demoSnapshot.runtime.status },
+      git: { branch: demoSnapshot.git.branch, commit: demoSnapshot.git.commit, clean: demoSnapshot.git.clean },
+    };
+    const parsed = parseSnapshot(legacy);
+    expect(parsed.runtime.activeOperations).toBe(0);
+    expect(parsed.git.changedFiles).toBe(0);
+    expect(parsed.workspaces).toEqual([]);
+  });
+
   it('maps HTTPS endpoints to the secure event stream', () => {
     expect(toWebSocketUrl('https://watcher.example.test/')).toBe('wss://watcher.example.test/api/v1/events');
   });

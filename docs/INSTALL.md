@@ -32,7 +32,7 @@ https://engasnm111.github.io/lnwjud-watcher/
 
 ## 1. Before opening Watcher
 
-Install and run **LNWJUD v5.6.0 or later** on the computer you want to monitor.
+Install and run **LNWJUD v5.6.1 or later** on the computer you want to monitor.
 
 On that LNWJUD computer, open:
 
@@ -46,6 +46,10 @@ Keep that page private. Copy the **Watcher access token**.
 - If Watcher runs on a **phone or another computer**, create a remote HTTPS URL first. See [Remote access providers](providers/README.md).
 
 Never publish port **17891**.
+
+On LNWJUD v5.6.1+, that pairing URL opens a local UI with buttons to copy the Session token and local endpoint. Integrations can still request JSON with `?format=json`.
+
+Watcher v0.3.0 also checks the latest stable GitHub Release at startup, every 30 minutes, and when the app returns to the foreground. A newer version shows a required update modal; Web/PWA refreshes to the newest service-worker build, while native/desktop targets open the appropriate GitHub asset or release path for the normal OS install confirmation.
 
 ## 2. Windows — easiest desktop option
 
@@ -90,13 +94,13 @@ If your distribution reports an AppImage/FUSE error, use your distribution's cur
 ## 5. Android
 
 1. On the Android phone/tablet, open the [latest release](https://github.com/engasnm111/lnwjud-watcher/releases/latest).
-2. Download **`lnwjud-watcher-android-debug.apk`**.
+2. Download **`lnwjud-watcher-android.apk`**.
 3. Android may ask for permission to **Install unknown apps** for the browser/files app. Allow it only for this install.
 4. Open the downloaded APK → Install.
 5. Start LNWJUD Watcher.
 6. Because a phone cannot reach the PC through `127.0.0.1`, use a remote **HTTPS** provider URL plus the Watcher token.
 
-The current APK is a GitHub release/debug build, not a Play Store package.
+The current APK is a GitHub release-signed build (not a Play Store package). v0.3.0 establishes the persistent signing identity used for future in-place APK updates. If you installed the older v0.2.0 debug APK, Android may require you to uninstall that build once before installing v0.3.0 because the signatures differ.
 
 ## 6. iPhone / iPad — easiest path
 
@@ -137,7 +141,7 @@ Do not run the development command `npm run dev` just to use Watcher.
 
 ## 1. ก่อนเปิด Watcher
 
-ติดตั้งและเปิด **LNWJUD v5.6.0 ขึ้นไป** บนเครื่องหลักก่อน
+ติดตั้งและเปิด **LNWJUD v5.6.1 ขึ้นไป** บนเครื่องหลักก่อน
 
 บนเครื่อง LNWJUD เปิด:
 
@@ -151,6 +155,10 @@ http://127.0.0.1:17891/api/v1/pair
 - ถ้า Watcher อยู่ **มือถือ/คอมอีกเครื่อง/นอกบ้าน** ต้องทำ HTTPS URL ก่อน ดู [คู่มือ Provider](providers/README.md)
 
 **ห้ามเปิด port 17891 ออกอินเทอร์เน็ต**
+
+ตั้งแต่ LNWJUD v5.6.1 ลิงก์ Pairing นี้จะแสดงหน้า UI บนเครื่องให้กดคัดลอก Session token และ local endpoint ได้ง่ายขึ้น ส่วน integration ยังขอ JSON ได้ด้วย `?format=json`
+
+Watcher v0.3.0 จะเช็ก GitHub Release รุ่นล่าสุดตอนเปิดแอป ทุก 30 นาที และเมื่อกลับมาเปิดแอปอีกครั้ง หากมีรุ่นใหม่จะขึ้น modal บังคับอัปเดต; Web/PWA จะ refresh ไป build ใหม่ ส่วนแอป native/desktop จะเปิดไฟล์หรือหน้า GitHub Release ที่ตรงกับแพลตฟอร์มเพื่อให้ระบบปฏิบัติการยืนยันการติดตั้งตามปกติ
 
 ## 2. Windows — ง่ายที่สุด
 
@@ -193,13 +201,13 @@ chmod +x lnwjud-watcher-linux-x64.AppImage
 ## 5. Android
 
 1. เปิด Latest Release จากมือถือ
-2. โหลด **`lnwjud-watcher-android-debug.apk`**
+2. โหลด **`lnwjud-watcher-android.apk`**
 3. Android อาจถามสิทธิ์ **Install unknown apps** ให้เปิดเฉพาะแอปที่ใช้ติดตั้ง
 4. แตะ APK → Install
 5. เปิด Watcher
 6. มือถือใช้ `127.0.0.1` ของคอมไม่ได้ ต้องใช้ HTTPS URL จาก Cloudflare/zrok/Tailscale/ngrok แล้วใส่ Watcher token
 
-APK ปัจจุบันเป็น GitHub release/debug build ยังไม่ใช่ Play Store package
+APK ปัจจุบันเป็น GitHub release-signed build (ยังไม่ใช่ Play Store package) และตั้งแต่ v0.3.0 จะใช้ signing key เดิมต่อเนื่องเพื่อให้อัปเดต APK รุ่นถัดไปทับได้ หากเคยลง v0.2.0 debug APK อาจต้องถอนรุ่นเก่าหนึ่งครั้งก่อนลง v0.3.0 เพราะลายเซ็น Android คนละชุด
 
 ## 6. iPhone / iPad — วิธีง่ายสุด
 

@@ -25,7 +25,7 @@
 </p>
 
 <h2 align="center">Download LNWJUD Watcher</h2>
-<p align="center">One-click desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.0.</p>
+<p align="center">One-click desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.3.0.</p>
 
 <table align="center">
   <tr>
@@ -36,7 +36,7 @@
       <sub>Windows portable EXE · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-macos-arm64.dmg">macOS Apple silicon</a> · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-macos-x64.dmg">macOS Intel</a> · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-linux-x64.AppImage">Linux</a></sub>
     </td>
     <td align="center" width="33%">
-      <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-android-debug.apk">
+      <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-android.apk">
         <img src="assets/download/download-android.svg" width="300" alt="Download LNWJUD Watcher for Android" />
       </a><br />
       <sub>Android APK · direct install</sub>
@@ -56,7 +56,18 @@
 
 ## Current version
 
-**LNWJUD Watcher v0.2.0** is designed for **LNWJUD v5.6.0 or later**.
+**LNWJUD Watcher v0.3.0** is designed for **LNWJUD v5.6.1 or later**.
+
+### What's new in v0.3.0
+
+- **Parallel projects and goals:** one Watcher snapshot shows every Active Project and all active Durable Goals inside each project, so several jobs can run at the same time without the UI collapsing them into one “current goal”.
+- **Clearer runtime tracking:** Watcher distinguishes observable LNWJUD runtime work from ChatGPT thinking outside the runtime, shows active-operation count, and adds a live “last runtime work” age.
+- **Richer Git status:** branch, current commit, clean/dirty state, changed-file count, latest commit subject, and latest commit time are shown on Overview.
+- **Copy-friendly pairing:** LNWJUD v5.6.1 turns `127.0.0.1:17891/api/v1/pair` into a local-only UI with one-click Session token copy while preserving JSON mode.
+- **Mandatory update prompt:** Watcher checks the latest GitHub Release on startup, every 30 minutes, and when the app becomes visible. A newer release blocks normal use until the user opens the platform update path.
+- **Web/PWA update:** service-worker updates are refreshed automatically.
+- **Stable Android upgrade identity:** v0.3.0 starts a release-signed APK line with a persistent signing key so future APK releases can update over v0.3.0. Users coming from the old v0.2.0 debug APK may need to uninstall that debug build once before installing v0.3.0 because Android signatures differ.
+- **Desktop/Linux/macOS/iOS handoff:** the forced update modal opens the matching GitHub asset or release page. Platform security still requires the normal OS confirmation/signing flow; Watcher does not silently execute downloaded binaries.
 
 ### What's new in v0.2.0
 
@@ -71,7 +82,7 @@
 
 ## What is LNWJUD Watcher?
 
-LNWJUD Watcher is the read-only companion for [LNWJUD](https://github.com/engasnm111/lnwjud). It shows whether LNWJUD is still working, the active goal, milestone progress, observable agents/workers, blockers, Git state, and recent activity.
+LNWJUD Watcher is the read-only companion for [LNWJUD](https://github.com/engasnm111/lnwjud). It shows whether LNWJUD is still working, every active project and Durable Goal, milestone progress, observable agents/workers, blockers, per-project Git state, and recent activity.
 
 Watcher consumes **Watcher Protocol v1**. It never reads the LNWJUD database directly.
 
@@ -79,7 +90,7 @@ Watcher consumes **Watcher Protocol v1**. It never reads the LNWJUD database dir
 
 ### English
 
-1. Run **LNWJUD v5.6.0+**.
+1. Run **LNWJUD v5.6.1+**.
 2. On the LNWJUD computer open `http://127.0.0.1:17891/api/v1/pair`.
 3. Copy the Watcher endpoint/token. **Never expose port 17891.**
 4. For same-PC use, connect to `http://127.0.0.1:17890`.
@@ -88,7 +99,7 @@ Watcher consumes **Watcher Protocol v1**. It never reads the LNWJUD database dir
 
 ### ภาษาไทย
 
-1. เปิด **LNWJUD v5.6.0 ขึ้นไป**
+1. เปิด **LNWJUD v5.6.1 ขึ้นไป**
 2. บนเครื่อง LNWJUD เปิด `http://127.0.0.1:17891/api/v1/pair`
 3. คัดลอก Watcher token และ **ห้ามเปิด port 17891 ออกอินเทอร์เน็ต**
 4. ถ้าใช้เครื่องเดียวกันให้ใช้ `http://127.0.0.1:17890`

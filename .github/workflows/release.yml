@@ -101,13 +101,24 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npx cap sync android
-      - run: chmod +x gradlew && ./gradlew assembleDebug
+      - name: Restore Android release signing key
+        env:
+          ANDROID_KEYSTORE_B64: ${{ secrets.WATCHER_ANDROID_KEYSTORE_B64 }}
+        run: |
+          test -n "$ANDROID_KEYSTORE_B64"
+          printf '%s' "$ANDROID_KEYSTORE_B64" | base64 --decode > "$RUNNER_TEMP/watcher-release.jks"
+      - run: chmod +x gradlew && ./gradlew assembleRelease
         working-directory: android
-      - run: cp android/app/build/outputs/apk/debug/app-debug.apk lnwjud-watcher-android-debug.apk
+        env:
+          WATCHER_ANDROID_KEYSTORE: ${{ runner.temp }}/watcher-release.jks
+          WATCHER_ANDROID_KEY_ALIAS: ${{ secrets.WATCHER_ANDROID_KEY_ALIAS }}
+          WATCHER_ANDROID_KEY_PASSWORD: ${{ secrets.WATCHER_ANDROID_KEY_PASSWORD }}
+          WATCHER_ANDROID_STORE_PASSWORD: ${{ secrets.WATCHER_ANDROID_STORE_PASSWORD }}
+      - run: cp android/app/build/outputs/apk/release/app-release.apk lnwjud-watcher-android.apk
       - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         with:
           name: android
-          path: lnwjud-watcher-android-debug.apk
+          path: lnwjud-watcher-android.apk
 
   ios:
     runs-on: macos-latest

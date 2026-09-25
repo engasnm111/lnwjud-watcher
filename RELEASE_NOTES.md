@@ -2,32 +2,43 @@
   <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="LNWJUD Watcher" />
 </p>
 
-# LNWJUD Watcher v0.2.0
+# LNWJUD Watcher v0.3.0
 
-v0.2.0 makes Watcher substantially easier to install and run for non-technical users while keeping the same read-only security boundary.
+v0.3.0 makes Watcher substantially more truthful about what LNWJUD can observe, adds richer Git/activity visibility, introduces a copy-friendly pairing experience through LNWJUD v5.6.1, and adds a mandatory GitHub-release update path across Watcher platforms.
 
-### One-click desktop builds
-- Windows ships a **single portable EXE**. Double-click to run; no Node.js/npm or installer is required.
-- macOS ships separate Apple-silicon and Intel DMGs.
-- Linux ships an x64 AppImage.
-- Desktop builds run the same Watcher UI in a hardened Electron shell with Node integration disabled, context isolation + sandbox enabled, single-instance behavior, external links opened in the system browser, and close-to-tray background behavior.
-- The system tray/menu-bar icon can show/hide Watcher and provides an explicit Quit action.
+### Parallel projects and goals
+- One Protocol v1 snapshot can carry every Active Project instead of only the selected workspace.
+- Each project carries all active Durable Goals (up to the runtime's bounded 50-goal host view), active-operation count, and sanitized Git state.
+- Goal, Agent, and Activity views keep workspace identity so parallel work does not collapse into one current task.
+- The existing top-level `goal` and `git` fields remain the selected-project compatibility view for older Protocol v1 clients.
 
-### Easier Web / mobile
-- GitHub Pages hosts the production Web/PWA build for a no-install browser path.
-- iPhone/iPad users can use Safari → Add to Home Screen without pretending the unsigned Simulator artifact is installable on a physical device.
-- Android keeps the downloadable APK path.
-- The raw Web ZIP remains available for self-hosting.
+### Runtime observability
+- Agent counts now represent work observable by the LNWJUD Runtime. `@lnwjud` is RUNNING while LNWJUD has an in-flight tool operation even when no Durable Goal is active.
+- The UI explicitly explains that ChatGPT reasoning between tool calls is outside the Runtime and therefore cannot truthfully be reported as an active agent.
+- Overview now shows active operations plus a separate "last runtime work" timestamp and relative age such as minutes/hours ago.
+- Git visibility now includes branch, short commit, clean/dirty state, changed-file count, latest commit subject, and latest commit time.
 
-### Beginner documentation
-- New bilingual installation guide covers Windows, macOS, Linux, Android, iPhone/iPad, hosted PWA, and advanced Web ZIP hosting.
-- Every remote-access provider guide now contains Thai + English in the same file.
-- zrok instructions include the missing folder/CD, archive extraction, PATH, account invitation/token, enable, and share steps.
-- Cloudflare is presented accurately: Tunnel is available on all plans; Quick Tunnels are temporary/testing-only; stable public hostnames require the normal Cloudflare account/domain setup.
-- GitHub About/topics and community-health files are populated.
+### Easier Session-token pairing
+- Onboarding and Settings now include the local pairing link plus an explanation of where the Session token comes from.
+- LNWJUD v5.6.1 changes `http://127.0.0.1:17891/api/v1/pair` from raw browser JSON into a local-only pairing page with one-click Session-token and endpoint copy.
+- JSON pairing remains available for integrations and non-HTML clients, including `?format=json`.
+- Port 17891 remains loopback-only and must never be exposed through a tunnel.
+
+### Mandatory update prompt
+- Watcher checks the latest stable GitHub Release on startup, every 30 minutes, and whenever the app returns to the foreground.
+- When a newer version is available, Watcher shows a non-dismissible update modal before normal use continues.
+- Web/PWA asks the service worker to update and refreshes the app.
+- Android opens the matching release APK; Android still requires the normal operating-system installation confirmation.
+- Windows and Linux open the matching release asset. macOS and iOS open the GitHub release page so the user can follow normal platform signed-install/distribution flow.
+- Update URLs are accepted only from trusted GitHub/GitHubusercontent HTTPS origins.
+
+### Android release signing
+- The release workflow now builds `assembleRelease` rather than publishing an ephemeral debug APK.
+- v0.3.0 starts a persistent Android release-signing identity so future APK releases can update over v0.3.0 without changing signatures.
+- Users who installed the older v0.2.0 debug APK may need to uninstall it once before installing v0.3.0 because Android does not allow an APK signed by a different key to replace the installed app.
 
 ### Runtime requirement
-Real monitoring requires **LNWJUD v5.6.0 or later**.
+The full v0.3.0 observability and pairing experience requires **LNWJUD v5.6.1 or later**.
 
 ### Release artifacts
 - `lnwjud-watcher-windows-x64.exe`
@@ -35,10 +46,10 @@ Real monitoring requires **LNWJUD v5.6.0 or later**.
 - `lnwjud-watcher-macos-x64.dmg`
 - `lnwjud-watcher-linux-x64.AppImage`
 - `lnwjud-watcher-web.zip`
-- `lnwjud-watcher-android-debug.apk`
+- `lnwjud-watcher-android.apk`
 - `lnwjud-watcher-ios-simulator.zip`
 
 ### Security boundary
-Watcher remains intentionally read-only. The desktop wrapper does not add shell, filesystem mutation, MCP mutation, approval, provider credential, or hidden reasoning access.
+Watcher remains intentionally read-only. The update feature does not add shell, filesystem mutation, MCP mutation, approval, provider credential, or hidden-reasoning access. Pairing remains local-only.
 
-Windows and macOS community artifacts are not currently claimed as Authenticode-signed / Apple-notarized. See [Install & run](docs/INSTALL.md) for safe first-launch instructions and platform limitations.
+Windows/macOS community artifacts are not claimed as Authenticode-signed / Apple-notarized unless the release evidence explicitly says otherwise. See [Install & run](docs/INSTALL.md) for platform limitations.

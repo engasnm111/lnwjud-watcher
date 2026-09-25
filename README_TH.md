@@ -21,7 +21,7 @@
       <sub>Windows Portable EXE · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-macos-arm64.dmg">macOS Apple silicon</a> · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-macos-x64.dmg">macOS Intel</a> · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-linux-x64.AppImage">Linux</a></sub>
     </td>
     <td align="center" width="33%">
-      <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-android-debug.apk"><img src="assets/download/download-android.svg" width="300" alt="Android" /></a><br />
+      <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-android.apk"><img src="assets/download/download-android.svg" width="300" alt="Android" /></a><br />
       <sub>Android APK · แตะติดตั้งได้โดยตรง</sub>
     </td>
     <td align="center" width="33%">
@@ -37,15 +37,24 @@
 
 ## LNWJUD Watcher คืออะไร
 
-**LNWJUD Watcher v0.2.0** เป็นแอปดูสถานะ LNWJUD แบบ **read-only** สำหรับ Desktop, Web/PWA, Android และ iOS ใช้คู่กับ **LNWJUD v5.6.0 ขึ้นไป**
+**LNWJUD Watcher v0.3.0** เป็นแอปดูสถานะ LNWJUD แบบ **read-only** สำหรับ Desktop, Web/PWA, Android และ iOS ใช้คู่กับ **LNWJUD v5.6.1 ขึ้นไป**
 
-ดูได้ว่า LNWJUD ยังทำงานอยู่ไหม กำลังทำ Goal ไหน milestone ไปถึงไหน มี Agent/worker อะไรทำงาน มี blocker หรือไม่ Git อยู่ branch ไหน และมี activity อะไรล่าสุด โดยไม่เปิดสิทธิ์สั่งงานกลับเข้า LNWJUD
+ดูได้ว่า LNWJUD ยังทำงานอยู่ไหม มีโปรเจกต์ไหนและ Goal ไหนกำลังทำพร้อมกัน milestone ไปถึงไหน มี Agent/worker อะไรทำงาน มี blocker หรือไม่ Git ของแต่ละโปรเจกต์อยู่ branch ไหน และมี activity อะไรล่าสุด โดยไม่เปิดสิทธิ์สั่งงานกลับเข้า LNWJUD
 
 > **ติดตั้งไม่ต้องใช้ npm:** Windows มี Portable EXE, macOS มี DMG, Linux มี AppImage, Android มี APK และ iPhone/iPad ใช้ Web/PWA แบบ Add to Home Screen ได้ ดู [คู่มือติดตั้งแบบง่าย](docs/INSTALL.md)
 
+## มีอะไรใหม่ใน v0.3.0
+
+- รองรับ **หลายโปรเจกต์ + หลาย Durable Goal ที่กำลังทำพร้อมกัน** โดยแยกงาน, active operations, Agent/activity และ Git ตาม workspace ไม่สรุปเหลือเพียง Goal เดียว
+- แยกให้ชัดว่า **Agent ที่แสดงคือกิจกรรมที่ LNWJUD Runtime มองเห็นได้จริง** ไม่ใช่ช่วงที่ ChatGPT กำลังคิดอยู่ระหว่าง tool call
+- เพิ่มจำนวนงานที่กำลังรัน, เวลาทำงานล่าสุดแบบเทียบกับเวลาปัจจุบัน, Git branch/commit/dirty, จำนวนไฟล์ที่เปลี่ยน และ commit ล่าสุด
+- หน้า `127.0.0.1:17891/api/v1/pair` ของ LNWJUD v5.6.1 เป็น UI สำหรับกด Copy Session token ได้ง่ายขึ้น
+- เพิ่ม **บังคับแจ้งอัปเดตจาก GitHub Release** เมื่อมี Watcher รุ่นใหม่: Web/PWA refresh อัปเดต, Android เปิด APK รุ่นล่าสุด, Desktop/Linux/macOS/iOS เปิดไฟล์หรือหน้า release ที่ตรงกับแพลตฟอร์ม
+- ตั้งแต่ v0.3.0 Android ใช้ release signing key คงที่ เพื่อให้อัปเดต APK รุ่นถัดไปทับได้; ถ้าเคยติดตั้ง v0.2.0 debug APK อาจต้องถอนรุ่นเก่าหนึ่งครั้งก่อนลง v0.3.0 เพราะลายเซ็น Android คนละชุด
+
 ## เริ่มใช้งานแบบสั้น
 
-1. เปิด LNWJUD v5.6.0+
+1. เปิด LNWJUD v5.6.1+
 2. บนเครื่อง LNWJUD เปิด `http://127.0.0.1:17891/api/v1/pair`
 3. คัดลอก **Watcher token** เก็บไว้ ห้ามเปิด port 17891 ออกอินเทอร์เน็ต
 4. ถ้าใช้เครื่องเดียวกัน ใช้ endpoint `http://127.0.0.1:17890`
