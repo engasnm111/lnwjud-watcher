@@ -61,8 +61,37 @@ export const snapshotSchema = z.object({
   git: gitSchema
 });
 
+function normalizeObservableWork(snapshot: WatcherSnapshot): WatcherSnapshot {
+  const workspaceOperations = new Map(snapshot.workspaces.map((workspace) => [workspace.id, workspace.activeOperations]));
+  const workspaces = snapshot.workspaces.map((workspace) => ({
+    ...workspace,
+    goals: workspace.goals.map((goal) => (
+      goal.status === 'running' && workspace.activeOperations === 0
+        ? { ...goal, status: 'waiting' as const }
+        : goal
+    ))
+  }));
+  const goalWorkspaceOperations = snapshot.goal?.workspaceId === undefined
+    ? snapshot.workspaces.find((workspace) => workspace.goals.some((goal) => goal.id === snapshot.goal?.id))?.activeOperations
+    : workspaceOperations.get(snapshot.goal.workspaceId);
+  const goal = snapshot.goal?.status === 'running' && (goalWorkspaceOperations ?? snapshot.runtime.activeOperations) === 0
+    ? { ...snapshot.goal, status: 'waiting' as const }
+    : snapshot.goal;
+  const agents = snapshot.agents.map((agent) => {
+    if (agent.status !== 'running') return agent;
+    const activeOperations = agent.workspaceId === undefined
+      ? snapshot.runtime.activeOperations
+      : workspaceOperations.get(agent.workspaceId) ?? 0;
+    return activeOperations === 0 ? { ...agent, status: 'idle' as const } : agent;
+  });
+  const runtime = snapshot.runtime.status === 'running' && snapshot.runtime.activeOperations === 0
+    ? { ...snapshot.runtime, status: 'idle' as const }
+    : snapshot.runtime;
+  return { ...snapshot, runtime, goal, workspaces, agents };
+}
+
 export function parseSnapshot(input: unknown): WatcherSnapshot {
-  return snapshotSchema.parse(input);
+  return normalizeObservableWork(snapshotSchema.parse(input));
 }
 
 export function parseActivityEvent(input: unknown): ActivityEvent {

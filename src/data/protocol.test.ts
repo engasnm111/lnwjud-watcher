@@ -33,6 +33,25 @@ describe('Watcher Protocol v1', () => {
     expect(parsed.workspaces.flatMap((workspace) => workspace.goals)).toHaveLength(3);
   });
 
+  it('does not present durable goals or agents as running without observable runtime work', () => {
+    const snapshot = structuredClone(demoSnapshot);
+    snapshot.runtime = { ...snapshot.runtime, status: 'running', activeOperations: 0 };
+    snapshot.workspaces = snapshot.workspaces.map((workspace) => ({
+      ...workspace,
+      activeOperations: 0,
+      goals: workspace.goals.map((goal) => ({ ...goal, status: 'running' as const }))
+    }));
+    snapshot.goal = snapshot.workspaces[0]?.goals[0] ?? null;
+    snapshot.agents = snapshot.agents.map((agent) => ({ ...agent, status: 'running' as const }));
+
+    const parsed = parseSnapshot(snapshot);
+
+    expect(parsed.runtime.status).toBe('idle');
+    expect(parsed.goal?.status).toBe('waiting');
+    expect(parsed.workspaces.flatMap((workspace) => workspace.goals).every((goal) => goal.status === 'waiting')).toBe(true);
+    expect(parsed.agents.every((agent) => agent.status === 'idle')).toBe(true);
+  });
+
   it('defaults additive observability fields for older protocol v1 runtimes', () => {
     const legacySnapshot = { ...demoSnapshot, workspaces: undefined };
     const legacy = {
