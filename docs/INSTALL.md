@@ -47,7 +47,7 @@ Keep that page private. Copy the **Watcher access token**.
 
 Never publish port **17891**.
 
-On LNWJUD v5.6.1+, that pairing URL opens a local UI with buttons to copy the Session token and local endpoint. Integrations can still request JSON with `?format=json`.
+On LNWJUD v5.6.1+, that pairing URL opens a local UI with buttons to copy the Session token and local endpoint. Integrations can still request JSON with `?format=json`. Watcher Web/PWA remembers the token for 60 days in that browser; packaged Windows/macOS/Linux and Android/iOS builds keep it on that device across restarts until you clear the token in Settings.
 
 Watcher v0.3.0 also checks the latest stable GitHub Release at startup, every 30 minutes, and when the app returns to the foreground. A newer version shows a required update modal; Web/PWA refreshes to the newest service-worker build, while native/desktop targets open the appropriate GitHub asset or release path for the normal OS install confirmation.
 
@@ -156,7 +156,7 @@ http://127.0.0.1:17891/api/v1/pair
 
 **ห้ามเปิด port 17891 ออกอินเทอร์เน็ต**
 
-ตั้งแต่ LNWJUD v5.6.1 ลิงก์ Pairing นี้จะแสดงหน้า UI บนเครื่องให้กดคัดลอก Session token และ local endpoint ได้ง่ายขึ้น ส่วน integration ยังขอ JSON ได้ด้วย `?format=json`
+ตั้งแต่ LNWJUD v5.6.1 ลิงก์ Pairing นี้จะแสดงหน้า UI บนเครื่องให้กดคัดลอก Session token และ local endpoint ได้ง่ายขึ้น ส่วน integration ยังขอ JSON ได้ด้วย `?format=json` โดย Web/PWA จะจำ token ไว้ใน browser 60 วัน ส่วน Windows/macOS/Linux และ Android/iOS แบบแอปจะเก็บไว้ในเครื่องข้ามการปิดเปิด จนกว่าผู้ใช้จะล้าง token ใน Settings
 
 Watcher v0.3.0 จะเช็ก GitHub Release รุ่นล่าสุดตอนเปิดแอป ทุก 30 นาที และเมื่อกลับมาเปิดแอปอีกครั้ง หากมีรุ่นใหม่จะขึ้น modal บังคับอัปเดต; Web/PWA จะ refresh ไป build ใหม่ ส่วนแอป native/desktop จะเปิดไฟล์หรือหน้า GitHub Release ที่ตรงกับแพลตฟอร์มเพื่อให้ระบบปฏิบัติการยืนยันการติดตั้งตามปกติ
 

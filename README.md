@@ -64,6 +64,7 @@
 - **Clearer runtime tracking:** Watcher distinguishes observable LNWJUD runtime work from ChatGPT thinking outside the runtime, shows active-operation count, and adds a live “last runtime work” age.
 - **Richer Git status:** branch, current commit, clean/dirty state, changed-file count, latest commit subject, and latest commit time are shown on Overview.
 - **Copy-friendly pairing:** LNWJUD v5.6.1 turns `127.0.0.1:17891/api/v1/pair` into a local-only UI with one-click Session token copy while preserving JSON mode.
+- **Remembered pairing:** Web/PWA keeps the Session token for 60 days in browser-local storage. Packaged Desktop and mobile apps keep it on the device across restarts until you clear it in Settings.
 - **Mandatory update prompt:** Watcher checks the latest GitHub Release on startup, every 30 minutes, and when the app becomes visible. A newer release blocks normal use until the user opens the platform update path.
 - **Web/PWA update:** service-worker updates are refreshed automatically.
 - **Stable Android upgrade identity:** v0.3.0 starts a release-signed APK line with a persistent signing key so future APK releases can update over v0.3.0. Users coming from the old v0.2.0 debug APK may need to uninstall that debug build once before installing v0.3.0 because Android signatures differ.

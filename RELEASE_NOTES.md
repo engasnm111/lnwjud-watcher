@@ -22,6 +22,7 @@ v0.3.0 makes Watcher substantially more truthful about what LNWJUD can observe, 
 - Onboarding and Settings now include the local pairing link plus an explanation of where the Session token comes from.
 - LNWJUD v5.6.1 changes `http://127.0.0.1:17891/api/v1/pair` from raw browser JSON into a local-only pairing page with one-click Session-token and endpoint copy.
 - JSON pairing remains available for integrations and non-HTML clients, including `?format=json`.
+- Web/PWA now remembers the Session token in browser-local storage for 60 days; packaged Desktop and mobile apps keep it on that device across restarts until the user clears it. Existing session-only tokens migrate automatically once.
 - Port 17891 remains loopback-only and must never be exposed through a tunnel.
 
 ### Mandatory update prompt

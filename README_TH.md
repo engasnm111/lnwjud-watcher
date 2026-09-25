@@ -49,6 +49,7 @@
 - แยกให้ชัดว่า **Agent ที่แสดงคือกิจกรรมที่ LNWJUD Runtime มองเห็นได้จริง** ไม่ใช่ช่วงที่ ChatGPT กำลังคิดอยู่ระหว่าง tool call
 - เพิ่มจำนวนงานที่กำลังรัน, เวลาทำงานล่าสุดแบบเทียบกับเวลาปัจจุบัน, Git branch/commit/dirty, จำนวนไฟล์ที่เปลี่ยน และ commit ล่าสุด
 - หน้า `127.0.0.1:17891/api/v1/pair` ของ LNWJUD v5.6.1 เป็น UI สำหรับกด Copy Session token ได้ง่ายขึ้น
+- Web/PWA จะจำ Session token ไว้ใน browser 60 วัน ส่วนแอป Desktop และมือถือจะเก็บไว้ในเครื่องข้ามการปิดเปิด จนกว่าผู้ใช้จะล้างใน Settings
 - เพิ่ม **บังคับแจ้งอัปเดตจาก GitHub Release** เมื่อมี Watcher รุ่นใหม่: Web/PWA refresh อัปเดต, Android เปิด APK รุ่นล่าสุด, Desktop/Linux/macOS/iOS เปิดไฟล์หรือหน้า release ที่ตรงกับแพลตฟอร์ม
 - ตั้งแต่ v0.3.0 Android ใช้ release signing key คงที่ เพื่อให้อัปเดต APK รุ่นถัดไปทับได้; ถ้าเคยติดตั้ง v0.2.0 debug APK อาจต้องถอนรุ่นเก่าหนึ่งครั้งก่อนลง v0.3.0 เพราะลายเซ็น Android คนละชุด
 

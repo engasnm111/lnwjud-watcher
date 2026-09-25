@@ -23,7 +23,7 @@ export default function OnboardingPage() {
     provider: 'zrok',
     endpoint: ''
   });
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState(watcher.token);
 
   const providers = useMemo(() => {
     if (connectionKind === 'local') return ['local'] as RemoteProvider[];
