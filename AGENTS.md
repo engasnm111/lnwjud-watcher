@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="LNWJUD Watcher" />
+  <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
-# LNWJUD Watcher Engineering Rules
+# lnwjud Watcher Engineering Rules
 
 ## Product boundary
 - This repository is the **read-only client** for lnwjud monitoring. It must never gain shell, MCP mutation, filesystem mutation, or arbitrary command execution capabilities.

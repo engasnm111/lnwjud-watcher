@@ -43,9 +43,9 @@ function Shell() {
 
   return <div className="app-shell">
     <aside className="sidebar">
-      <NavLink className="brand" to="/overview" aria-label="LNWJUD Watcher">
+      <NavLink className="brand" to="/overview" aria-label="lnwjud Watcher">
         <img src="./brand/lnwjud-watcher-mark.png" alt="" />
-        <div><strong>LNWJUD</strong><span>Watcher</span></div>
+        <div><strong>lnwjud</strong><span>Watcher</span></div>
       </NavLink>
       <nav>{nav.map(({ to, key, icon: Icon }) =>
         <NavLink key={to} to={to}><Icon size={19}/><span>{t(key)}</span></NavLink>)}</nav>
@@ -59,7 +59,7 @@ function Shell() {
       <header className="topbar">
         <div className="topbar-title">
           <span className="eyebrow">{t('app.readOnly')}</span>
-          <h1>{watcher.snapshot?.instance.name ?? 'LNWJUD Watcher'}</h1>
+          <h1>{watcher.snapshot?.instance.name ?? 'lnwjud Watcher'}</h1>
           <div className="freshness">
             <span className={'dot dot-' + watcher.state}/>
             <span>{watcher.fallbackPolling ? t('app.fallback') : stateLabel}</span>

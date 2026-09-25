@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../../public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="LNWJUD Watcher" />
+  <img src="../../public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
 # zrok — public HTTPS without your own domain / เปิดดูจากนอกบ้านโดยไม่ต้องมีโดเมน
@@ -14,7 +14,7 @@ Official:
 - https://docs.zrok.io/docs/guides/install/
 - https://github.com/openziti/zrok/releases
 
-LNWJUD Watcher uses the current v2 CLI name: **`zrok2`**.
+lnwjud Watcher uses the current v2 CLI name: **`zrok2`**.
 
 ## English setup
 

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="LNWJUD Watcher" />
+  <img src="../public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
 # Install & run / วิธีติดตั้งและเปิดใช้งาน
@@ -13,7 +13,7 @@ This guide is written for normal end users. You do **not** need Node.js, npm, Po
 | You use / อุปกรณ์ | Easiest option / วิธีง่ายสุด |
 | --- | --- |
 | Windows PC | **Portable EXE** — double-click, no installer |
-| macOS | **DMG** — drag LNWJUD Watcher to Applications |
+| macOS | **DMG** — drag lnwjud Watcher to Applications |
 | Linux | **AppImage** — make executable once, then double-click |
 | Android | **APK** from GitHub Releases |
 | iPhone / iPad | **Web/PWA** in Safari → Add to Home Screen |
@@ -49,7 +49,7 @@ Never publish port **17891**.
 
 On LNWJUD v5.6.1+, that pairing URL opens a local UI with buttons to copy the Session token and local endpoint. Integrations can still request JSON with `?format=json`. Watcher Web/PWA remembers the token for 60 days in that browser; packaged Windows/macOS/Linux and Android/iOS builds keep it on that device across restarts until you clear the token in Settings.
 
-Watcher v0.3.0 also checks the latest stable GitHub Release at startup, every 30 minutes, and when the app returns to the foreground. A newer version shows a required update modal; Web/PWA refreshes to the newest service-worker build, while native/desktop targets open the appropriate GitHub asset or release path for the normal OS install confirmation.
+Watcher v0.1.0 also checks the latest stable GitHub Release at startup, every 30 minutes, and when the app returns to the foreground. A newer version shows a required update modal; Web/PWA refreshes to the newest service-worker build, while native/desktop targets open the appropriate GitHub asset or release path for the normal OS install confirmation.
 
 ## 2. Windows — easiest desktop option
 
@@ -68,9 +68,9 @@ No terminal is required.
 1. Download:
    - Apple silicon (M1/M2/M3/M4…): **`lnwjud-watcher-macos-arm64.dmg`**
    - Intel Mac: **`lnwjud-watcher-macos-x64.dmg`**
-2. Open the DMG and drag **LNWJUD Watcher** to Applications.
+2. Open the DMG and drag **lnwjud Watcher** to Applications.
 3. Because the community build is not Apple-notarized, macOS may block the first launch.
-4. Use **Control-click → Open**. If macOS still blocks it, open **System Settings → Privacy & Security** and choose **Open Anyway** for LNWJUD Watcher.
+4. Use **Control-click → Open**. If macOS still blocks it, open **System Settings → Privacy & Security** and choose **Open Anyway** for lnwjud Watcher.
 5. Enter the Watcher endpoint and token.
 6. Closing the window keeps the app available from the menu-bar/tray icon. Choose **Quit** from its tray menu to exit.
 
@@ -97,10 +97,10 @@ If your distribution reports an AppImage/FUSE error, use your distribution's cur
 2. Download **`lnwjud-watcher-android.apk`**.
 3. Android may ask for permission to **Install unknown apps** for the browser/files app. Allow it only for this install.
 4. Open the downloaded APK → Install.
-5. Start LNWJUD Watcher.
+5. Start lnwjud Watcher.
 6. Because a phone cannot reach the PC through `127.0.0.1`, use a remote **HTTPS** provider URL plus the Watcher token.
 
-The current APK is a GitHub release-signed build (not a Play Store package). v0.3.0 establishes the persistent signing identity used for future in-place APK updates. If you installed the older v0.2.0 debug APK, Android may require you to uninstall that build once before installing v0.3.0 because the signatures differ.
+The current v0.1.0 APK is a GitHub release-signed build (not a Play Store package). v0.1.0 establishes the persistent signing identity used for future in-place APK updates.
 
 ## 6. iPhone / iPad — easiest path
 
@@ -158,7 +158,7 @@ http://127.0.0.1:17891/api/v1/pair
 
 ตั้งแต่ LNWJUD v5.6.1 ลิงก์ Pairing นี้จะแสดงหน้า UI บนเครื่องให้กดคัดลอก Session token และ local endpoint ได้ง่ายขึ้น ส่วน integration ยังขอ JSON ได้ด้วย `?format=json` โดย Web/PWA จะจำ token ไว้ใน browser 60 วัน ส่วน Windows/macOS/Linux และ Android/iOS แบบแอปจะเก็บไว้ในเครื่องข้ามการปิดเปิด จนกว่าผู้ใช้จะล้าง token ใน Settings
 
-Watcher v0.3.0 จะเช็ก GitHub Release รุ่นล่าสุดตอนเปิดแอป ทุก 30 นาที และเมื่อกลับมาเปิดแอปอีกครั้ง หากมีรุ่นใหม่จะขึ้น modal บังคับอัปเดต; Web/PWA จะ refresh ไป build ใหม่ ส่วนแอป native/desktop จะเปิดไฟล์หรือหน้า GitHub Release ที่ตรงกับแพลตฟอร์มเพื่อให้ระบบปฏิบัติการยืนยันการติดตั้งตามปกติ
+Watcher v0.1.0 จะเช็ก GitHub Release รุ่นล่าสุดตอนเปิดแอป ทุก 30 นาที และเมื่อกลับมาเปิดแอปอีกครั้ง หากมีรุ่นใหม่จะขึ้น modal บังคับอัปเดต; Web/PWA จะ refresh ไป build ใหม่ ส่วนแอป native/desktop จะเปิดไฟล์หรือหน้า GitHub Release ที่ตรงกับแพลตฟอร์มเพื่อให้ระบบปฏิบัติการยืนยันการติดตั้งตามปกติ
 
 ## 2. Windows — ง่ายที่สุด
 
@@ -176,7 +176,7 @@ Watcher v0.3.0 จะเช็ก GitHub Release รุ่นล่าสุด�
 
 1. Mac ชิป Apple Silicon ให้โหลด **`lnwjud-watcher-macos-arm64.dmg`**
 2. Mac Intel ให้โหลด **`lnwjud-watcher-macos-x64.dmg`**
-3. เปิด DMG แล้วลาก LNWJUD Watcher ไป Applications
+3. เปิด DMG แล้วลาก lnwjud Watcher ไป Applications
 4. community build ยังไม่ได้ Apple notarize จึงอาจโดน macOS บล็อกครั้งแรก
 5. ให้ Control-click ที่แอป → **Open** หรือไป **System Settings → Privacy & Security → Open Anyway**
 6. ใส่ endpoint + token
@@ -207,7 +207,7 @@ chmod +x lnwjud-watcher-linux-x64.AppImage
 5. เปิด Watcher
 6. มือถือใช้ `127.0.0.1` ของคอมไม่ได้ ต้องใช้ HTTPS URL จาก Cloudflare/zrok/Tailscale/ngrok แล้วใส่ Watcher token
 
-APK ปัจจุบันเป็น GitHub release-signed build (ยังไม่ใช่ Play Store package) และตั้งแต่ v0.3.0 จะใช้ signing key เดิมต่อเนื่องเพื่อให้อัปเดต APK รุ่นถัดไปทับได้ หากเคยลง v0.2.0 debug APK อาจต้องถอนรุ่นเก่าหนึ่งครั้งก่อนลง v0.3.0 เพราะลายเซ็น Android คนละชุด
+APK v0.1.0 เป็น GitHub release-signed build (ยังไม่ใช่ Play Store package) และใช้ signing key คงที่เพื่อให้เวอร์ชันถัดไปอัปเดตทับได้ด้วยลายเซ็นเดิม
 
 ## 6. iPhone / iPad — วิธีง่ายสุด
 

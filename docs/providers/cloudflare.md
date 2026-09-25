@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../../public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="LNWJUD Watcher" />
+  <img src="../../public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
 # Cloudflare Tunnel — recommended public option / แนะนำสำหรับดูจากนอกบ้าน
@@ -24,7 +24,7 @@ Official docs:
 
 ## English setup
 
-### 1. Confirm LNWJUD Watcher API
+### 1. Confirm lnwjud Watcher API
 
 On the LNWJUD computer:
 

@@ -15,7 +15,7 @@ export default defineConfig({
         'apple-touch-icon.png'
       ],
       manifest: {
-        name: 'LNWJUD Watcher',
+        name: 'lnwjud Watcher',
         short_name: 'Watcher',
         description: 'Read-only live monitoring for LNWJUD runtimes',
         theme_color: '#070b12',

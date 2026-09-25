@@ -36,7 +36,7 @@ describe('Session token persistence', () => {
   });
 
   it('keeps the token on a packaged Electron device without the browser TTL', () => {
-    vi.stubGlobal('navigator', { userAgent: 'Mozilla/5.0 LNWJUD Watcher Electron/44.4.5' });
+    vi.stubGlobal('navigator', { userAgent: 'Mozilla/5.0 lnwjud Watcher Electron/44.4.5' });
     const now = vi.spyOn(Date, 'now').mockReturnValue(1_800_000_000_000);
 
     saveSessionToken('desktop-token');

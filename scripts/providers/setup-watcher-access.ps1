@@ -110,4 +110,4 @@ switch ($Provider) {
 
 Write-Host ""
 Write-Host "Watcher origin: $Target"
-Write-Host "Keep provider credentials on this runtime machine; do not paste them into LNWJUD Watcher."
+Write-Host "Keep provider credentials on this runtime machine; do not paste them into lnwjud Watcher."

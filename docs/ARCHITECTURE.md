@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="LNWJUD Watcher" />
+  <img src="../public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
 # Architecture
@@ -9,7 +9,7 @@
 ถ้าต้องการแค่ติดตั้งและเชื่อมต่อ ให้เริ่มจาก [README](../README.md) และ [คู่มือเลือก Provider](providers/README.md) ก่อน เอกสารหน้านี้อธิบายโครงสร้างภายในสำหรับผู้ดูแลและนักพัฒนา.
 
 ## Scope
-LNWJUD Watcher is a read-only monitoring client delivered from one codebase to Desktop, Web/PWA, Android, and iOS. It connects to a lnwjud runtime through a versioned Watcher Protocol over HTTPS plus WebSocket.
+lnwjud Watcher is a read-only monitoring client delivered from one codebase to Desktop, Web/PWA, Android, and iOS. It connects to a lnwjud runtime through a versioned Watcher Protocol over HTTPS plus WebSocket.
 
 ## Trust boundary
 
@@ -45,4 +45,4 @@ Watcher does not start tunnels and does not expose MCP. Remote access providers 
 ## Release model
 - `main`: released/integrated history.
 - `dev`: active integration branch.
-- Current public release: `v0.3.0` (first public release: `v0.1.0`); 1.0 is reserved for a stable protocol and signed mobile distribution path.
+- Current public release: `v0.1.0`; 1.0 is reserved for a stable protocol and signed mobile distribution path.
