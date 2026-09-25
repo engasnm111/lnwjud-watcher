@@ -14,6 +14,7 @@ v0.1.0 is the first canonical full release of lnwjud Watcher. It combines the co
 
 ### Runtime observability
 - Agent counts represent work observable by the lnwjud Runtime.
+- Active Durable Goals with zero observable runtime operations are normalized to `waiting`, and their agents/runtime to `idle`, preventing finished-or-paused work from looking actively busy while preserving completed history.
 - The UI distinguishes runtime-visible work from ChatGPT reasoning between tool calls.
 - Overview shows active operations, last runtime work, branch, short commit, clean/dirty state, changed-file count, latest commit subject, and latest commit time.
 - ISO-8601 timestamps with timezone offsets such as `+07:00` are accepted by the Watcher protocol parser.
@@ -26,6 +27,7 @@ v0.1.0 is the first canonical full release of lnwjud Watcher. It combines the co
 
 ### Distribution and updates
 - Windows portable EXE, macOS DMG, Linux AppImage, Android APK, Web/PWA, and iOS Simulator artifacts are produced from the shared application.
+- Android/iOS native launcher and splash assets use the lnwjud Watcher brand; mobile bottom navigation is pinned above the device safe area and onboarding is compact/responsive across small phones.
 - Desktop wrappers support tray/background behavior.
 - Watcher checks the latest stable GitHub Release on startup, every 30 minutes, and when returning to the foreground.
 - Web/PWA refreshes through the service worker; native/desktop platforms open the matching trusted GitHub asset or release page.

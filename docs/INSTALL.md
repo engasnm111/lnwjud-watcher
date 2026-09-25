@@ -102,6 +102,8 @@ If your distribution reports an AppImage/FUSE error, use your distribution's cur
 
 The current v0.1.0 APK is a GitHub release-signed build (not a Play Store package). v0.1.0 establishes the persistent signing identity used for future in-place APK updates.
 
+**About Android download/install warnings:** because this APK is sideloaded from GitHub instead of installed through Google Play, Chrome/Android/Play Protect may show an “unknown app” or potentially harmful-file warning. That warning is controlled by Android/the browser and cannot be removed by app code or by ordinary APK signing. Release signing proves update identity; it does not turn a GitHub download into a trusted store install. GitHub distribution remains free, but users may still need to approve **Install unknown apps**. Avoid disabling Play Protect globally. If you want a free path with no APK sideload prompt, use the hosted **Web/PWA** and add it to the Home Screen instead.
+
 ## 6. iPhone / iPad — easiest path
 
 The current native iOS release asset is a **Simulator build**, so it is not a normal one-tap install for a physical iPhone.
@@ -208,6 +210,8 @@ chmod +x lnwjud-watcher-linux-x64.AppImage
 6. มือถือใช้ `127.0.0.1` ของคอมไม่ได้ ต้องใช้ HTTPS URL จาก Cloudflare/zrok/Tailscale/ngrok แล้วใส่ Watcher token
 
 APK v0.1.0 เป็น GitHub release-signed build (ยังไม่ใช่ Play Store package) และใช้ signing key คงที่เพื่อให้เวอร์ชันถัดไปอัปเดตทับได้ด้วยลายเซ็นเดิม
+
+**เรื่องคำเตือนตอนดาวน์โหลด/ติดตั้ง Android:** เพราะ APK นี้เป็นการ sideload จาก GitHub ไม่ได้ติดตั้งผ่าน Google Play เบราว์เซอร์/Android/Play Protect อาจขึ้นคำเตือนว่าเป็นแอปจากแหล่งที่ไม่รู้จักหรือไฟล์อาจเป็นอันตราย คำเตือนนี้เป็นนโยบายของ Android/เบราว์เซอร์ จึงเอาออกด้วยโค้ดแอปหรือการเซ็น APK ปกติไม่ได้ การเซ็น Release ช่วยยืนยันตัวตนสำหรับการอัปเดต แต่ไม่ได้ทำให้ไฟล์ GitHub กลายเป็นแอปจาก Store การแจกผ่าน GitHub ยังใช้ฟรีได้ แต่ผู้ใช้ยังอาจต้องอนุญาต **Install unknown apps** และไม่ควรปิด Play Protect ทั้งระบบ ถ้าต้องการทางเลือกฟรีที่ไม่มีขั้นตอน sideload APK ให้ใช้ **Web/PWA** บน GitHub Pages แล้ว Add to Home Screen แทน
 
 ## 6. iPhone / iPad — วิธีง่ายสุด
 
