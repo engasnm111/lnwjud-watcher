@@ -1,0 +1,25 @@
+name: Feature request
+description: Suggest an improvement that preserves Watcher's read-only boundary
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What are you trying to accomplish?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed improvement
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: Read-only boundary
+      options:
+        - label: This request does not require Watcher to execute commands, mutate files, call MCP mutations, or expose hidden reasoning.
+          required: true

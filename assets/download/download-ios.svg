@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="96" viewBox="0 0 340 96" role="img" aria-labelledby="title desc">
+  <title id="title">Download LNWJUD Watcher for iOS Simulator</title>
+  <desc id="desc">Unsigned iOS Simulator build download card</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#171426"/><stop offset="1" stop-color="#0f1020"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+  </defs>
+  <rect x="1" y="1" width="338" height="94" rx="18" fill="url(#bg)" stroke="#4a416a" stroke-width="2"/>
+  <rect x="18" y="18" width="60" height="60" rx="16" fill="url(#accent)"/>
+  <rect x="35" y="27" width="26" height="42" rx="6" fill="none" stroke="#fff" stroke-width="2.4"/>
+  <path d="M44 31h8M45 64h6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+  <text x="96" y="42" fill="#f8fafc" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="700">iOS</text>
+  <text x="96" y="64" fill="#bcb4da" font-family="Segoe UI,Arial,sans-serif" font-size="13">Simulator ZIP · unsigned</text>
+  <circle cx="306" cy="48" r="18" fill="#201b35" stroke="#5f557f"/>
+  <path d="M306 37v17m-7-6 7 7 7-7M298 62h16" fill="none" stroke="#f5f3ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

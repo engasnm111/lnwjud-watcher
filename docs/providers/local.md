@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="../../public/brand/lnwjud-watcher-logo-transparent.png" width="180" alt="LNWJUD Watcher" />
+  <img src="../../public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="LNWJUD Watcher" />
 </p>
 
 # Local / LAN
 
-> **เหมาะกับ:** Watcher อยู่เครื่องเดียวกับ LNWJUD หรือเครือข่ายที่คุณควบคุมเอง. / **Best for:** same-device use or a trusted private LAN.
+## English
 
-## Same machine
+### Same computer
 
 Use:
 
@@ -14,10 +14,36 @@ Use:
 http://127.0.0.1:17890
 ```
 
-Loopback HTTP is allowed because traffic never leaves the device.
+Pair locally at:
 
-## Another device on the LAN
+```text
+http://127.0.0.1:17891/api/v1/pair
+```
 
-Do not expose a plain HTTP Watcher API to an untrusted network. Prefer Tailscale Serve for private access or a TLS reverse proxy. If you intentionally bind LNWJUD to a LAN interface, protect it with authentication and a trusted network policy.
+### Another device on the LAN
 
-For phones outside the LAN, use zrok, Cloudflare Tunnel, Tailscale, ngrok, or your own HTTPS endpoint instead.
+A phone cannot use `127.0.0.1` to reach your PC; on the phone, `127.0.0.1` means the phone itself.
+
+For another device, prefer **Tailscale Serve** or another HTTPS provider. Do not publish a plain HTTP Watcher API to an untrusted LAN, public Wi-Fi, or the internet.
+
+## ภาษาไทย
+
+### เครื่องเดียวกัน
+
+ใส่ endpoint:
+
+```text
+http://127.0.0.1:17890
+```
+
+แล้วเอา token จาก:
+
+```text
+http://127.0.0.1:17891/api/v1/pair
+```
+
+### มือถือหรือคอมอีกเครื่องใน LAN
+
+บนมือถือ `127.0.0.1` หมายถึงมือถือเอง ไม่ใช่เครื่อง LNWJUD
+
+ถ้าจะดูจากเครื่องอื่น แนะนำ **Tailscale Serve** หรือ provider แบบ HTTPS แทน และไม่ควรเปิด plain HTTP ออก network ที่ไม่ไว้ใจ

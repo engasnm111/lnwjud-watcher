@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/engasnm111/lnwjud-watcher/security
+    about: Please use the Security tab/private reporting path for sensitive issues.

@@ -1,0 +1,65 @@
+name: Bug report
+description: Report a reproducible problem in LNWJUD Watcher
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please do not include Watcher tokens, provider tokens, private URLs, or other secrets.
+  - type: input
+    id: watcher-version
+    attributes:
+      label: Watcher version
+      placeholder: v0.2.0
+    validations:
+      required: true
+  - type: input
+    id: lnwjud-version
+    attributes:
+      label: LNWJUD version
+      placeholder: v5.6.0
+    validations:
+      required: true
+  - type: dropdown
+    id: target
+    attributes:
+      label: Target
+      options:
+        - Web/PWA
+        - Android
+        - iOS Simulator
+        - iOS device
+    validations:
+      required: true
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Connection provider
+      options:
+        - Local
+        - Cloudflare Tunnel
+        - zrok
+        - Tailscale Serve
+        - Tailscale Funnel
+        - ngrok
+        - Custom HTTPS
+        - Other
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true

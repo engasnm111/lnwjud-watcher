@@ -6,11 +6,14 @@ import '@fontsource/prompt/500.css';
 import '@fontsource/prompt/600.css';
 import '@fontsource/prompt/700.css';
 import App from './app/App';
+import { shouldRegisterServiceWorker } from './platform/runtime';
 import { WatcherProvider } from './app/WatcherContext';
 import { I18nProvider } from './i18n/I18nContext';
 import './styles.css';
 
-registerSW({ immediate: true });
+if (shouldRegisterServiceWorker(window.location.protocol)) {
+  registerSW({ immediate: true });
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
