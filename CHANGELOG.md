@@ -1,8 +1,20 @@
 <p align="center">
-  <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="180" alt="LNWJUD Watcher" />
+  <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="LNWJUD Watcher" />
 </p>
 
 # Changelog
+
+## 0.2.0 - 2026-09-25
+
+Beginner-friendly desktop and remote monitoring release.
+
+- Added one-click desktop distribution: Windows portable EXE, macOS DMGs, and Linux AppImage.
+- Added close-to-tray/background behavior for the desktop wrapper while preserving the read-only Watcher boundary.
+- Added hosted GitHub Pages Web/PWA as the simplest browser and iPhone/iPad path.
+- Added bilingual install instructions for Windows, macOS, Linux, Android, iPhone/iPad, Web/PWA, pairing, and remote access.
+- Expanded bilingual provider guides, including complete zrok download/extract/PATH/token/enable/share steps.
+- Clarified Cloudflare Tunnel as a free-plan-capable public option, with Quick Tunnel limitations and stable-domain requirements documented.
+- Standardized README/document branding, download cards, About/topics, and GitHub community files.
 
 ## 0.1.0 - 2026-09-25
 
