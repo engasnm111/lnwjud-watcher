@@ -1,45 +1,54 @@
 <p align="center">
-  <img src="../../public/brand/lnwjud-watcher-logo-transparent.png" width="180" alt="LNWJUD Watcher" />
+  <img src="../../public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="LNWJUD Watcher" />
 </p>
 
 # Tailscale Serve / Funnel
 
-> **เหมาะกับ:** ต้องการ private access ผ่าน tailnet (Serve) หรือ public HTTPS (Funnel). / **Best for:** controlled device-to-device access.
+Use **Serve** for private access inside your tailnet. Use **Funnel** when the Watcher endpoint must be reachable from the public internet.
 
-Official install guide: https://tailscale.com/docs/install
+ใช้ **Serve** ถ้าต้องการให้เฉพาะอุปกรณ์ใน tailnet ของคุณเข้าถึงได้ และใช้ **Funnel** ถ้าต้องการ public HTTPS จากอินเทอร์เน็ต
 
-Use **Serve** when Watcher should be reachable only inside your tailnet. Use **Funnel** when the endpoint must be reachable from the public internet.
+Official install: https://tailscale.com/download
 
-## Install and sign in
+## English
 
-Install Tailscale for the runtime OS, then authenticate the runtime machine to your tailnet.
+### 1. Install and sign in
 
-On mainstream Linux distributions the official docs offer the Tailscale install script; users who prefer not to pipe a remote script to a shell can use the distribution-specific package instructions instead.
+Install Tailscale on the LNWJUD computer and sign in to your tailnet.
 
-## Private: Tailscale Serve
+Windows helper:
 
-```sh
+```powershell
+cd C:\path\to\lnwjud-watcher
+powershell -ExecutionPolicy Bypass -File .\scripts\providers\setup-watcher-access.ps1 -Provider tailscale-serve -Install
+```
+
+### 2A. Private — Serve
+
+```powershell
 tailscale serve --bg http://127.0.0.1:17890
 tailscale serve status
 ```
 
-Serve respects tailnet access controls. HTTPS must be enabled for the tailnet; the CLI guides you through missing requirements.
+Use the HTTPS URL shown by `tailscale serve status`. The phone/computer opening Watcher must be authorized on the same tailnet.
 
-## Public: Tailscale Funnel
+### 2B. Public — Funnel
 
-```sh
+```powershell
 tailscale funnel --bg http://127.0.0.1:17890
 tailscale funnel status
 ```
 
-Funnel requires the account/tailnet prerequisites documented by Tailscale and exposes the service publicly over HTTPS.
+Funnel requires the current account/tailnet prerequisites shown by Tailscale. Use the final HTTPS URL in Watcher.
 
-## Windows helper
+## ภาษาไทย
 
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\providers\setup-watcher-access.ps1 -Provider tailscale-serve -Install
-# or
-powershell -ExecutionPolicy Bypass -File scripts\providers\setup-watcher-access.ps1 -Provider tailscale-funnel -Install
-```
+1. ติดตั้ง Tailscale ที่เครื่อง LNWJUD และล็อกอิน tailnet
+2. ถ้าดูเฉพาะเครื่องของตัวเอง ใช้:
+   `tailscale serve --bg http://127.0.0.1:17890`
+3. ถ้าต้องการ public ใช้:
+   `tailscale funnel --bg http://127.0.0.1:17890`
+4. รัน `tailscale serve status` หรือ `tailscale funnel status`
+5. เอา HTTPS URL ไปใส่ Watcher พร้อม Watcher token
 
-The helper uses the current `Tailscale.Tailscale` winget package when installation is requested.
+Do not expose pairing port 17891. / ห้ามนำ port 17891 ออกผ่าน Serve/Funnel

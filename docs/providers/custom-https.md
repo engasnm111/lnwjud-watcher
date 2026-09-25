@@ -1,27 +1,38 @@
 <p align="center">
-  <img src="../../public/brand/lnwjud-watcher-logo-transparent.png" width="180" alt="LNWJUD Watcher" />
+  <img src="../../public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="LNWJUD Watcher" />
 </p>
 
 # Custom HTTPS reverse proxy
 
-> **เหมาะกับ:** มี VPS, reverse proxy, ingress หรือ zero-trust gateway ของตัวเอง. / **Best for:** operators with existing HTTPS infrastructure.
+Use this only when you already manage a VPS, reverse proxy, ingress, or zero-trust gateway.
 
-Use this option when you already operate a domain, VPS, reverse proxy, ingress controller, or zero-trust gateway.
+เหมาะกับคนที่มี VPS / reverse proxy / ingress ของตัวเองและเข้าใจการตั้งค่า HTTPS
 
-The public endpoint must:
+## Requirements / สิ่งที่ต้องรองรับ
 
-- terminate valid TLS;
-- proxy `GET /api/v1/snapshot` to the local LNWJUD Watcher API;
-- proxy WebSocket upgrades for `/api/v1/events`;
-- preserve required authentication headers on HTTP requests;
-- permit the Watcher web origin through a narrowly-scoped CORS policy when the web client is hosted on a different origin;
+Your public endpoint must:
+
+- terminate valid TLS (HTTPS);
+- proxy `GET /api/v1/snapshot` to `http://127.0.0.1:17890`;
+- support WebSocket upgrade for `/api/v1/events`;
+- preserve required authentication headers;
+- allow the Watcher web origin only through a narrow CORS policy when cross-origin access is required;
 - avoid buffering/rewriting WebSocket frames;
-- enforce authentication/rate limits appropriate to the deployment.
+- enforce appropriate rate limits and outer authentication for your deployment.
 
-Example upstream:
+Endpoint ภายนอกต้องเป็น HTTPS และต้อง proxy ทั้ง snapshot กับ WebSocket ไปที่ `127.0.0.1:17890`
+
+## Example architecture / ตัวอย่าง
 
 ```text
-http://127.0.0.1:17890
+Internet
+  -> https://watcher.example.com
+  -> your TLS reverse proxy
+  -> http://127.0.0.1:17890
 ```
 
-Never publish the full LNWJUD MCP gateway simply to expose Watcher. The Watcher API is a separate read-only surface with a smaller security boundary.
+Never proxy or publish `127.0.0.1:17891`. That pairing endpoint must remain local-only.
+
+ห้าม proxy port 17891 ออกอินเทอร์เน็ตเด็ดขาด
+
+After the proxy works, put `https://watcher.example.com` into Watcher and use the Watcher token from the local pairing page.

@@ -1,40 +1,44 @@
 <p align="center">
-  <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="180" alt="LNWJUD Watcher" />
+  <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="LNWJUD Watcher" />
 </p>
 
-# LNWJUD Watcher v0.1.0
+# LNWJUD Watcher v0.2.0
 
-First public cross-platform release of the read-only LNWJUD Watcher.
+v0.2.0 makes Watcher substantially easier to install and run for non-technical users while keeping the same read-only security boundary.
 
-### Web / Android / iOS
-- One React/TypeScript UI ships as Web/PWA plus Capacitor Android and iOS shells.
-- Responsive LNWJUD-family Watcher design using the approved gold eye/radar identity.
-- Self-hosted Prompt typography for Thai and English.
-- Thai/English first-run flow and in-app language switching.
+### One-click desktop builds
+- Windows ships a **single portable EXE**. Double-click to run; no Node.js/npm or installer is required.
+- macOS ships separate Apple-silicon and Intel DMGs.
+- Linux ships an x64 AppImage.
+- Desktop builds run the same Watcher UI in a hardened Electron shell with Node integration disabled, context isolation + sandbox enabled, single-instance behavior, external links opened in the system browser, and close-to-tray background behavior.
+- The system tray/menu-bar icon can show/hide Watcher and provides an explicit Quit action.
 
-### Live monitoring
-- Watcher Protocol v1 client with runtime validation.
-- Initial authoritative snapshot plus authenticated WebSocket live events.
-- Realtime is marked connected only after the runtime confirms token authentication with a `ready` acknowledgement.
-- Automatic authoritative snapshot re-sync after reconnect **and after live activity**, keeping Goal, Agent, and Git state current.
-- 5-second visible-screen snapshot fallback while realtime is degraded.
-- Manual refresh remains available.
-- Evidence-based goal progress; hidden model reasoning is never requested or shown.
+### Easier Web / mobile
+- GitHub Pages hosts the production Web/PWA build for a no-install browser path.
+- iPhone/iPad users can use Safari → Add to Home Screen without pretending the unsigned Simulator artifact is installable on a physical device.
+- Android keeps the downloadable APK path.
+- The raw Web ZIP remains available for self-hosting.
 
-### Easy connection
-- Guided setup for Local/LAN, zrok, Cloudflare Tunnel, Tailscale Serve/Funnel, ngrok, and Custom HTTPS.
-- Windows and macOS/Linux helper scripts for provider detection/install guidance.
-- Dedicated Watcher access token obtained from the local-only LNWJUD pairing endpoint.
+### Beginner documentation
+- New bilingual installation guide covers Windows, macOS, Linux, Android, iPhone/iPad, hosted PWA, and advanced Web ZIP hosting.
+- Every remote-access provider guide now contains Thai + English in the same file.
+- zrok instructions include the missing folder/CD, archive extraction, PATH, account invitation/token, enable, and share steps.
+- Cloudflare is presented accurately: Tunnel is available on all plans; Quick Tunnels are temporary/testing-only; stable public hostnames require the normal Cloudflare account/domain setup.
+- GitHub About/topics and community-health files are populated.
 
 ### Runtime requirement
-Real monitoring requires **LNWJUD v5.6.0 or later**, which provides the read-only Watcher snapshot/WebSocket server, protected Watcher token, local pairing endpoint, ActivityTracker subscriptions, and Desktop auto-start.
+Real monitoring requires **LNWJUD v5.6.0 or later**.
 
 ### Release artifacts
+- `lnwjud-watcher-windows-x64.exe`
+- `lnwjud-watcher-macos-arm64.dmg`
+- `lnwjud-watcher-macos-x64.dmg`
+- `lnwjud-watcher-linux-x64.AppImage`
 - `lnwjud-watcher-web.zip`
 - `lnwjud-watcher-android-debug.apk`
 - `lnwjud-watcher-ios-simulator.zip`
 
 ### Security boundary
-Watcher v0.1.0 is intentionally read-only: no shell, file mutation, MCP command execution, approval, pause/resume, provider credentials, or hidden chain-of-thought surface.
+Watcher remains intentionally read-only. The desktop wrapper does not add shell, filesystem mutation, MCP mutation, approval, provider credential, or hidden reasoning access.
 
-The Android artifact is an evaluation/debug APK. The iOS artifact validates the Simulator/native shell; installation on a physical iPhone/App Store distribution requires Apple signing credentials.
+Windows and macOS community artifacts are not currently claimed as Authenticode-signed / Apple-notarized. See [Install & run](docs/INSTALL.md) for safe first-launch instructions and platform limitations.

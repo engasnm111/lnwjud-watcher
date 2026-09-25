@@ -31,6 +31,54 @@ jobs:
       - run: npm run build
       - run: npm audit --audit-level=high
 
+  desktop-windows:
+    needs: quality
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run desktop:pack:windows
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+
+  desktop-macos:
+    needs: quality
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run desktop:pack:mac
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+
+  desktop-linux:
+    needs: quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run desktop:pack:linux
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+
   android:
     needs: quality
     runs-on: ubuntu-latest
