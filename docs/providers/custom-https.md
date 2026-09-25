@@ -1,4 +1,10 @@
+<p align="center">
+  <img src="../../public/brand/lnwjud-watcher-logo-dark.png" width="180" alt="LNWJUD Watcher" />
+</p>
+
 # Custom HTTPS reverse proxy
+
+> **เหมาะกับ:** มี VPS, reverse proxy, ingress หรือ zero-trust gateway ของตัวเอง. / **Best for:** operators with existing HTTPS infrastructure.
 
 Use this option when you already operate a domain, VPS, reverse proxy, ingress controller, or zero-trust gateway.
 

@@ -1,4 +1,10 @@
+<p align="center">
+  <img src="../../public/brand/lnwjud-watcher-logo-dark.png" width="180" alt="LNWJUD Watcher" />
+</p>
+
 # Local / LAN
+
+> **เหมาะกับ:** Watcher อยู่เครื่องเดียวกับ LNWJUD หรือเครือข่ายที่คุณควบคุมเอง. / **Best for:** same-device use or a trusted private LAN.
 
 ## Same machine
 

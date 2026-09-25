@@ -1,4 +1,4 @@
-# LNWJUD Watcher Design System
+<p align="center">\n  <img src="public/brand/lnwjud-watcher-logo-dark.png" width="180" alt="LNWJUD Watcher" />\n</p>\n\n# LNWJUD Watcher Design System
 
 ## Direction
 

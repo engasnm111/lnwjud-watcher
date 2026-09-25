@@ -46,12 +46,23 @@ export class HttpWatcherTransport implements WatcherTransport {
       onState(attempts === 0 ? 'connecting' : 'reconnecting');
       socket = new WebSocket(toWebSocketUrl(this.endpoint));
       socket.onopen = () => {
-        attempts = 0;
         if (this.token) socket?.send(JSON.stringify({ type: 'auth', token: this.token }));
-        onState('connected');
       };
       socket.onmessage = (message) => {
-        try { onEvent(parseActivityEvent(JSON.parse(String(message.data)))); } catch { /* reject malformed remote events */ }
+        try {
+          const parsed = JSON.parse(String(message.data)) as unknown;
+          if (typeof parsed === 'object' && parsed !== null && 'type' in parsed && parsed.type === 'ready') {
+            if (!('protocolVersion' in parsed) || parsed.protocolVersion !== 1) {
+              onState('error');
+              socket?.close(4406, 'unsupported Watcher protocol');
+              return;
+            }
+            attempts = 0;
+            onState('connected');
+            return;
+          }
+          onEvent(parseActivityEvent(parsed));
+        } catch { /* reject malformed remote events */ }
       };
       socket.onerror = () => onState('error');
       socket.onclose = () => {

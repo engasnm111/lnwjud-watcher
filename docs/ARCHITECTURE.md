@@ -1,4 +1,12 @@
+<p align="center">
+  <img src="../public/brand/lnwjud-watcher-logo-dark.png" width="180" alt="LNWJUD Watcher" />
+</p>
+
 # Architecture
+
+## สำหรับผู้ใช้ทั่วไป / For users
+
+ถ้าต้องการแค่ติดตั้งและเชื่อมต่อ ให้เริ่มจาก [README](../README.md) และ [คู่มือเลือก Provider](providers/README.md) ก่อน เอกสารหน้านี้อธิบายโครงสร้างภายในสำหรับผู้ดูแลและนักพัฒนา.
 
 ## Scope
 LNWJUD Watcher is a read-only monitoring client delivered from one codebase to Web/PWA, Android, and iOS. It connects to a lnwjud runtime through a versioned Watcher Protocol over HTTPS plus WebSocket.

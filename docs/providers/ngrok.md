@@ -1,4 +1,10 @@
+<p align="center">
+  <img src="../../public/brand/lnwjud-watcher-logo-dark.png" width="180" alt="LNWJUD Watcher" />
+</p>
+
 # ngrok
+
+> **เหมาะกับ:** ใช้ ngrok อยู่แล้วและต้องการ reuse account/config เดิม. / **Best for:** existing ngrok users.
 
 Official downloads: https://ngrok.com/download
 

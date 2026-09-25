@@ -1,4 +1,10 @@
+<p align="center">
+  <img src="../../public/brand/lnwjud-watcher-logo-dark.png" width="180" alt="LNWJUD Watcher" />
+</p>
+
 # Tailscale Serve / Funnel
+
+> **เหมาะกับ:** ต้องการ private access ผ่าน tailnet (Serve) หรือ public HTTPS (Funnel). / **Best for:** controlled device-to-device access.
 
 Official install guide: https://tailscale.com/docs/install
 

@@ -19,6 +19,31 @@
 
 ---
 
+## เวอร์ชันปัจจุบัน / Current version
+
+**LNWJUD Watcher v0.1.0** — ใช้คู่กับ **LNWJUD v5.6.0 ขึ้นไป** สำหรับข้อมูลจริงจาก Watcher Protocol v1.
+
+### มีอะไรใหม่ใน v0.1.0 / What's new
+
+- **ดูสถานะแบบ realtime:** initial snapshot + authenticated WebSocket + automatic reconnect.
+- **ไม่ขึ้น Connected หลอก:** client รอ `ready` acknowledgement หลัง token ผ่านก่อนแสดงว่า realtime เชื่อมต่อแล้ว.
+- **ข้อมูลหลักไม่ค้าง:** เมื่อมี live activity Watcher จะ re-sync authoritative snapshot เพื่ออัปเดต Goal, Agent และ Git ตาม runtime จริง.
+- **มี fallback อัตโนมัติ:** ถ้า realtime หลุด จะ refresh snapshot ทุก 5 วินาทีขณะหน้าจอเปิดอยู่.
+- **Web/PWA + Android + iOS:** ใช้ React/TypeScript codebase เดียว พร้อม Capacitor native shells.
+- **ภาษาไทย / English:** onboarding, navigation, states และ settings รองรับสองภาษา.
+- **Read-only by design:** ไม่มี shell, file mutation, MCP command, approve/reject หรือ hidden chain-of-thought.
+
+## เลือกวิธีเชื่อมต่อแบบไหนดี / Which connection should I use?
+
+| สถานการณ์ | แนะนำ | หมายเหตุ |
+| --- | --- | --- |
+| Watcher อยู่เครื่องเดียวกับ LNWJUD | **Local** | ง่ายที่สุด ใช้ `127.0.0.1` |
+| มือถือ/เครื่องอื่น แต่ต้องการ private | **Tailscale Serve** | จำกัดใน tailnet |
+| ต้องการ public HTTPS แบบง่าย | **zrok** | เหมาะกับผู้ใช้ทั่วไปหลายกรณี |
+| มี Cloudflare/domain อยู่แล้ว | **Cloudflare Tunnel** | เหมาะกับ endpoint ระยะยาว |
+| ใช้ ngrok อยู่แล้ว | **ngrok** | reuse account/config เดิมได้ |
+| มี reverse proxy/VPS ของตัวเอง | **Custom HTTPS** | ต้องรองรับ TLS + WebSocket |
+
 ## ใช้งานง่ายแบบคนทั่วไป / Built for normal users
 
 LNWJUD Watcher เป็นแอปคู่กับ [lnwjud](https://github.com/engasnm111/lnwjud) ตั้งใจให้เปิดแล้วรู้ทันทีว่า LNWJUD ยังทำงานอยู่ไหม กำลังทำอะไร มี Agent ตัวไหนทำงาน มี blocker หรือไม่ และมีอะไรเกิดขึ้นล่าสุด โดยไม่ต้องนั่งดู Live Logs หรือเปิดคอมเครื่องนั้นตลอดเวลา

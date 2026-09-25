@@ -1,4 +1,10 @@
+<p align="center">
+  <img src="../../public/brand/lnwjud-watcher-logo-dark.png" width="180" alt="LNWJUD Watcher" />
+</p>
+
 # zrok
+
+> **เหมาะกับ:** ต้องการ public HTTPS แบบเริ่มง่ายโดยไม่เปิด port router. / **Best for:** a simple outbound public share.
 
 zrok is the recommended simple public option for users who want an outbound tunnel without configuring router port forwarding. LNWJUD Watcher supports the current zrok v2 CLI name: **`zrok2`**.
 

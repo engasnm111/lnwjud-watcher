@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/brand/lnwjud-watcher-logo-dark.png" width="180" alt="LNWJUD Watcher" />
+</p>
+
 # LNWJUD Watcher v0.1.0
 
 First public cross-platform release of the read-only LNWJUD Watcher.
@@ -11,7 +15,8 @@ First public cross-platform release of the read-only LNWJUD Watcher.
 ### Live monitoring
 - Watcher Protocol v1 client with runtime validation.
 - Initial authoritative snapshot plus authenticated WebSocket live events.
-- Automatic snapshot re-sync after reconnect.
+- Realtime is marked connected only after the runtime confirms token authentication with a `ready` acknowledgement.
+- Automatic authoritative snapshot re-sync after reconnect **and after live activity**, keeping Goal, Agent, and Git state current.
 - 5-second visible-screen snapshot fallback while realtime is degraded.
 - Manual refresh remains available.
 - Evidence-based goal progress; hidden model reasoning is never requested or shown.

@@ -55,6 +55,7 @@ export function WatcherProvider({ children }: PropsWithChildren) {
   const [refreshing, setRefreshing] = useState(false);
   const [onboardingComplete, setOnboardingComplete] = useState(() => loadOnboardingComplete());
   const refreshInFlight = useRef<Promise<void> | null>(null);
+  const refreshQueued = useRef(false);
 
   const transport = useMemo<WatcherTransport>(
     () => profile.mode === 'demo'
@@ -64,18 +65,26 @@ export function WatcherProvider({ children }: PropsWithChildren) {
   );
 
   const refresh = useCallback(async () => {
-    if (refreshInFlight.current) return refreshInFlight.current;
+    if (refreshInFlight.current) {
+      refreshQueued.current = true;
+      return refreshInFlight.current;
+    }
 
     const task = (async () => {
       setRefreshing(true);
       try {
-        const next = await transport.getSnapshot();
-        setError(null);
-        setSnapshot(next);
-        setLastSyncAt(new Date().toISOString());
-      } catch (cause) {
-        setState('error');
-        setError(cause instanceof Error ? cause.message : 'Unable to load Watcher status');
+        do {
+          refreshQueued.current = false;
+          try {
+            const next = await transport.getSnapshot();
+            setError(null);
+            setSnapshot(next);
+            setLastSyncAt(new Date().toISOString());
+          } catch (cause) {
+            setState('error');
+            setError(cause instanceof Error ? cause.message : 'Unable to load Watcher status');
+          }
+        } while (refreshQueued.current);
       } finally {
         setRefreshing(false);
       }
@@ -92,6 +101,7 @@ export function WatcherProvider({ children }: PropsWithChildren) {
       (event) => {
         setSnapshot((current) => current ? mergeActivityEvent(current, event) : current);
         setLastSyncAt(new Date().toISOString());
+        void refresh();
       },
       setState
     );

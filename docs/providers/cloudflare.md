@@ -1,4 +1,10 @@
+<p align="center">
+  <img src="../../public/brand/lnwjud-watcher-logo-dark.png" width="180" alt="LNWJUD Watcher" />
+</p>
+
 # Cloudflare Tunnel
+
+> **เหมาะกับ:** มี Cloudflare/domain อยู่แล้วหรือต้องการ endpoint ระยะยาว. / **Best for:** managed HTTPS with a stable hostname.
 
 Official downloads: https://developers.cloudflare.com/tunnel/downloads/
 

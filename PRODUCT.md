@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/brand/lnwjud-watcher-logo-dark.png" width="180" alt="LNWJUD Watcher" />
+</p>
+
 # LNWJUD Watcher — Product Truth
 
 ## What it is
@@ -68,6 +72,7 @@ The product ships in Thai and English. Locale is selected from the device on fir
 - If the live stream is not healthy, visible clients refresh the authoritative snapshot every 5 seconds.
 - Manual refresh remains available.
 - After reconnect, Watcher re-synchronizes the full snapshot.
+- Each accepted live activity also triggers a deduplicated authoritative snapshot refresh so Goal, Agent, and Git state do not silently drift.
 
 ## Design personality
 
