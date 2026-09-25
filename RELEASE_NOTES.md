@@ -29,9 +29,10 @@ v0.1.0 is the first canonical full release of lnwjud Watcher. It combines the co
 - Windows portable EXE, macOS DMG, Linux AppImage, Android APK, Web/PWA, and iOS Simulator artifacts are produced from the shared application.
 - Android/iOS native launcher and splash assets use the lnwjud Watcher brand; mobile bottom navigation is pinned above the device safe area and onboarding is compact/responsive across small phones.
 - Desktop wrappers support tray/background behavior.
-- Watcher checks the latest stable GitHub Release on startup, every 30 minutes, and when returning to the foreground.
+- Watcher checks the latest stable GitHub Release on startup, every 30 minutes, and when returning to the foreground. Canonical `v0.1.0` rebuilds are detected by comparing the release commit SHA with the build SHA embedded in the installed client. Early v0.1.0 APKs from before this mechanism need one manual install of this refreshed build first.
 - Web/PWA refreshes through the service worker; native/desktop platforms open the matching trusted GitHub asset or release page.
-- v0.1.0 establishes the persistent Android release-signing identity used for future in-place APK upgrades.
+- Android uses the persistent v0.1.0 signing identity plus a monotonically increasing internal `versionCode`, allowing refreshed v0.1.0 APKs to install over older signed builds. Android still requires normal user installation approval.
+- Activity cards use explicit spacing and safe wrapping on narrow phones, render 20 items at a time, and progressively load older activity near the viewport; the Runtime snapshot remains bounded to the newest 100 events.
 
 ### Runtime requirement
 The full v0.1.0 experience requires **lnwjud v5.6.1 or later**.

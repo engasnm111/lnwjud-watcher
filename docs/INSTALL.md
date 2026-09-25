@@ -49,7 +49,9 @@ Never publish port **17891**.
 
 On LNWJUD v5.6.1+, that pairing URL opens a local UI with buttons to copy the Session token and local endpoint. Integrations can still request JSON with `?format=json`. Watcher Web/PWA remembers the token for 60 days in that browser; packaged Windows/macOS/Linux and Android/iOS builds keep it on that device across restarts until you clear the token in Settings.
 
-Watcher v0.1.0 also checks the latest stable GitHub Release at startup, every 30 minutes, and when the app returns to the foreground. A newer version shows a required update modal; Web/PWA refreshes to the newest service-worker build, while native/desktop targets open the appropriate GitHub asset or release path for the normal OS install confirmation.
+Watcher v0.1.0 checks the latest stable GitHub Release at startup, every 30 minutes, and when the app returns to the foreground. It compares both the semantic version and the release commit SHA, so a refreshed canonical `v0.1.0` build can be detected even when the visible version remains 0.1.0. Web/PWA refreshes to the newest service-worker build. Android opens the newest signed APK and uses an increasing internal `versionCode` so it can update over the older signed APK, but Android still requires the normal user install confirmation; Watcher cannot silently install an APK.
+
+**One-time note for early v0.1.0 APKs:** builds published before commit-SHA update detection cannot discover another release that still says v0.1.0. Install this refreshed v0.1.0 APK manually once; after that, future canonical v0.1.0 rebuilds can be detected by build SHA.
 
 ## 2. Windows — easiest desktop option
 
