@@ -1,45 +1,92 @@
-import { Activity, Bot, Gauge, Home, Settings } from 'lucide-react';
+import { Activity, Bot, Gauge, Home, Languages, RefreshCw, Settings } from 'lucide-react';
 import { HashRouter, NavLink, Navigate, Route, Routes } from 'react-router-dom';
 import { useWatcher } from './WatcherContext';
+import { useI18n } from '../i18n/I18nContext';
 import OverviewPage from '../features/overview/OverviewPage';
 import GoalsPage from '../features/goals/GoalsPage';
 import AgentsPage from '../features/agents/AgentsPage';
 import ActivityPage from '../features/activity/ActivityPage';
 import SettingsPage from '../features/settings/SettingsPage';
+import OnboardingPage from '../features/onboarding/OnboardingPage';
+import { formatTime } from '../shared/format';
+import type { MessageKey } from '../i18n/messages';
 
 const nav = [
-  { to: '/overview', label: 'Overview', icon: Home },
-  { to: '/goals', label: 'Goals', icon: Gauge },
-  { to: '/agents', label: 'Agents', icon: Bot },
-  { to: '/activity', label: 'Activity', icon: Activity },
-  { to: '/settings', label: 'Settings', icon: Settings }
+  { to: '/overview', key: 'nav.overview' as const, icon: Home },
+  { to: '/goals', key: 'nav.goals' as const, icon: Gauge },
+  { to: '/agents', key: 'nav.agents' as const, icon: Bot },
+  { to: '/activity', key: 'nav.activity' as const, icon: Activity },
+  { to: '/settings', key: 'nav.settings' as const, icon: Settings }
 ];
 
 function Shell() {
-  const { snapshot, state, error, refresh } = useWatcher();
+  const watcher = useWatcher();
+  const { locale, localeTag, setLocale, t } = useI18n();
+
+  if (!watcher.onboardingComplete) {
+    return <Routes>
+      <Route path="/onboarding" element={<OnboardingPage/>}/>
+      <Route path="*" element={<Navigate to="/onboarding" replace/>}/>
+    </Routes>;
+  }
+
+  const stateLabel = t(('connection.' + watcher.state) as MessageKey);
+
   return <div className="app-shell">
     <aside className="sidebar">
-      <div className="brand"><img src="/icon.svg" alt="" /><div><strong>LNWJUD</strong><span>Watcher</span></div></div>
-      <nav>{nav.map(({ to, label, icon: Icon }) => <NavLink key={to} to={to}><Icon size={20}/><span>{label}</span></NavLink>)}</nav>
-      <div className="sidebar-state"><span className={'dot dot-' + state}/>{state}</div>
+      <NavLink className="brand" to="/overview" aria-label="LNWJUD Watcher">
+        <img src="./brand/lnwjud-watcher-mark.png" alt="" />
+        <div><strong>LNWJUD</strong><span>Watcher</span></div>
+      </NavLink>
+      <nav>{nav.map(({ to, key, icon: Icon }) =>
+        <NavLink key={to} to={to}><Icon size={19}/><span>{t(key)}</span></NavLink>)}</nav>
+      <div className="sidebar-state">
+        <span className={'dot dot-' + watcher.state}/>
+        <span>{stateLabel}</span>
+      </div>
     </aside>
+
     <main className="content">
       <header className="topbar">
-        <div><span className="eyebrow">READ-ONLY CONTROL CENTER</span><h1>{snapshot?.instance.name ?? 'LNWJUD Watcher'}</h1></div>
-        <button className="icon-button" onClick={() => void refresh()} aria-label="Refresh">↻</button>
+        <div className="topbar-title">
+          <span className="eyebrow">{t('app.readOnly')}</span>
+          <h1>{watcher.snapshot?.instance.name ?? 'LNWJUD Watcher'}</h1>
+          <div className="freshness">
+            <span className={'dot dot-' + watcher.state}/>
+            <span>{watcher.fallbackPolling ? t('app.fallback') : stateLabel}</span>
+            <span>·</span>
+            <span>{t('app.lastUpdated')}: {watcher.lastSyncAt ? formatTime(watcher.lastSyncAt, localeTag) : t('app.never')}</span>
+          </div>
+        </div>
+        <div className="topbar-actions">
+          <button className="icon-button text-button" onClick={() => setLocale(locale === 'th' ? 'en' : 'th')} aria-label={t('settings.language')}>
+            <Languages size={18}/><span>{locale === 'th' ? 'EN' : 'TH'}</span>
+          </button>
+          <button className="icon-button" onClick={() => void watcher.refresh()} aria-label={t('app.refresh')} disabled={watcher.refreshing}>
+            <RefreshCw size={19} className={watcher.refreshing ? 'spin-once' : ''}/>
+          </button>
+        </div>
       </header>
-      {error && <div className="error-banner">{error}</div>}
+
+      {watcher.fallbackPolling && <div className="degraded-banner">{t('connection.autoRefresh')}</div>}
+      {watcher.error && <div className="error-banner">{watcher.error}</div>}
+
       <Routes>
         <Route path="/overview" element={<OverviewPage/>}/>
         <Route path="/goals" element={<GoalsPage/>}/>
         <Route path="/agents" element={<AgentsPage/>}/>
         <Route path="/activity" element={<ActivityPage/>}/>
         <Route path="/settings" element={<SettingsPage/>}/>
+        <Route path="/onboarding" element={<Navigate to="/overview" replace/>}/>
         <Route path="*" element={<Navigate to="/overview" replace/>}/>
       </Routes>
     </main>
-    <nav className="bottom-nav">{nav.map(({ to, label, icon: Icon }) => <NavLink key={to} to={to}><Icon size={21}/><span>{label}</span></NavLink>)}</nav>
+
+    <nav className="bottom-nav">{nav.map(({ to, key, icon: Icon }) =>
+      <NavLink key={to} to={to}><Icon size={20}/><span>{t(key)}</span></NavLink>)}</nav>
   </div>;
 }
 
-export default function App() { return <HashRouter><Shell/></HashRouter>; }
+export default function App() {
+  return <HashRouter><Shell/></HashRouter>;
+}
