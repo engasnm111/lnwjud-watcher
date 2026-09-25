@@ -6,6 +6,10 @@ export function goalProgress(goal: Goal | null): number {
   return Math.round((done / goal.milestones.length) * 100);
 }
 
-export function formatTime(value: string): string {
-  return new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(new Date(value));
+export function formatTime(value: string, locale = 'en-US'): string {
+  return new Intl.DateTimeFormat(locale, {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  }).format(new Date(value));
 }
