@@ -1,12 +1,20 @@
 <p align="center">
-  <img src="public/brand/lnwjud-watcher-logo-dark.png" width="300" alt="LNWJUD Watcher" />
+  <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="300" alt="LNWJUD Watcher" />
 </p>
 
 <h1 align="center">LNWJUD Watcher</h1>
 
 <p align="center">
-  <strong>ดูงาน LNWJUD แบบสดจาก Web, Android และ iOS — โดย Watcher ไม่มีสิทธิ์สั่งงานเครื่อง</strong><br />
-  <em>See LNWJUD goals, agents, blockers and observable activity live from Web, Android and iOS — read-only by design.</em>
+  <strong>Read-only live monitoring for LNWJUD on Web/PWA, Android, and iOS.</strong><br />
+  See runtime health, Durable Goal progress, agents, blockers, Git state, and observable activity without exposing LNWJUD's command surface.
+</p>
+
+<p align="center">
+  <a href="README_TH.md"><strong>ภาษาไทย</strong></a>
+  ·
+  <a href="https://github.com/engasnm111/lnwjud"><strong>LNWJUD</strong></a>
+  ·
+  <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest"><strong>Latest Release</strong></a>
 </p>
 
 <p align="center">
@@ -14,119 +22,116 @@
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-blue.svg" /></a>
   <img alt="Targets" src="https://img.shields.io/badge/Web%20%7C%20Android%20%7C%20iOS-Watcher-d5a63a" />
   <img alt="Protocol" src="https://img.shields.io/badge/Watcher%20Protocol-v1-d5a63a" />
-  <img alt="Languages" src="https://img.shields.io/badge/ภาษา-ไทย%20%7C%20English-d5a63a" />
 </p>
 
 ---
 
-## เวอร์ชันปัจจุบัน / Current version
+## Current version
 
-**LNWJUD Watcher v0.1.0** — ใช้คู่กับ **LNWJUD v5.6.0 ขึ้นไป** สำหรับข้อมูลจริงจาก Watcher Protocol v1.
+**LNWJUD Watcher v0.1.0** is designed for **LNWJUD v5.6.0 or later**.
 
-### มีอะไรใหม่ใน v0.1.0 / What's new
+### What's new in v0.1.0
 
-- **ดูสถานะแบบ realtime:** initial snapshot + authenticated WebSocket + automatic reconnect.
-- **ไม่ขึ้น Connected หลอก:** client รอ `ready` acknowledgement หลัง token ผ่านก่อนแสดงว่า realtime เชื่อมต่อแล้ว.
-- **ข้อมูลหลักไม่ค้าง:** เมื่อมี live activity Watcher จะ re-sync authoritative snapshot เพื่ออัปเดต Goal, Agent และ Git ตาม runtime จริง.
-- **มี fallback อัตโนมัติ:** ถ้า realtime หลุด จะ refresh snapshot ทุก 5 วินาทีขณะหน้าจอเปิดอยู่.
-- **Web/PWA + Android + iOS:** ใช้ React/TypeScript codebase เดียว พร้อม Capacitor native shells.
-- **ภาษาไทย / English:** onboarding, navigation, states และ settings รองรับสองภาษา.
-- **Read-only by design:** ไม่มี shell, file mutation, MCP command, approve/reject หรือ hidden chain-of-thought.
+- **Authenticated realtime:** initial snapshot plus WebSocket live events with automatic reconnect.
+- **No false connected state:** Watcher reports realtime as connected only after LNWJUD validates the token and sends the Protocol v1 `ready` acknowledgement.
+- **Authoritative live state:** accepted live activity triggers a deduplicated snapshot re-sync so Goal, Agent, and Git state do not silently go stale.
+- **Automatic fallback:** if realtime is unavailable, Watcher refreshes snapshots every 5 seconds while the app is open.
+- **Three targets:** Web/PWA, Android, and iOS share the same React/TypeScript application.
+- **English + Thai UI:** the product UI supports both languages; this README stays English-first and the Thai guide lives in [README_TH.md](README_TH.md).
+- **Read-only by design:** no shell, filesystem mutation, MCP mutation, approve/reject actions, or hidden chain-of-thought access.
 
-## เลือกวิธีเชื่อมต่อแบบไหนดี / Which connection should I use?
+## What is LNWJUD Watcher?
 
-| สถานการณ์ | แนะนำ | หมายเหตุ |
+LNWJUD Watcher is a companion app for [LNWJUD](https://github.com/engasnm111/lnwjud). It is meant for people who want to check whether LNWJUD is still working, what goal is active, which agents are active, whether anything is blocked, and what observable work happened recently—without keeping the LNWJUD machine in front of them.
+
+Watcher consumes **Watcher Protocol v1** from the LNWJUD runtime. It never reads the LNWJUD database directly.
+
+## Targets
+
+| Target | Use | v0.1.0 |
 | --- | --- | --- |
-| Watcher อยู่เครื่องเดียวกับ LNWJUD | **Local** | ง่ายที่สุด ใช้ `127.0.0.1` |
-| มือถือ/เครื่องอื่น แต่ต้องการ private | **Tailscale Serve** | จำกัดใน tailnet |
-| ต้องการ public HTTPS แบบง่าย | **zrok** | เหมาะกับผู้ใช้ทั่วไปหลายกรณี |
-| มี Cloudflare/domain อยู่แล้ว | **Cloudflare Tunnel** | เหมาะกับ endpoint ระยะยาว |
-| ใช้ ngrok อยู่แล้ว | **ngrok** | reuse account/config เดิมได้ |
-| มี reverse proxy/VPS ของตัวเอง | **Custom HTTPS** | ต้องรองรับ TLS + WebSocket |
+| **Web / PWA** | Browser or Add to Home Screen | Production web bundle |
+| **Android** | Installable APK | Android artifact from release CI |
+| **iOS** | Native Capacitor shell | Simulator artifact; device/App Store signing requires Apple credentials |
 
-## ใช้งานง่ายแบบคนทั่วไป / Built for normal users
+## Quick setup
 
-LNWJUD Watcher เป็นแอปคู่กับ [lnwjud](https://github.com/engasnm111/lnwjud) ตั้งใจให้เปิดแล้วรู้ทันทีว่า LNWJUD ยังทำงานอยู่ไหม กำลังทำอะไร มี Agent ตัวไหนทำงาน มี blocker หรือไม่ และมีอะไรเกิดขึ้นล่าสุด โดยไม่ต้องนั่งดู Live Logs หรือเปิดคอมเครื่องนั้นตลอดเวลา
+### English
 
-**Watcher v0.1.0 เป็น read-only 100%** — ไม่มี shell, file write/delete, MCP command, approve/reject, pause/resume หรือ hidden chain-of-thought.
+#### 1. Run LNWJUD v5.6.0 or later
 
-English: Watcher is a read-only companion for LNWJUD. Open it and immediately see runtime health, the current Durable Goal, milestone progress, active agents, blockers, recent observable work, Git baseline, and whether the view is live or using fallback refresh.
+LNWJUD Desktop starts the read-only Watcher API with the Desktop runtime.
 
-## รองรับ 3 ทาง / Three targets
-
-| Target | ใช้แบบไหน | v0.1.0 |
-| --- | --- | --- |
-| **Web / PWA** | เปิดจาก browser หรือ Add to Home Screen | Production web bundle |
-| **Android** | ติดตั้ง APK สำหรับทดสอบ/ใช้งานตรง | Android debug APK |
-| **iOS** | ใช้ source/native shell และ Simulator artifact | iOS Simulator artifact; App Store/device signing requires Apple credentials |
-
-> iOS จริงบน iPhone ต้องใช้ Apple signing / Developer account ตามข้อกำหนดของ Apple. v0.1.0 ไม่อ้างว่าเป็น App Store release หากยังไม่มี signing credentials.
-
-## Quick start — 5 นาที
-
-### 1. ใช้ lnwjud v5.6.0 ขึ้นไป
-
-LNWJUD Desktop v5.6.0 เพิ่ม Watcher API แบบอ่านอย่างเดียวและเริ่มให้อัตโนมัติเมื่อเปิด Desktop.
-
-บนเครื่องที่รัน LNWJUD เปิด:
+On the LNWJUD machine, open:
 
 ```text
 http://127.0.0.1:17891/api/v1/pair
 ```
 
-จะได้:
+The pairing response gives you:
 
-- local Watcher endpoint
-- Watcher access token
-- protocol version
+- the local Watcher endpoint;
+- the dedicated Watcher access token;
+- the Watcher protocol version.
 
-**อย่าเปิด port 17891 ออกอินเทอร์เน็ต** — pairing endpoint ตั้งใจให้ใช้เฉพาะในเครื่อง LNWJUD.
+> **Do not expose port 17891 to the internet.** It is a loopback-only pairing endpoint.
 
-### 2. เลือกวิธีเข้าถึงเครื่อง LNWJUD
+#### 2. Choose how Watcher reaches LNWJUD
 
-ถ้า Watcher อยู่เครื่องเดียวกัน ใช้ Local ได้เลย.
+| Situation | Recommended option |
+| --- | --- |
+| Watcher runs on the same computer | **Local** |
+| Private access between your devices | **Tailscale Serve** |
+| Simple outbound public HTTPS | **zrok** |
+| Existing Cloudflare/domain setup | **Cloudflare Tunnel** |
+| Existing ngrok setup | **ngrok** |
+| Your own VPS/reverse proxy | **Custom HTTPS** |
 
-ถ้าจะดูจาก Android/iPhone/เครื่องอื่น เลือกหนึ่งวิธี:
+Expose only the Watcher API on **port 17890**. You do not need to expose the MCP gateway.
 
-- **zrok** — ทาง public HTTPS ที่ตั้งค่าง่ายสำหรับหลายคน
-- **Cloudflare Tunnel**
-- **Tailscale Serve** — private ภายใน tailnet
-- **Tailscale Funnel** — public HTTPS
-- **ngrok**
-- **Custom HTTPS reverse proxy**
+#### 3. Connect Watcher
 
-เปิดเฉพาะ **Watcher API port 17890** ผ่าน provider ที่เลือก ไม่ต้องเปิด MCP gateway.
+On first run:
 
-### 3. เปิด Watcher
+1. choose English or Thai;
+2. choose a connection/provider;
+3. enter the Watcher endpoint and token;
+4. open Overview.
 
-ครั้งแรก Watcher จะถาม:
+### ภาษาไทย — ตั้งค่าเบื้องต้น
 
-1. ไทย / English
-2. วิธีเชื่อมต่อ
-3. Provider
-4. Endpoint + Watcher token
+#### 1. เปิด LNWJUD v5.6.0 ขึ้นไป
 
-จากนั้นเข้า Overview ได้เลย.
-
-## Realtime จริง ไม่ต้องกด Refresh เอง
-
-Watcher ใช้ลำดับนี้:
+LNWJUD Desktop จะเปิด Watcher API แบบ read-only ให้อัตโนมัติพร้อมตัวโปรแกรม จากเครื่องที่รัน LNWJUD ให้เปิด:
 
 ```text
-Initial snapshot
-      ↓
-Authenticated WebSocket
-      ↓
-live observable events
-      ↓
-reconnect → authoritative snapshot resync
+http://127.0.0.1:17891/api/v1/pair
 ```
 
-ถ้า WebSocket หลุด Watcher จะเปลี่ยนเป็น **snapshot refresh ทุก 5 วินาทีขณะหน้าจอเปิดอยู่** และกลับไป realtime ให้อัตโนมัติเมื่อ WebSocket กลับมา. ปุ่ม Refresh ยังคงมีไว้ให้กดเองได้.
+จะได้ **Watcher endpoint**, **Watcher access token** และ **protocol version**
 
-## ตั้งค่า Remote Access
+> **ห้ามเปิด port 17891 ออกอินเทอร์เน็ต** เพราะเป็น pairing endpoint ที่ออกแบบให้ใช้เฉพาะในเครื่อง
 
-คู่มือทีละขั้นอยู่ที่:
+#### 2. เลือกวิธีที่ Watcher จะเชื่อมกลับมา
+
+| ใช้งานแบบไหน | แนะนำ |
+| --- | --- |
+| Watcher อยู่เครื่องเดียวกับ LNWJUD | **Local** |
+| ต้องการ private ระหว่างอุปกรณ์ | **Tailscale Serve** |
+| ต้องการ public HTTPS แบบเริ่มง่าย | **zrok** |
+| มี Cloudflare/domain อยู่แล้ว | **Cloudflare Tunnel** |
+| ใช้ ngrok อยู่แล้ว | **ngrok** |
+| มี VPS/reverse proxy ของตัวเอง | **Custom HTTPS** |
+
+ถ้าใช้งานจากระยะไกล ให้ expose เฉพาะ Watcher API port **17890** ไม่ต้อง expose MCP gateway
+
+#### 3. เปิด Watcher
+
+ครั้งแรกให้เลือกภาษา เลือก provider แล้วกรอก endpoint + Watcher token จากนั้นเข้า **Overview** ได้เลย
+
+> คู่มือภาษาไทยฉบับเต็ม: **[README_TH.md](README_TH.md)**
+
+Provider guides:
 
 - [Local / LAN](docs/providers/local.md)
 - [zrok](docs/providers/zrok.md)
@@ -134,68 +139,37 @@ reconnect → authoritative snapshot resync
 - [Tailscale Serve / Funnel](docs/providers/tailscale.md)
 - [ngrok](docs/providers/ngrok.md)
 - [Custom HTTPS](docs/providers/custom-https.md)
+- [Provider chooser](docs/providers/README.md)
 
-รวมทั้งหมด: [Provider setup](docs/providers/README.md)
+## Realtime behavior
 
-### Windows helper
-
-จาก repo Watcher:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\providers\setup-watcher-access.ps1 -Provider zrok -Install
+```text
+Initial snapshot
+      ↓
+WebSocket auth
+      ↓
+server "ready" acknowledgement
+      ↓
+live observable activity
+      ↓
+authoritative snapshot re-sync
 ```
 
-เปลี่ยน `zrok` เป็น `cloudflare`, `tailscale-serve`, `tailscale-funnel` หรือ `ngrok` ได้.
+If the socket disconnects, Watcher reconnects automatically. While realtime is degraded it falls back to a 5-second snapshot refresh. Manual Refresh remains available.
 
-ตัว helper จะตรวจของเดิมก่อน และติดตั้งเฉพาะเมื่อระบุ `-Install`.
+## What you can see
 
-### macOS / Linux helper
+- runtime online/offline state;
+- current Durable Goal and milestone progress;
+- current task and blockers;
+- active observable agents/workers;
+- sanitized Git branch/commit/clean state;
+- structured recent activity;
+- live/reconnecting/fallback connection state.
 
-```sh
-chmod +x scripts/providers/setup-watcher-access.sh
-./scripts/providers/setup-watcher-access.sh zrok
-```
+Watcher does **not** expose hidden model reasoning.
 
-สำหรับ provider ที่ระบบติดตั้งอัตโนมัติไม่ได้ script จะพาไป official install path แทนการเดาหรือดาวน์โหลด binary ผิด architecture.
-
-> Provider account token / authtoken / enable token ให้ใส่ใน CLI ของ provider บนเครื่อง LNWJUD เท่านั้น **อย่าใส่ลง Watcher**.
-
-## สิ่งที่ดูได้
-
-### Overview
-
-- runtime online / offline
-- live / reconnecting / 5s fallback
-- current Durable Goal
-- milestone progress จากข้อมูลจริง
-- current task
-- blockers
-- active agents
-- Git clean/dirty, branch, commit
-- recent observable activity
-
-### Goals
-
-ดู goal ปัจจุบัน, milestones, task และ blockers แบบอ่านอย่างเดียว.
-
-### Agents
-
-ดู `@lnwjud` และ agent/worker ที่ LNWJUD มี evidence ว่ากำลังทำงานจริง.
-
-### Activity
-
-ไทม์ไลน์ structured events เช่น running, analyzing, verifying, waiting, blocked, done. Watcher **ไม่อ่านหรือแสดง hidden reasoning**.
-
-### Settings
-
-- ไทย / English
-- endpoint
-- access provider
-- session token
-- provider setup guide
-- connection reset / onboarding
-
-## Security model
+## Security boundary
 
 ```text
 LNWJUD runtime
@@ -206,67 +180,43 @@ LNWJUD Watcher
 Web / Android / iOS
 ```
 
-หลักสำคัญ:
+Key rules:
 
-- Runtime เป็น source of truth.
-- Watcher ไม่อ่านฐานข้อมูล LNWJUD โดยตรง.
-- Remote HTTP ที่ไม่ใช่ loopback ถูกปฏิเสธ; ใช้ HTTPS/WSS.
-- Watcher token เก็บเฉพาะ session ฝั่ง client.
-- LNWJUD v5.6.0 เก็บ dedicated Watcher token ผ่าน protected secret storage ใน production.
-- Pairing ใช้ listener คนละ port และ loopback-only.
-- ไม่มี command execution surface ใน Watcher Protocol v1.
+- LNWJUD is the source of truth.
+- Watcher is read-only.
+- Pairing stays loopback-only on port 17891.
+- Remote Watcher traffic uses HTTPS/WSS.
+- The dedicated Watcher token is separate from MCP/tunnel credentials.
+- The client keeps the bearer token session-only.
+- Protocol v1 exposes no shell, file mutation, MCP mutation, or approval surface.
 
-Protocol details: [docs/PROTOCOL.md](docs/PROTOCOL.md)
+See [Protocol v1](docs/PROTOCOL.md) and [Architecture](docs/ARCHITECTURE.md).
 
-## Download / Install
+## Download / install
 
-เมื่อ v0.1.0 ถูก publish แล้ว ให้ใช้หน้า:
+Use the [latest LNWJUD Watcher release](https://github.com/engasnm111/lnwjud-watcher/releases/latest).
 
-**[Latest LNWJUD Watcher Release](https://github.com/engasnm111/lnwjud-watcher/releases/latest)**
-
-Release มี:
-
-- `lnwjud-watcher-web.zip`
-- `lnwjud-watcher-android-debug.apk`
-- `lnwjud-watcher-ios-simulator.zip`
-
-### Web/PWA
-
-แตก `lnwjud-watcher-web.zip` แล้ว serve เป็น static HTTPS website ได้เลย. Build ใช้ relative assets และ HashRouter จึงวางใต้ sub-path ได้โดยไม่ต้อง rewrite route ฝั่ง server.
-
-เปิดด้วย browser แล้วใช้ **Install app / Add to Home Screen** เพื่อใช้แบบ PWA.
-
-### Android
-
-ติดตั้ง APK จาก GitHub Release. Android อาจถามอนุญาตติดตั้งจากแหล่งภายนอกเมื่อ sideload.
-
-### iOS
-
-v0.1.0 มี Simulator artifact เพื่อพิสูจน์ native build. สำหรับติดตั้งบน iPhone จริงต้อง build/sign ด้วย Xcode และ Apple Developer identity.
+Release artifacts are produced by the repository release workflow for the supported targets. iPhone device/App Store installation still requires Apple signing credentials.
 
 ## Troubleshooting
 
-**ขึ้น Unauthorized / 401**
+**401 / Unauthorized**
 
-กลับไปที่เครื่อง LNWJUD แล้วเปิด pairing URL ใหม่ จากนั้นใส่ Watcher token ให้ตรง.
+Pair again on the LNWJUD machine and use the current Watcher token.
 
-**Snapshot มา แต่ realtime ไม่มา**
+**Snapshot works, realtime does not**
 
-Tunnel/reverse proxy ต้องรองรับ WebSocket upgrade ที่ `/api/v1/events`.
+Your tunnel or reverse proxy must support WebSocket upgrade at `/api/v1/events`.
 
-**มือถือเปิด Local URL ไม่ได้**
+**A phone cannot open a Local URL**
 
-`127.0.0.1` บนมือถือหมายถึง “มือถือเอง” ไม่ใช่คอม LNWJUD. ใช้ Tailscale หรือ public HTTPS provider แทน.
+`127.0.0.1` on the phone points to the phone itself. Use Tailscale or another HTTPS provider.
 
-**ห้ามเปิด 17891 ใช่ไหม?**
+**Should port 17891 be public?**
 
-ใช่. 17891 เป็น pairing loopback-only. ถ้าจะ tunnel ให้ tunnel เฉพาะ 17890.
+No. Only expose port 17890 when remote access is required.
 
-**Watcher สั่งให้ Agent หยุด/ทำต่อได้ไหม?**
-
-ไม่ได้ใน v0.1.0. นี่เป็น deliberate security boundary.
-
-## สำหรับนักพัฒนา / Developers
+## Development
 
 Requires Node.js 22–24.
 
@@ -275,7 +225,7 @@ npm ci
 npm run dev
 ```
 
-Quality gates:
+Release gates:
 
 ```bash
 npm run lint
@@ -285,19 +235,19 @@ npm run build
 npx cap sync
 ```
 
-Architecture:
+Engineering docs:
 
 - [Architecture](docs/ARCHITECTURE.md)
 - [Protocol v1](docs/PROTOCOL.md)
-- [v0.1.0 release completion plan](docs/V0.1.0-RELEASE-PLAN.md)
 - [Product truth](PRODUCT.md)
 - [Design system](DESIGN.md)
+- [v0.1.0 release checklist](docs/V0.1.0-RELEASE-PLAN.md)
 
 Branch model:
 
 - `dev` — development/integration
 - `main` — released/integrated history
-- release work goes `dev → PR → main → tag`
+- release flow — `dev → PR → main → tag`
 
 ## License
 

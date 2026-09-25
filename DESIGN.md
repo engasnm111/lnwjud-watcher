@@ -1,4 +1,8 @@
-<p align="center">\n  <img src="public/brand/lnwjud-watcher-logo-dark.png" width="180" alt="LNWJUD Watcher" />\n</p>\n\n# LNWJUD Watcher Design System
+<p align="center">
+  <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="180" alt="LNWJUD Watcher" />
+</p>
+
+# LNWJUD Watcher Design System
 
 ## Direction
 
@@ -8,8 +12,8 @@ The interface must prioritize scanability and reliable status comprehension. Bra
 
 ## Brand assets
 
-- Dark hero: `/brand/lnwjud-watcher-logo-dark.png`
-- Transparent master: `/brand/lnwjud-watcher-logo-transparent.png`
+- Primary logo: `/brand/lnwjud-watcher-logo-transparent.png` — use this for README/docs and general product surfaces.
+- Dark-background variant: `/brand/lnwjud-watcher-logo-dark.png` — optional only when a composed dark plate is intentionally required.
 - Mark-only derivative: `/brand/lnwjud-watcher-mark.png`
 
 Do not stretch, skew, recolor, or regenerate these inside the application.
