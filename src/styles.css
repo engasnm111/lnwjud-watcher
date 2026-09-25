@@ -378,6 +378,36 @@ img{max-width:100%}
 }
 .settings-card input:disabled,.settings-card select:disabled{color:#667281;background:#0b1016}
 .settings-card small{color:#778493;font-weight:400}
+.session-token-help{
+  display:grid;
+  gap:10px;
+  margin:8px 0 18px;
+  padding:14px;
+  border:1px solid #4b3d24;
+  border-radius:14px;
+  background:linear-gradient(145deg,rgba(244,185,63,.08),rgba(8,13,20,.9));
+}
+.session-token-help-copy{display:flex;gap:10px;align-items:flex-start}
+.session-token-help-copy>svg{color:var(--gold);flex:0 0 auto;margin-top:2px}
+.session-token-help-copy>div{display:grid;gap:4px}
+.session-token-help-copy strong{color:#f3e8cf}
+.session-token-help-copy span,.session-token-help>small{color:#8e9aa8;font-size:.8rem;line-height:1.55}
+.session-token-link{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 11px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:#080d14;
+  color:var(--gold-strong);
+  text-decoration:none;
+}
+.session-token-link:hover{border-color:#765723;background:#0d1117}
+.session-token-link code{min-width:0;overflow-wrap:anywhere;font-size:.76rem;color:#d9c28a}
+.session-token-link span{margin-left:auto;white-space:nowrap;font-size:.78rem;font-weight:700}
+.session-token-link svg{flex:0 0 auto}
 .guide-card{align-self:start}
 .command-box{
   display:grid;
