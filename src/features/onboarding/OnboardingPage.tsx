@@ -6,6 +6,7 @@ import { useI18n } from '../../i18n/I18nContext';
 import type { ConnectionProfile, RemoteProvider } from '../../domain/models';
 import { defaultProfile } from '../../data/profile';
 import type { MessageKey } from '../../i18n/messages';
+import SessionTokenHelp from '../../shared/SessionTokenHelp';
 
 const publicProviders: RemoteProvider[] = ['zrok', 'cloudflare', 'tailscale-funnel', 'ngrok', 'custom'];
 const privateProviders: RemoteProvider[] = ['tailscale-serve'];
@@ -22,7 +23,7 @@ export default function OnboardingPage() {
     provider: 'zrok',
     endpoint: ''
   });
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState(watcher.token);
 
   const providers = useMemo(() => {
     if (connectionKind === 'local') return ['local'] as RemoteProvider[];
@@ -117,6 +118,7 @@ export default function OnboardingPage() {
           <input type="password" autoComplete="off" value={token} onChange={(event) => setToken(event.target.value)}/>
           <small>{t('onboarding.tokenHelp')}</small>
         </label>
+        <SessionTokenHelp/>
       </>}
 
       <div className="onboarding-actions">

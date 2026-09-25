@@ -5,6 +5,7 @@ import { useI18n } from '../../i18n/I18nContext';
 import type { ConnectionProfile, RemoteProvider } from '../../domain/models';
 import type { MessageKey } from '../../i18n/messages';
 import { providerGuides } from '../../data/providers';
+import SessionTokenHelp from '../../shared/SessionTokenHelp';
 
 const providers: RemoteProvider[] = [
   'local',
@@ -64,6 +65,7 @@ export default function SettingsPage() {
         <input type="password" autoComplete="off" disabled={draft.mode === 'demo'} value={token} onChange={(event) => setToken(event.target.value)}/>
         <small>{t('settings.tokenHelp')}</small>
       </label>
+      {draft.mode !== 'demo' && <SessionTokenHelp/>}
 
       <button className="primary-button" onClick={save}>{t('settings.save')}</button>
     </section>

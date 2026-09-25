@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Activity, Bot, Gauge, Home, Languages, RefreshCw, Settings } from 'lucide-react';
 import { HashRouter, NavLink, Navigate, Route, Routes } from 'react-router-dom';
 import { useWatcher } from './WatcherContext';
@@ -8,8 +9,9 @@ import AgentsPage from '../features/agents/AgentsPage';
 import ActivityPage from '../features/activity/ActivityPage';
 import SettingsPage from '../features/settings/SettingsPage';
 import OnboardingPage from '../features/onboarding/OnboardingPage';
-import { formatTime } from '../shared/format';
+import { formatRelativeTime, formatTime } from '../shared/format';
 import type { MessageKey } from '../i18n/messages';
+import UpdateGate from '../shared/UpdateGate';
 
 const nav = [
   { to: '/overview', key: 'nav.overview' as const, icon: Home },
@@ -22,6 +24,12 @@ const nav = [
 function Shell() {
   const watcher = useWatcher();
   const { locale, localeTag, setLocale, t } = useI18n();
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(Date.now()), 15_000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   if (!watcher.onboardingComplete) {
     return <Routes>
@@ -31,6 +39,7 @@ function Shell() {
   }
 
   const stateLabel = t(('connection.' + watcher.state) as MessageKey);
+  const lastActivityAt = watcher.snapshot?.activity[0]?.timestamp;
 
   return <div className="app-shell">
     <aside className="sidebar">
@@ -56,6 +65,11 @@ function Shell() {
             <span>{watcher.fallbackPolling ? t('app.fallback') : stateLabel}</span>
             <span>·</span>
             <span>{t('app.lastUpdated')}: {watcher.lastSyncAt ? formatTime(watcher.lastSyncAt, localeTag) : t('app.never')}</span>
+          </div>
+          <div className="activity-freshness">
+            {lastActivityAt
+              ? t('app.lastActivity', { time: formatTime(lastActivityAt, localeTag), age: formatRelativeTime(lastActivityAt, now, localeTag) })
+              : t('app.noActivityYet')}
           </div>
         </div>
         <div className="topbar-actions">
@@ -88,5 +102,5 @@ function Shell() {
 }
 
 export default function App() {
-  return <HashRouter><Shell/></HashRouter>;
+  return <UpdateGate><HashRouter><Shell/></HashRouter></UpdateGate>;
 }

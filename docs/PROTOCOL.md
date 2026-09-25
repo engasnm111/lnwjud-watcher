@@ -6,7 +6,7 @@
 
 ## สำหรับผู้ใช้ทั่วไป / For users
 
-ผู้ใช้ทั่วไปไม่ต้องเรียก API เอง: เปิด LNWJUD v5.6.0+, ใช้ local pairing endpoint เพื่อรับ Watcher endpoint/token แล้วกรอกในแอป Watcher. รายละเอียดการเชื่อมต่ออยู่ใน [README](../README.md).
+ผู้ใช้ทั่วไปไม่ต้องเรียก API เอง: เปิด LNWJUD v5.6.1+, ใช้ local pairing endpoint เพื่อรับ Watcher endpoint/token แล้วกรอกในแอป Watcher. รายละเอียดการเชื่อมต่ออยู่ใน [README](../README.md).
 
 Base URL: `https://<runtime-host>/api/v1`
 
@@ -18,10 +18,13 @@ Required top-level fields:
 - `serverTime`: ISO-8601 timestamp
 - `runtime`: lnwjud version and health
 - `instance`: stable id, user-facing name, platform
-- `goal`: current durable goal or null
-- `agents`: observable agent states
-- `activity`: recent observable activity events
-- `git`: sanitized repository baseline
+- `goal`: selected/primary-project durable goal compatibility view or null
+- `workspaces`: every Active Project, with all active Durable Goals, active-operation count, and sanitized per-project Git state
+- `agents`: observable agent states, tagged with workspace identity when known
+- `activity`: recent observable activity events, tagged with workspace identity when known
+- `git`: selected/primary-project sanitized Git compatibility view
+
+`workspaces` is an additive Protocol v1 field. LNWJUD v5.6.1 keeps top-level `goal` and `git` so clients written for the original v1 shape can continue to render the selected project. New clients should use `workspaces[]` for parallel-project and multi-goal views.
 
 ## Live events
 `WS /events` streams validated event envelopes after the initial snapshot. Clients reconnect with bounded exponential backoff, refresh the authoritative snapshot after reconnect, and re-sync the snapshot after live activity so Goal/Agent/Git state cannot remain stale while the socket stays healthy.

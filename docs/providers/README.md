@@ -24,7 +24,7 @@ LNWJUD Watcher ใช้ **Watcher API port 17890** สำหรับดูส�
 
 ## Before any provider / ก่อนเริ่มทุกแบบ
 
-1. Install and run **LNWJUD v5.6.0+**.
+1. Install and run **LNWJUD v5.6.1+**.
 2. On the LNWJUD computer, open:
    `http://127.0.0.1:17891/api/v1/pair`
 3. Copy the **Watcher access token** somewhere private.

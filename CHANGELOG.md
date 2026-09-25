@@ -4,6 +4,21 @@
 
 # Changelog
 
+## 0.3.0 - 2026-09-25
+
+Observability, parallel-work, pairing, and update-safety release.
+
+- Added multi-project/multi-goal Watcher state: every Active Project can expose all active Durable Goals, project-scoped operations/agents/activity, and per-project Git state in one additive Protocol v1 snapshot.
+- Clarified Agent semantics: Watcher reports only work observable inside the LNWJUD Runtime, not ChatGPT reasoning between tool calls.
+- Added active-operation count and a live relative "last runtime work" age separate from connection/snapshot freshness.
+- Expanded Git visibility with branch, commit, clean/dirty state, changed-file count, latest commit subject, and latest commit time.
+- Added a shared Session-token help block to onboarding and Settings on every Watcher platform.
+- Persist Session tokens across restarts: Web/PWA keeps them for 60 days in browser-local storage, while packaged Desktop/mobile keeps them on-device until cleared; legacy session-only tokens migrate automatically.
+- LNWJUD v5.6.1 pairing now renders a copy-friendly local UI while preserving JSON pairing for integrations.
+- Added a mandatory GitHub Release update gate: startup/foreground/30-minute checks, Web/PWA refresh update, and platform-specific release/download handoff for Android/Desktop/macOS/Linux/iOS.
+- Switched Android release artifacts from ephemeral debug APKs to a release-signed APK with a persistent signing identity for future in-place upgrades from v0.3.0 onward.
+- Kept Watcher read-only and kept pairing port 17891 local-only.
+
 ## 0.2.0 - 2026-09-25
 
 Beginner-friendly desktop and remote monitoring release.
