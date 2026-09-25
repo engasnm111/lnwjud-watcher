@@ -56,7 +56,7 @@ export default function OnboardingPage() {
   return <main className="onboarding-shell">
     <div className="onboarding-orbit" aria-hidden="true"/>
     <section className="onboarding-brand">
-      <img src="./brand/lnwjud-watcher-logo-transparent.png" alt="LNWJUD Watcher"/>
+      <img src="./brand/lnwjud-watcher-logo-transparent.png" alt="lnwjud Watcher"/>
       <span className="eyebrow">{t('onboarding.kicker')}</span>
       <h1>{t('onboarding.title')}</h1>
       <p>{t('onboarding.subtitle')}</p>

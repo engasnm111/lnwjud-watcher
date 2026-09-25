@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="LNWJUD Watcher" />
+  <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
-# LNWJUD Watcher — Product Truth
+# lnwjud Watcher — Product Truth
 
 ## What it is
 
-LNWJUD Watcher is the read-only companion for LNWJUD. It lets a person see what a connected LNWJUD runtime is doing from Desktop, Web/PWA, Android, or iOS without giving the Watcher app command execution privileges.
+lnwjud Watcher is the read-only companion for LNWJUD. It lets a person see what a connected LNWJUD runtime is doing from Desktop, Web/PWA, Android, or iOS without giving the Watcher app command execution privileges.
 
 ## Primary users
 
@@ -37,7 +37,7 @@ One shared React/TypeScript application ships as:
 
 ## Product boundary
 
-All current releases, including v0.2.0, are monitoring only.
+The current v0.1.0 release is monitoring only.
 
 Watcher does not:
 

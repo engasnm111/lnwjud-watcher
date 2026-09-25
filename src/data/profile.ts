@@ -59,7 +59,7 @@ export function loadSessionToken(): string {
     localStorage.removeItem(TOKEN_KEY);
   }
 
-  // v0.3.0 and earlier kept the token only for the browser tab/session.
+  // Earlier builds kept the token only for the browser tab/session.
   // Migrate it once so an update does not force the user to pair again.
   const legacySessionToken = sessionStorage.getItem(TOKEN_KEY) ?? '';
   if (legacySessionToken) {

@@ -1,6 +1,6 @@
-# Contributing to LNWJUD Watcher
+# Contributing to lnwjud Watcher
 
-Thanks for helping improve LNWJUD Watcher.
+Thanks for helping improve lnwjud Watcher.
 
 ## Before opening a change
 

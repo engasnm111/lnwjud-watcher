@@ -8,6 +8,20 @@ describe('Watcher Protocol v1', () => {
     expect(parseSnapshot(demoSnapshot).protocolVersion).toBe(1);
   });
 
+  it('accepts ISO-8601 timestamps with timezone offsets emitted by Git', () => {
+    const offsetTimestamp = '2026-09-26T01:37:20+07:00';
+    const snapshot = structuredClone(demoSnapshot);
+    snapshot.serverTime = offsetTimestamp;
+    snapshot.git.latestAt = offsetTimestamp;
+    snapshot.activity = snapshot.activity.map((event) => ({ ...event, timestamp: offsetTimestamp }));
+    snapshot.workspaces = snapshot.workspaces.map((workspace) => ({
+      ...workspace,
+      git: { ...workspace.git, latestAt: offsetTimestamp }
+    }));
+
+    expect(() => parseSnapshot(snapshot)).not.toThrow();
+  });
+
   it('rejects an incompatible protocol version', () => {
     expect(() => parseSnapshot({ ...demoSnapshot, protocolVersion: 2 })).toThrow();
   });

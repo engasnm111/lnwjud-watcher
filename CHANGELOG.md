@@ -1,48 +1,24 @@
 <p align="center">
-  <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="LNWJUD Watcher" />
+  <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
 # Changelog
 
-## 0.3.0 - 2026-09-25
+## 0.1.0 - 2026-09-26
 
-Observability, parallel-work, pairing, and update-safety release.
+First canonical full release of lnwjud Watcher.
 
-- Added multi-project/multi-goal Watcher state: every Active Project can expose all active Durable Goals, project-scoped operations/agents/activity, and per-project Git state in one additive Protocol v1 snapshot.
-- Clarified Agent semantics: Watcher reports only work observable inside the LNWJUD Runtime, not ChatGPT reasoning between tool calls.
-- Added active-operation count and a live relative "last runtime work" age separate from connection/snapshot freshness.
-- Expanded Git visibility with branch, commit, clean/dirty state, changed-file count, latest commit subject, and latest commit time.
-- Added a shared Session-token help block to onboarding and Settings on every Watcher platform.
-- Persist Session tokens across restarts: Web/PWA keeps them for 60 days in browser-local storage, while packaged Desktop/mobile keeps them on-device until cleared; legacy session-only tokens migrate automatically.
-- LNWJUD v5.6.1 pairing now renders a copy-friendly local UI while preserving JSON pairing for integrations.
-- Added a mandatory GitHub Release update gate: startup/foreground/30-minute checks, Web/PWA refresh update, and platform-specific release/download handoff for Android/Desktop/macOS/Linux/iOS.
-- Switched Android release artifacts from ephemeral debug APKs to a release-signed APK with a persistent signing identity for future in-place upgrades from v0.3.0 onward.
-- Kept Watcher read-only and kept pairing port 17891 local-only.
-
-## 0.2.0 - 2026-09-25
-
-Beginner-friendly desktop and remote monitoring release.
-
-- Added one-click desktop distribution: Windows portable EXE, macOS DMGs, and Linux AppImage.
-- Added close-to-tray/background behavior for the desktop wrapper while preserving the read-only Watcher boundary.
-- Added hosted GitHub Pages Web/PWA as the simplest browser and iPhone/iPad path.
-- Added bilingual install instructions for Windows, macOS, Linux, Android, iPhone/iPad, Web/PWA, pairing, and remote access.
-- Expanded bilingual provider guides, including complete zrok download/extract/PATH/token/enable/share steps.
-- Clarified Cloudflare Tunnel as a free-plan-capable public option, with Quick Tunnel limitations and stable-domain requirements documented.
-- Standardized README/document branding, download cards, About/topics, and GitHub community files.
-
-## 0.1.0 - 2026-09-25
-
-Initial public preview release.
-
-- Web/PWA, Android, and iOS from one shared React/TypeScript + Capacitor codebase.
-- Approved Watcher gold eye/radar branding with self-hosted Prompt Thai/Latin typography.
-- Complete Thai/English app localization and onboarding.
-- Read-only Watcher Protocol v1 client with runtime validation.
-- Reconnecting authenticated live activity stream with explicit server `ready` acknowledgement, authoritative snapshot re-sync after live activity/reconnect, and 5-second degraded fallback refresh.
-- Evidence-based goal progress plus Overview, Goals, Agents, Activity, Settings, and first-run connection flow.
-- Local/LAN, zrok, Cloudflare, Tailscale Serve/Funnel, ngrok, and custom HTTPS guidance.
-- Provider detection/install helper scripts for Windows and POSIX hosts where safe.
-- Session-only client bearer token handling, HTTPS-only remote endpoints, and local-only pairing guidance.
-- Consumer-first README and provider troubleshooting documentation.
-- Hardened SHA-pinned GitHub Actions for quality, Android, iOS Simulator, and tagged release artifacts.
+- Read-only Watcher Protocol v1 client for lnwjud v5.6.1+ with runtime validation, authenticated snapshot access, and realtime WebSocket activity.
+- Multi-project and multi-goal monitoring across every Active Project, including active operations, observable agents, activity, blockers, milestone progress, and project-scoped Git state.
+- Runtime observability distinguishes work visible inside lnwjud from ChatGPT reasoning outside runtime tool calls.
+- Overview shows branch, short commit, clean/dirty state, changed-file count, latest commit subject/time, and last runtime work age.
+- Copy-friendly local pairing UI at `127.0.0.1:17891/api/v1/pair`, with JSON mode retained for integrations.
+- Session token persistence across restarts: Web/PWA stores it for 60 days; packaged desktop/mobile builds keep it on-device until cleared in Settings.
+- Mandatory GitHub Release update flow for Web/PWA, Android, Windows, macOS, Linux, and iOS handoff.
+- Desktop distribution for Windows portable EXE, macOS DMG, and Linux AppImage, with tray/background behavior.
+- Hosted GitHub Pages Web/PWA plus Android APK and iOS Simulator artifacts.
+- Persistent Android release-signing identity for future in-place APK upgrades from v0.1.0 onward.
+- Remote access guidance for local/LAN, zrok, Cloudflare, Tailscale Serve/Funnel, ngrok, and custom HTTPS.
+- ISO-8601 protocol timestamps accept timezone offsets emitted by Git, preventing valid `+HH:MM` commit dates from breaking snapshot validation.
+- Thai/English localization, onboarding, install guides, provider documentation, and community files.
+- Watcher remains strictly read-only; pairing port 17891 remains loopback-only.

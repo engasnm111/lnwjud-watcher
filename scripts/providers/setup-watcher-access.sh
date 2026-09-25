@@ -88,4 +88,4 @@ esac
 
 echo
 echo "Watcher origin: $target"
-echo "Keep provider credentials on this runtime machine; never paste them into LNWJUD Watcher."
+echo "Keep provider credentials on this runtime machine; never paste them into lnwjud Watcher."

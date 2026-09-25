@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="../../public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="LNWJUD Watcher" />
+  <img src="../../public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
 # Remote access providers / คู่มือเชื่อมต่อจากนอกบ้าน
 
-LNWJUD Watcher reads the **Watcher API on port 17890**. The local pairing page is on **17891** and must stay loopback-only.
+lnwjud Watcher reads the **Watcher API on port 17890**. The local pairing page is on **17891** and must stay loopback-only.
 
-LNWJUD Watcher ใช้ **Watcher API port 17890** สำหรับดูสถานะ ส่วนหน้า pairing ใช้ **17891** และต้องเปิดจากเครื่อง LNWJUD เท่านั้น ห้ามเอา 17891 ออกอินเทอร์เน็ต
+lnwjud Watcher ใช้ **Watcher API port 17890** สำหรับดูสถานะ ส่วนหน้า pairing ใช้ **17891** และต้องเปิดจากเครื่อง LNWJUD เท่านั้น ห้ามเอา 17891 ออกอินเทอร์เน็ต
 
 ## Quick chooser / เลือกแบบเร็ว
 

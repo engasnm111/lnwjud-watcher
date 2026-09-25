@@ -1,6 +1,6 @@
 {
   "name": "lnwjud-watcher",
-  "version": "0.3.0",
+  "version": "0.1.0",
   "description": "Read-only LNWJUD monitoring client for Desktop/Web/PWA, Android, and iOS.",
   "license": "MIT",
   "type": "module",
@@ -59,7 +59,7 @@
   },
   "build": {
     "appId": "com.lnwjud.watcher",
-    "productName": "LNWJUD Watcher",
+    "productName": "lnwjud Watcher",
     "asar": true,
     "directories": {
       "output": "release-desktop"

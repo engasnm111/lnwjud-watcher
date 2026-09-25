@@ -42,7 +42,7 @@ function createWindow() {
     minHeight: 560,
     show: true,
     backgroundColor: '#070b12',
-    title: 'LNWJUD Watcher',
+    title: 'lnwjud Watcher',
     icon,
     webPreferences: {
       nodeIntegration: false,
@@ -77,7 +77,7 @@ function createWindow() {
 function createTray() {
   const trayIcon = nativeImage.createFromPath(iconPath).resize({ width: 20, height: 20 });
   tray = new Tray(trayIcon);
-  tray.setToolTip('LNWJUD Watcher');
+  tray.setToolTip('lnwjud Watcher');
 
   const rebuildMenu = () => {
     const visible = Boolean(mainWindow?.isVisible());

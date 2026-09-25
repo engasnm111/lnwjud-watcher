@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a reproducible problem in LNWJUD Watcher
+description: Report a reproducible problem in lnwjud Watcher
 title: "[Bug] "
 labels: ["bug"]
 body:
@@ -11,7 +11,7 @@ body:
     id: watcher-version
     attributes:
       label: Watcher version
-      placeholder: v0.3.0
+      placeholder: v0.1.0
     validations:
       required: true
   - type: input

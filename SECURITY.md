@@ -2,7 +2,7 @@
 
 ## Supported versions
 
-Security fixes are prioritized for the latest published LNWJUD Watcher release and the current `main` branch.
+Security fixes are prioritized for the latest published lnwjud Watcher release and the current `main` branch.
 
 ## Reporting a vulnerability
 
@@ -19,7 +19,7 @@ If private vulnerability reporting is unavailable, contact the repository mainta
 
 ## Security model
 
-LNWJUD Watcher is intentionally **read-only**.
+lnwjud Watcher is intentionally **read-only**.
 
 - Pairing port `17891` must remain loopback-only.
 - Only the Watcher API on `17890` may be placed behind an HTTPS tunnel/reverse proxy.

@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import type { ActivityEvent, WatcherSnapshot } from '../domain/models';
 
+const isoDateTimeSchema = z.string().datetime({ offset: true });
 const statusSchema = z.enum(['running', 'analyzing', 'verifying', 'waiting', 'blocked', 'idle', 'done', 'error']);
 const milestoneSchema = z.object({ id: z.string(), title: z.string(), status: z.enum(['pending', 'in_progress', 'completed', 'blocked']) });
 const goalSchema = z.object({
@@ -24,7 +25,7 @@ const agentSchema = z.object({
 });
 export const activityEventSchema = z.object({
   id: z.string(),
-  timestamp: z.string().datetime(),
+  timestamp: isoDateTimeSchema,
   kind: z.string(),
   status: statusSchema,
   actor: z.string(),
@@ -38,7 +39,7 @@ const gitSchema = z.object({
   clean: z.boolean(),
   changedFiles: z.number().int().nonnegative().default(0),
   latestSubject: z.string().optional(),
-  latestAt: z.string().datetime().optional()
+  latestAt: isoDateTimeSchema.optional()
 });
 const workspaceSchema = z.object({
   id: z.string(),
@@ -50,7 +51,7 @@ const workspaceSchema = z.object({
 });
 export const snapshotSchema = z.object({
   protocolVersion: z.literal(1),
-  serverTime: z.string().datetime(),
+  serverTime: isoDateTimeSchema,
   runtime: z.object({ version: z.string(), status: statusSchema, activeOperations: z.number().int().nonnegative().default(0) }),
   instance: z.object({ id: z.string(), name: z.string(), platform: z.enum(['windows', 'macos', 'linux', 'unknown']) }),
   goal: goalSchema.nullable(),
