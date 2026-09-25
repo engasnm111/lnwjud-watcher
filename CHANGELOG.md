@@ -15,7 +15,9 @@ First canonical full release of lnwjud Watcher.
 - Overview shows branch, short commit, clean/dirty state, changed-file count, latest commit subject/time, and last runtime work age.
 - Copy-friendly local pairing UI at `127.0.0.1:17891/api/v1/pair`, with JSON mode retained for integrations.
 - Session token persistence across restarts: Web/PWA stores it for 60 days; packaged desktop/mobile builds keep it on-device until cleared in Settings.
-- Mandatory GitHub Release update flow for Web/PWA, Android, Windows, macOS, Linux, and iOS handoff.
+- Mandatory GitHub Release update flow for Web/PWA, Android, Windows, macOS, Linux, and iOS handoff, including commit-SHA detection for refreshed canonical v0.1.0 builds.
+- Android keeps the public version at 0.1.0 while using a monotonically increasing internal `versionCode` so newly published signed APKs can replace older v0.1.0 builds.
+- Activity cards now use explicit vertical rhythm and safe wrapping on narrow screens, with progressive 20-item rendering over the runtime's bounded 100-event snapshot.
 - Desktop distribution for Windows portable EXE, macOS DMG, and Linux AppImage, with tray/background behavior.
 - Hosted GitHub Pages Web/PWA plus Android APK and iOS Simulator artifacts.
 - Native Android/iOS launcher and splash assets now use lnwjud Watcher branding instead of platform-template artwork; mobile navigation and onboarding layouts are tuned for phone safe areas and small screens.

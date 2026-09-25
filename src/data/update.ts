@@ -24,10 +24,16 @@ interface GitHubRelease {
   assets?: unknown;
 }
 
+interface GitHubCommit {
+  sha?: unknown;
+}
+
 const LATEST_RELEASE_API = 'https://api.github.com/repos/engasnm111/lnwjud-watcher/releases/latest';
+const RELEASE_COMMIT_API = 'https://api.github.com/repos/engasnm111/lnwjud-watcher/commits/';
 const RELEASES_URL = 'https://github.com/engasnm111/lnwjud-watcher/releases/latest';
 
 export const CURRENT_VERSION = packageInfo.version;
+export const CURRENT_BUILD_SHA = __WATCHER_BUILD_SHA__;
 
 function parseVersion(value: string): [number, number, number] | null {
   const match = /^v?(\d+)\.(\d+)\.(\d+)(?:[-+].*)?$/.exec(value.trim());
@@ -45,6 +51,24 @@ export function isNewerVersion(latest: string, current: string): boolean {
     if (left !== right) return left > right;
   }
   return false;
+}
+
+function isSameVersion(latest: string, current: string): boolean {
+  const next = parseVersion(latest);
+  const installed = parseVersion(current);
+  return next !== null && installed !== null && next.every((value, index) => value === installed[index]);
+}
+
+export function shouldOfferUpdate(
+  latestVersion: string,
+  currentVersion: string,
+  latestBuildSha: string | null,
+  currentBuildSha = CURRENT_BUILD_SHA,
+): boolean {
+  if (isNewerVersion(latestVersion, currentVersion)) return true;
+  if (!isSameVersion(latestVersion, currentVersion)) return false;
+  if (!latestBuildSha || currentBuildSha === 'unknown') return false;
+  return latestBuildSha !== currentBuildSha;
 }
 
 function trustedGitHubUrl(value: unknown): string | null {
@@ -83,10 +107,22 @@ export function selectReleaseAsset(assets: readonly ReleaseAsset[], platform: Up
   return match ? trustedGitHubUrl(match.browser_download_url) : null;
 }
 
+async function resolveReleaseCommitSha(tag: string, signal?: AbortSignal): Promise<string | null> {
+  const response = await fetch(RELEASE_COMMIT_API + encodeURIComponent(tag), {
+    headers: { Accept: 'application/vnd.github+json' },
+    cache: 'no-store',
+    signal,
+  });
+  if (!response.ok) return null;
+  const commit = await response.json() as GitHubCommit;
+  return typeof commit.sha === 'string' ? commit.sha : null;
+}
+
 export async function checkForUpdate(
   currentVersion = CURRENT_VERSION,
   platform = detectUpdatePlatform(),
   signal?: AbortSignal,
+  currentBuildSha = CURRENT_BUILD_SHA,
 ): Promise<AvailableUpdate | null> {
   const response = await fetch(LATEST_RELEASE_API, {
     headers: { Accept: 'application/vnd.github+json' },
@@ -97,7 +133,12 @@ export async function checkForUpdate(
 
   const release = await response.json() as GitHubRelease;
   if (release.draft === true || release.prerelease === true || typeof release.tag_name !== 'string') return null;
-  if (!isNewerVersion(release.tag_name, currentVersion)) return null;
+
+  let latestBuildSha: string | null = null;
+  if (isSameVersion(release.tag_name, currentVersion) && currentBuildSha !== 'unknown') {
+    latestBuildSha = await resolveReleaseCommitSha(release.tag_name, signal);
+  }
+  if (!shouldOfferUpdate(release.tag_name, currentVersion, latestBuildSha, currentBuildSha)) return null;
 
   const releaseUrl = trustedGitHubUrl(release.html_url) ?? RELEASES_URL;
   const assets = Array.isArray(release.assets)

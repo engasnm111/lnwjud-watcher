@@ -1,21 +1,63 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useWatcher } from '../../app/WatcherContext';
 import StatusPill from '../../shared/StatusPill';
 import { formatTime, workspaceName } from '../../shared/format';
 import { useI18n } from '../../i18n/I18nContext';
 
+export const ACTIVITY_PAGE_SIZE = 20;
+
 export default function ActivityPage() {
   const { snapshot } = useWatcher();
   const { localeTag, t } = useI18n();
+  const activity = useMemo(() => snapshot?.activity ?? [], [snapshot?.activity]);
+  const [visibleCount, setVisibleCount] = useState(ACTIVITY_PAGE_SIZE);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  return <div className="page-stack">
+  const visibleActivity = useMemo(
+    () => activity.slice(0, visibleCount),
+    [activity, visibleCount],
+  );
+  const hasMore = visibleCount < activity.length;
+  const loadMore = useCallback(
+    () => setVisibleCount((current) => Math.min(current + ACTIVITY_PAGE_SIZE, activity.length)),
+    [activity.length],
+  );
+
+  useEffect(() => {
+    if (!hasMore || typeof IntersectionObserver === 'undefined') return;
+    const target = loadMoreRef.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) loadMore();
+    }, { rootMargin: '320px 0px' });
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [hasMore, loadMore]);
+
+  return <div className="page-stack activity-page">
     <div className="section-heading"><div><span className="eyebrow">{t('activity.observable')}</span><h2>{t('activity.title')}</h2></div></div>
-    <div className="timeline">{snapshot?.activity.map((event) => {
-      const project = workspaceName(snapshot, event.workspaceId);
-      return <article className="timeline-card" key={event.id}>
-        <div><StatusPill status={event.status}/><time>{formatTime(event.timestamp, localeTag)}</time></div>
-        {project && <span className="project-chip project-chip-inline">{project}</span>}
-        <strong>{event.summary}</strong><p>{event.detail ?? event.actor}</p><small>{event.actor} · {event.kind}</small>
-      </article>;
-    }) ?? <div className="empty-card">{t('activity.waiting')}</div>}</div>
+    {activity.length === 0
+      ? <div className="empty-card">{t('activity.waiting')}</div>
+      : <div className="timeline">{visibleActivity.map((event) => {
+          const project = snapshot ? workspaceName(snapshot, event.workspaceId) : undefined;
+          return <article className="timeline-card" key={event.id}>
+            <div className="timeline-card-head">
+              <StatusPill status={event.status}/>
+              <time>{formatTime(event.timestamp, localeTag)}</time>
+            </div>
+            <div className="timeline-card-body">
+              {project && <span className="project-chip project-chip-inline">{project}</span>}
+              <strong className="timeline-card-title">{event.summary}</strong>
+              <p className="timeline-card-detail">{event.detail ?? event.actor}</p>
+              <small className="timeline-card-meta">{event.actor} · {event.kind}</small>
+            </div>
+          </article>;
+        })}
+        {hasMore && <div className="activity-load-more" ref={loadMoreRef}>
+          <button type="button" onClick={loadMore}>{t('activity.more')}</button>
+          <span>{t('activity.showing', { visible: visibleActivity.length, total: activity.length })}</span>
+        </div>}
+      </div>}
   </div>;
 }

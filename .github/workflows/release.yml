@@ -107,7 +107,11 @@ jobs:
         run: |
           test -n "$ANDROID_KEYSTORE_B64"
           printf '%s' "$ANDROID_KEYSTORE_B64" | base64 --decode > "$RUNNER_TEMP/watcher-release.jks"
-      - run: chmod +x gradlew && ./gradlew assembleRelease
+      - name: Build signed Android release
+        run: |
+          chmod +x gradlew
+          export WATCHER_ANDROID_VERSION_CODE=$((1000000 + GITHUB_RUN_NUMBER))
+          ./gradlew assembleRelease
         working-directory: android
         env:
           WATCHER_ANDROID_KEYSTORE: ${{ runner.temp }}/watcher-release.jks

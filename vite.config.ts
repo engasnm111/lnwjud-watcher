@@ -1,9 +1,21 @@
+import { execFileSync } from 'node:child_process';
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
+const buildSha = (() => {
+  try {
+    return execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+  } catch {
+    return process.env.GITHUB_SHA ?? 'unknown';
+  }
+})();
+
 export default defineConfig({
   base: './',
+  define: {
+    __WATCHER_BUILD_SHA__: JSON.stringify(buildSha),
+  },
   plugins: [
     react(),
     VitePWA({
