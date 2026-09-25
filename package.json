@@ -17,9 +17,9 @@
     "test": "vitest run --pool=threads --maxWorkers=1",
     "test:watch": "vitest",
     "desktop": "npm run build && electron .",
-    "desktop:pack:windows": "npm run build && electron-builder --win portable --x64",
-    "desktop:pack:mac": "npm run build && electron-builder --mac dmg --arm64 --x64",
-    "desktop:pack:linux": "npm run build && electron-builder --linux AppImage --x64",
+    "desktop:pack:windows": "npm run build && electron-builder --win portable --x64 --publish never",
+    "desktop:pack:mac": "npm run build && electron-builder --mac dmg --arm64 --x64 --publish never",
+    "desktop:pack:linux": "npm run build && electron-builder --linux AppImage --x64 --publish never",
     "cap:sync": "cap sync",
     "cap:android": "cap open android",
     "cap:ios": "cap open ios"
