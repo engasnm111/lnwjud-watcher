@@ -7,7 +7,7 @@
 ## Product boundary
 - This repository is the **read-only client** for lnwjud monitoring. It must never gain shell, MCP mutation, filesystem mutation, or arbitrary command execution capabilities.
 - The lnwjud runtime is the source of truth. Watcher consumes the versioned HTTP/WebSocket Watcher Protocol; it never reads lnwjud databases or internal files directly.
-- Web/PWA, Android, and iOS share the same React/TypeScript application code. Native shells are adapters, not separate product implementations.
+- Desktop, Web/PWA, Android, and iOS share the same React/TypeScript application code. Platform shells are adapters, not separate product implementations.
 
 ## Architecture
 - `domain/`: protocol-independent product models and view state.

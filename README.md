@@ -195,7 +195,7 @@ Engineering docs:
 - [Protocol v1](docs/PROTOCOL.md)
 - [Product truth](PRODUCT.md)
 - [Design system](DESIGN.md)
-- [v0.1.0 release checklist](docs/V0.1.0-RELEASE-PLAN.md)
+- [Historical v0.1.0 release checklist](docs/V0.1.0-RELEASE-PLAN.md)
 
 Branch model: `dev → PR → main → tag`.
 
