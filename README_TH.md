@@ -37,21 +37,23 @@
 
 ## lnwjud Watcher คืออะไร
 
-**lnwjud Watcher v0.1.0** เป็นแอปดูสถานะ LNWJUD แบบ **read-only** สำหรับ Desktop, Web/PWA, Android และ iOS ใช้คู่กับ **LNWJUD v5.6.1 ขึ้นไป**
+**lnwjud Watcher v0.2.0** เป็นแอปดูสถานะ LNWJUD แบบ **read-only** สำหรับ Desktop, Web/PWA, Android และ iOS ใช้คู่กับ **LNWJUD v5.6.1 ขึ้นไป**
 
 ดูได้ว่า LNWJUD ยังทำงานอยู่ไหม มีโปรเจกต์ไหนและ Goal ไหนกำลังทำพร้อมกัน milestone ไปถึงไหน มี Agent/worker อะไรทำงาน มี blocker หรือไม่ Git ของแต่ละโปรเจกต์อยู่ branch ไหน และมี activity อะไรล่าสุด โดยไม่เปิดสิทธิ์สั่งงานกลับเข้า LNWJUD
 
 > **ติดตั้งไม่ต้องใช้ npm:** Windows มี Portable EXE, macOS มี DMG, Linux มี AppImage, Android มี APK และ iPhone/iPad ใช้ Web/PWA แบบ Add to Home Screen ได้ ดู [คู่มือติดตั้งแบบง่าย](docs/INSTALL.md)
 
-## มีอะไรใหม่ใน v0.1.0
+## มีอะไรใหม่ใน v0.2.0
 
 - รองรับ **หลายโปรเจกต์ + หลาย Durable Goal ที่กำลังทำพร้อมกัน** โดยแยกงาน, active operations, Agent/activity และ Git ตาม workspace ไม่สรุปเหลือเพียง Goal เดียว
 - แยกให้ชัดว่า **Agent ที่แสดงคือกิจกรรมที่ LNWJUD Runtime มองเห็นได้จริง** ไม่ใช่ช่วงที่ ChatGPT กำลังคิดอยู่ระหว่าง tool call และถ้า Goal ยัง active แต่ไม่มี operation ที่ Runtime มองเห็น จะขึ้นเป็นรอ/ว่างแทนการขึ้นว่ากำลังทำงาน
 - เพิ่มจำนวนงานที่กำลังรัน, เวลาทำงานล่าสุดแบบเทียบกับเวลาปัจจุบัน, Git branch/commit/dirty, จำนวนไฟล์ที่เปลี่ยน และ commit ล่าสุด
 - หน้า `127.0.0.1:17891/api/v1/pair` ของ LNWJUD v5.6.1 เป็น UI สำหรับกด Copy Session token ได้ง่ายขึ้น
 - Web/PWA จะจำ Session token ไว้ใน browser 60 วัน ส่วนแอป Desktop และมือถือจะเก็บไว้ในเครื่องข้ามการปิดเปิด จนกว่าผู้ใช้จะล้างใน Settings
-- เพิ่ม **บังคับแจ้งอัปเดตจาก GitHub Release** ตอนเปิดแอป ทุก 30 นาที และเมื่อกลับมา foreground พร้อมเทียบ commit ของ Release กับ build ที่ติดตั้ง จึงตรวจพบ build ใหม่ของ `v0.1.0` ได้แม้เลขเวอร์ชันภายนอกยังเป็น 0.1.0
-- Android v0.1.0 ใช้ release signing key คงที่และ `versionCode` ภายในที่เพิ่มขึ้นทุก Release ทำให้ APK v0.1.0 ตัวใหม่ติดตั้งทับตัวเก่าได้ แต่ Android ยังต้องให้ผู้ใช้กดยืนยันติดตั้งเอง ไม่สามารถ silent update ได้
+- เพิ่ม **Android Home Screen Widget 3 แบบ**: สถานะ, Goal และ Agents โดยแสดงงานที่กำลังทำ จำนวนงาน/เอเจนต์ ทำล่าสุดเมื่อไร และซิงก์ล่าสุดเมื่อไร โดยไม่เก็บ Watcher token ลง widget
+- ปรับ Activity บนมือถือให้มีระยะห่างชัดเจนระหว่างสถานะ/เวลาและ project/title พร้อม wrap command/UUID ยาว ๆ ไม่ให้ชนหรือล้นการ์ด
+- เพิ่ม **บังคับแจ้งอัปเดตจาก GitHub Release** ตอนเปิดแอป ทุก 30 นาที และเมื่อกลับมา foreground โดย v0.1.0 → v0.2.0 เป็นการอัปเดตข้ามเวอร์ชันปกติสำหรับทดสอบ APK update
+- Android v0.2.0 ใช้ release signing key เดิมและ `versionCode` ที่สูงกว่า v0.1.0 จึงติดตั้งทับ APK v0.1.0 ที่เซ็นด้วย key เดิมได้ แต่ Android ยังต้องให้ผู้ใช้กดยืนยันติดตั้งเอง ไม่สามารถ silent update ได้
 - หน้า Activity แสดงทีละ 20 รายการและโหลดเพิ่มอัตโนมัติเมื่อเลื่อนใกล้ด้านล่าง (มีปุ่มโหลดเพิ่มสำรอง) ขณะที่ Runtime จำกัด snapshot ไว้ที่ 100 เหตุการณ์ล่าสุดเพื่อไม่ให้ DOM โตไม่สิ้นสุด
 
 ## เริ่มใช้งานแบบสั้น

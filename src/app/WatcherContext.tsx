@@ -4,6 +4,7 @@ import type { PropsWithChildren } from 'react';
 import type { ActivityEvent, ConnectionProfile, ConnectionState, WatcherSnapshot } from '../domain/models';
 import { DemoWatcherTransport } from '../data/demo';
 import { HttpWatcherTransport, type WatcherTransport } from '../data/transport';
+import { syncNativeWidgets } from '../data/widget';
 import {
   loadOnboardingComplete,
   loadProfile,
@@ -113,6 +114,10 @@ export function WatcherProvider({ children }: PropsWithChildren) {
   }, [profile.mode, refresh, state]);
 
   const fallbackPolling = shouldUseFallbackPolling(profile.mode, state);
+
+  useEffect(() => {
+    void syncNativeWidgets(snapshot, state, lastSyncAt);
+  }, [lastSyncAt, snapshot, state]);
 
   useEffect(() => {
     if (!fallbackPolling) return;
