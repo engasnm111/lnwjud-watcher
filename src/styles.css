@@ -231,12 +231,7 @@ img{max-width:100%}
   letter-spacing:.06em;
   text-transform:uppercase;
 }
-.hero-status{
-  display:flex;
-  gap:11px;
-  align-items:center;
-  margin-top:22px;
-}
+.hero-status{margin-top:22px}
 .hero-card p,.goal-card p,.card p,.timeline-card p,.agent-card p{
   color:var(--text-muted);
   line-height:1.65;
@@ -458,23 +453,25 @@ img{max-width:100%}
   gap:14px;
   overflow:hidden;
 }
-.timeline-card-head{
+.status-meta{
   min-width:0;
   display:flex;
   align-items:center;
+  justify-content:flex-start;
   flex-wrap:wrap;
-  column-gap:16px;
-  row-gap:8px;
+  gap:11px;
 }
-.timeline-card-head .status-pill{
+.status-meta .status-pill{
   flex:0 0 auto;
   white-space:nowrap;
 }
-.timeline-card-head time{
-  margin-left:auto;
-  padding-left:10px;
+.status-meta time{
   flex:0 0 auto;
   white-space:nowrap;
+  color:#7d8998;
+  font-size:.875rem;
+  font-weight:400;
+  line-height:1.4;
 }
 .timeline-card-body{
   min-width:0;
