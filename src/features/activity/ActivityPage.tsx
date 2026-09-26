@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useWatcher } from '../../app/WatcherContext';
-import StatusPill from '../../shared/StatusPill';
-import { formatTime, workspaceName } from '../../shared/format';
+import StatusMeta from '../../shared/StatusMeta';
+import { workspaceName } from '../../shared/format';
 import { useI18n } from '../../i18n/I18nContext';
 
 export const ACTIVITY_PAGE_SIZE = 20;
 
 export default function ActivityPage() {
   const { snapshot } = useWatcher();
-  const { localeTag, t } = useI18n();
+  const { t } = useI18n();
   const activity = useMemo(() => snapshot?.activity ?? [], [snapshot?.activity]);
   const [visibleCount, setVisibleCount] = useState(ACTIVITY_PAGE_SIZE);
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -42,10 +42,7 @@ export default function ActivityPage() {
       : <div className="timeline">{visibleActivity.map((event) => {
           const project = snapshot ? workspaceName(snapshot, event.workspaceId) : undefined;
           return <article className="timeline-card" key={event.id}>
-            <div className="timeline-card-head">
-              <StatusPill status={event.status}/>
-              <time>{formatTime(event.timestamp, localeTag)}</time>
-            </div>
+            <StatusMeta status={event.status} timestamp={event.timestamp} className="timeline-card-head"/>
             <div className="timeline-card-body">
               {project && <span className="project-chip project-chip-inline">{project}</span>}
               <strong className="timeline-card-title">{event.summary}</strong>
