@@ -4,6 +4,15 @@
 
 # Changelog
 
+## 0.2.3 - 2026-09-26
+
+Shared activity metadata and release consistency update.
+
+- Added shared `StatusMeta` so Live Activity, Overview timeline, and Activity timeline use the same status + timestamp component.
+- Unified status/time spacing, typography, and color across Desktop, Web/PWA, Android, and iOS.
+- Updated package, iOS marketing version, release notes, install docs, architecture/product docs, demo data, and issue template to v0.2.3.
+- Kept Android in-app update behavior: download the trusted GitHub APK inside Watcher, then hand off to Android for install confirmation.
+
 ## 0.2.1 - 2026-09-26
 
 Corrective Android/mobile release.
