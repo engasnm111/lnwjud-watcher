@@ -47,4 +47,4 @@ Watcher does not start tunnels and does not expose MCP. Remote access providers 
 ## Release model
 - `main`: released/integrated history.
 - `dev`: active integration branch.
-- Current public release: `v0.2.1`; 1.0 is reserved for a stable protocol and signed mobile distribution path.
+- Current public release: `v0.2.3`; 1.0 is reserved for a stable protocol and signed mobile distribution path.
