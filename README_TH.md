@@ -52,15 +52,20 @@ Widget เน้นคำถามสำคัญเวลาปล่อยง�
 
 ## lnwjud Watcher คืออะไร
 
-**lnwjud Watcher v0.2.1** เป็นแอปดูสถานะ LNWJUD แบบ **read-only** สำหรับ Desktop, Web/PWA, Android และ iOS ใช้คู่กับ **LNWJUD v5.6.1 ขึ้นไป**
+**lnwjud Watcher v0.2.3** เป็นแอปดูสถานะ LNWJUD แบบ **read-only** สำหรับ Desktop, Web/PWA, Android และ iOS ใช้คู่กับ **LNWJUD v5.6.1 ขึ้นไป**
 
 ดูได้ว่า LNWJUD ยังทำงานอยู่ไหม มีโปรเจกต์ไหนและ Goal ไหนกำลังทำพร้อมกัน milestone ไปถึงไหน มี Agent/worker อะไรทำงาน มี blocker หรือไม่ Git ของแต่ละโปรเจกต์อยู่ branch ไหน และมี activity อะไรล่าสุด โดยไม่เปิดสิทธิ์สั่งงานกลับเข้า LNWJUD
 
 > **ติดตั้งไม่ต้องใช้ npm:** Windows มี Portable EXE, macOS มี DMG, Linux มี AppImage, Android มี APK และ iPhone/iPad ใช้ Web/PWA แบบ Add to Home Screen ได้ ดู [คู่มือติดตั้งแบบง่าย](docs/INSTALL.md)
 
-## มีอะไรใหม่ใน v0.2.1
+## มีอะไรใหม่ใน v0.2.3
 
-- แก้ **Activity บนจอแคบ/iQOO** ให้สถานะกับเวลามีระยะห่างจริงเพิ่มอีก 10 px แม้ WebView จะบีบ layout ก็ไม่ชนกัน
+- รวม UI **สถานะ + เวลา** ให้ใช้ shared component `StatusMeta` ตัวเดียวกันทั้ง Live Activity, Overview timeline และหน้า Activity เพื่อไม่ให้ spacing / font / color หลุดคนละแบบอีก
+- หน้า Overview และ Activity ใช้ layout สถานะ/เวลาเดียวกันบนจอ Android แคบ ๆ แล้ว
+- การแก้อยู่ใน shared React/CSS เดียว จึงใช้เหมือนกันทั้ง Desktop, Web/PWA, Android และ iOS
+
+## ไฮไลต์จาก v0.2.1
+
 - ปรับ Widget Android ทั้ง Status, Goal และ Agents ให้พอดีกับ launcher preview และขนาด widget ที่ใช้งานจริงมากขึ้น
 - Android อัปเดตแบบในแอป: Watcher ดาวน์โหลด APK จาก GitHub ที่ตรวจสอบ host แล้วก่อน จากนั้นค่อยเปิดหน้าติดตั้งของ Android เมื่อไฟล์พร้อม ผู้ใช้ยังต้องกดยืนยันติดตั้งตามระบบ
 - README แสดงหน้าตาโปรแกรมและ Widget โดยตรงแล้ว เพื่อให้ผู้ใช้เข้าใจว่า Watcher ใช้ดูอะไรได้บ้างก่อนติดตั้ง

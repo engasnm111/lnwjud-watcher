@@ -25,7 +25,7 @@
 </p>
 
 <h2 align="center">Download lnwjud Watcher</h2>
-<p align="center">One-click desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.1.</p>
+<p align="center">One-click desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.3.</p>
 
 <table align="center">
   <tr>
@@ -71,11 +71,16 @@ The widgets are designed for the quick question that matters most during long-ru
 
 ## Current version
 
-**lnwjud Watcher v0.2.1** is designed for **LNWJUD v5.6.1 or later**.
+**lnwjud Watcher v0.2.3** is designed for **LNWJUD v5.6.1 or later**.
 
-### What's new in v0.2.1
+### What's new in v0.2.3
 
-- **iQOO/narrow-screen Activity spacing:** status and timestamp now have an explicit 10 px content buffer in addition to the layout gap, so they cannot visually touch even when the WebView compresses the header.
+- **Shared status metadata UI:** live activity and timeline cards now use one `StatusMeta` component for status + timestamp, so spacing, typography, and color cannot drift between screens.
+- **Consistent mobile spacing:** Overview and Activity now render the same status/time layout on narrow Android WebViews.
+- **No platform split:** the refactor stays in shared React/CSS, so Desktop, Web/PWA, Android, and iOS all use the same UI path.
+
+### v0.2.1 highlights
+
 - **Polished Android widgets:** Status, Goal, and Agents layouts are tuned for launcher previews and practical home-screen sizes.
 - **In-app Android update:** Watcher downloads the trusted GitHub APK inside the app, then opens Android's installer only when the file is ready. Android still requires the normal install confirmation.
 - **Visual README:** the mobile Activity UI and Android widget family are now shown directly in the repository.
