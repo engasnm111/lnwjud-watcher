@@ -1,4 +1,5 @@
 import { useWatcher } from '../../app/WatcherContext';
+import StatusMeta from '../../shared/StatusMeta';
 import StatusPill from '../../shared/StatusPill';
 import { formatTime, goalProgress, snapshotGoals, snapshotWorkspaces, workspaceName } from '../../shared/format';
 import { useI18n } from '../../i18n/I18nContext';
@@ -23,7 +24,7 @@ export default function OverviewPage() {
       </div>
       {latest
         ? <>
-            <div className="hero-status"><StatusPill status={latest.status}/><small>{formatTime(latest.timestamp, localeTag)}</small></div>
+            <StatusMeta status={latest.status} timestamp={latest.timestamp} className="hero-status"/>
             {workspaceName(snapshot, latest.workspaceId) && <span className="project-chip project-chip-inline">{workspaceName(snapshot, latest.workspaceId)}</span>}
             <h2>{latest.summary}</h2>
             <p>{latest.detail ?? latest.actor}</p>
@@ -87,7 +88,7 @@ export default function OverviewPage() {
       <div className="section-heading"><div><span className="eyebrow">{t('overview.recent')}</span><h2>{t('overview.timeline')}</h2></div></div>
       <div className="timeline">{snapshot.activity.slice(0, 6).map((event) =>
         <article className="timeline-card" key={event.id}>
-          <div><StatusPill status={event.status}/><time>{formatTime(event.timestamp, localeTag)}</time></div>
+          <StatusMeta status={event.status} timestamp={event.timestamp} className="timeline-card-head"/>
           {workspaceName(snapshot, event.workspaceId) && <span className="project-chip project-chip-inline">{workspaceName(snapshot, event.workspaceId)}</span>}
           <strong>{event.summary}</strong><p>{event.detail ?? event.actor}</p>
         </article>)}</div>
