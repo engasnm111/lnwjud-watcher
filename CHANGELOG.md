@@ -4,6 +4,17 @@
 
 # Changelog
 
+## 0.2.1 - 2026-09-26
+
+Corrective Android/mobile release.
+
+- Added a guaranteed 10 px timestamp content buffer so Activity status/time cannot visually touch on compressed narrow-screen WebView layouts.
+- Kept timestamp text on one line while preserving safe wrapping for long activity details.
+- Polished the three Android launcher widgets and their launcher-preview sizing.
+- Added the native Android in-app APK downloader/installer handoff for trusted GitHub release URLs.
+- Added mobile UI and Android widget visual previews to README and README_TH.
+- Bumped Android/iOS/package marketing version to 0.2.1 while retaining the same Android release signing identity for in-place upgrades.
+
 ## 0.2.0 - 2026-09-26
 
 Mobile observability and signed Android upgrade release.

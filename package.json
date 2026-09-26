@@ -1,6 +1,6 @@
 {
   "name": "lnwjud-watcher",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Read-only LNWJUD monitoring client for Desktop/Web/PWA, Android, and iOS.",
   "license": "MIT",
   "type": "module",

@@ -33,17 +33,39 @@
 
 <p align="center"><a href="docs/INSTALL.md"><strong>คู่มือติดตั้งแบบคนทั่วไป →</strong></a> · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest"><strong>ดูไฟล์ release ทั้งหมด →</strong></a></p>
 
+## ดูหน้าตา lnwjud Watcher ก่อนติดตั้ง
+
+<table>
+  <tr>
+    <td width="50%" align="center"><strong>Activity บนมือถือ</strong><br /><sub>ดูงานที่ Runtime มองเห็นจริง สถานะ เวลา command และ task ID</sub></td>
+    <td width="50%" align="center"><strong>Android Home Screen Widget</strong><br /><sub>สถานะ, Goal และ Agents ดูได้โดยไม่ต้องเปิดแอป</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="assets/screenshots/mobile-activity-preview.svg" width="360" alt="หน้าจอ Activity ของ lnwjud Watcher บนมือถือ" /></td>
+    <td align="center"><img src="assets/screenshots/android-widgets-preview.svg" width="560" alt="Widget Android ของ lnwjud Watcher แบบ Status Goal และ Agents" /></td>
+  </tr>
+</table>
+
+Widget เน้นคำถามสำคัญเวลาปล่อยงานยาว ๆ: **ตอนนี้กำลังทำอะไรอยู่ และทำอะไรล่าสุดไปกี่นาทีแล้ว** เพื่อให้เห็นได้ทันทีว่างานยังเดินอยู่หรือหยุดไปตั้งแต่เมื่อไร
+
 ---
 
 ## lnwjud Watcher คืออะไร
 
-**lnwjud Watcher v0.2.0** เป็นแอปดูสถานะ LNWJUD แบบ **read-only** สำหรับ Desktop, Web/PWA, Android และ iOS ใช้คู่กับ **LNWJUD v5.6.1 ขึ้นไป**
+**lnwjud Watcher v0.2.1** เป็นแอปดูสถานะ LNWJUD แบบ **read-only** สำหรับ Desktop, Web/PWA, Android และ iOS ใช้คู่กับ **LNWJUD v5.6.1 ขึ้นไป**
 
 ดูได้ว่า LNWJUD ยังทำงานอยู่ไหม มีโปรเจกต์ไหนและ Goal ไหนกำลังทำพร้อมกัน milestone ไปถึงไหน มี Agent/worker อะไรทำงาน มี blocker หรือไม่ Git ของแต่ละโปรเจกต์อยู่ branch ไหน และมี activity อะไรล่าสุด โดยไม่เปิดสิทธิ์สั่งงานกลับเข้า LNWJUD
 
 > **ติดตั้งไม่ต้องใช้ npm:** Windows มี Portable EXE, macOS มี DMG, Linux มี AppImage, Android มี APK และ iPhone/iPad ใช้ Web/PWA แบบ Add to Home Screen ได้ ดู [คู่มือติดตั้งแบบง่าย](docs/INSTALL.md)
 
-## มีอะไรใหม่ใน v0.2.0
+## มีอะไรใหม่ใน v0.2.1
+
+- แก้ **Activity บนจอแคบ/iQOO** ให้สถานะกับเวลามีระยะห่างจริงเพิ่มอีก 10 px แม้ WebView จะบีบ layout ก็ไม่ชนกัน
+- ปรับ Widget Android ทั้ง Status, Goal และ Agents ให้พอดีกับ launcher preview และขนาด widget ที่ใช้งานจริงมากขึ้น
+- Android อัปเดตแบบในแอป: Watcher ดาวน์โหลด APK จาก GitHub ที่ตรวจสอบ host แล้วก่อน จากนั้นค่อยเปิดหน้าติดตั้งของ Android เมื่อไฟล์พร้อม ผู้ใช้ยังต้องกดยืนยันติดตั้งตามระบบ
+- README แสดงหน้าตาโปรแกรมและ Widget โดยตรงแล้ว เพื่อให้ผู้ใช้เข้าใจว่า Watcher ใช้ดูอะไรได้บ้างก่อนติดตั้ง
+
+## ไฮไลต์จาก v0.2.0
 
 - รองรับ **หลายโปรเจกต์ + หลาย Durable Goal ที่กำลังทำพร้อมกัน** โดยแยกงาน, active operations, Agent/activity และ Git ตาม workspace ไม่สรุปเหลือเพียง Goal เดียว
 - แยกให้ชัดว่า **Agent ที่แสดงคือกิจกรรมที่ LNWJUD Runtime มองเห็นได้จริง** ไม่ใช่ช่วงที่ ChatGPT กำลังคิดอยู่ระหว่าง tool call และถ้า Goal ยัง active แต่ไม่มี operation ที่ Runtime มองเห็น จะขึ้นเป็นรอ/ว่างแทนการขึ้นว่ากำลังทำงาน

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="30%" r="90%">
+      <stop stop-color="#382032"/><stop offset=".52" stop-color="#152538"/><stop offset="1" stop-color="#09131d"/>
+    </radialGradient>
+    <style>
+      .th{font-family:Prompt,Arial,sans-serif}.white{fill:#f5f2e9}.muted{fill:#a9b4c2}.gold{fill:#f4b93f}.green{fill:#45d89a}
+    </style>
+  </defs>
+  <rect width="1200" height="760" rx="38" fill="url(#bg)"/>
+  <text x="60" y="78" class="th white" font-size="40" font-weight="700">lnwjud Watcher · Android widgets</text>
+  <text x="60" y="116" class="th muted" font-size="20">ดูว่ายังทำงานอยู่ไหม, Goal ไหนกำลังเดิน, Agent ทำอะไร และทำล่าสุดเมื่อไร — จากหน้าจอโฮม</text>
+
+  <g transform="translate(55 175)">
+    <rect width="520" height="230" rx="34" fill="#0d1722" stroke="#263b51" stroke-width="2"/>
+    <text x="28" y="42" class="th gold" font-size="20" font-weight="700">สถานะ</text>
+    <text x="460" y="42" class="th green" font-size="20" font-weight="700" text-anchor="end">ว่าง</text>
+    <text x="28" y="88" class="th white" font-size="26" font-weight="700">DESKTOP-20QQMEU</text>
+    <text x="28" y="130" class="th muted" font-size="20">Wait for macOS x64 rerun to terminal…</text>
+    <text x="28" y="177" class="th white" font-size="18" font-weight="700">เป้าหมาย 2 · เอเจนต์ 0 · งาน 0</text>
+    <text x="28" y="210" class="th muted" font-size="17">ทำ 3 นาทีที่แล้ว · ซิงก์ 0 นาทีที่แล้ว</text>
+  </g>
+
+  <g transform="translate(625 175)">
+    <rect width="520" height="300" rx="34" fill="#0d1722" stroke="#263b51" stroke-width="2"/>
+    <text x="28" y="42" class="th gold" font-size="20" font-weight="700">เป้าหมาย</text>
+    <text x="470" y="42" class="th muted" font-size="18" text-anchor="end">lnwjud</text>
+    <text x="28" y="90" class="th white" font-size="25" font-weight="700">v5.6.2-context-economy-dsstore-</text>
+    <text x="28" y="122" class="th white" font-size="25" font-weight="700">tunnel-start</text>
+    <text x="28" y="170" class="th muted" font-size="19">Wait for macOS x64 rerun to terminal. If green,</text>
+    <text x="28" y="200" class="th muted" font-size="19">tag exact main SHA, push tag, watch release…</text>
+    <text x="28" y="244" class="th white" font-size="18" font-weight="700">ความคืบหน้า 7/8</text>
+    <text x="28" y="278" class="th muted" font-size="17">ทำล่าสุด 3 นาทีที่แล้ว</text>
+  </g>
+
+  <g transform="translate(55 445)">
+    <rect width="520" height="235" rx="34" fill="#0d1722" stroke="#263b51" stroke-width="2"/>
+    <text x="28" y="42" class="th gold" font-size="20" font-weight="700">เอเจนต์</text>
+    <text x="470" y="42" class="th green" font-size="20" font-weight="700" text-anchor="end">2 active</text>
+    <text x="28" y="90" class="th white" font-size="21" font-weight="700">@lnwjud · verify release workflow</text>
+    <text x="28" y="132" class="th muted" font-size="19">reviewer · inspect Android packaging</text>
+    <text x="28" y="176" class="th muted" font-size="18">Current work · release validation</text>
+    <text x="28" y="210" class="th muted" font-size="17">ซิงก์ล่าสุด 0 นาทีที่แล้ว</text>
+  </g>
+
+  <g transform="translate(625 515)">
+    <text x="0" y="0" class="th gold" font-size="22" font-weight="700">3 แบบที่เลือกเพิ่มได้จาก Android launcher</text>
+    <text x="0" y="42" class="th white" font-size="22">Status · Goal · Agents</text>
+    <text x="0" y="82" class="th muted" font-size="18">แตะ widget เพื่อเปิด lnwjud Watcher ได้ทันที</text>
+    <text x="0" y="117" class="th muted" font-size="18">ข้อมูล monitoring เท่านั้น — ไม่เก็บ Session token ใน widget</text>
+  </g>
+</svg>
