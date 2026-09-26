@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1280" viewBox="0 0 720 1280">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#071019"/>
+      <stop offset="1" stop-color="#0b111a"/>
+    </linearGradient>
+    <style>
+      .th{font-family:Prompt,Arial,sans-serif}.muted{fill:#97a4b5}.white{fill:#f5f2e9}.gold{fill:#f4b93f}.green{fill:#45d89a}
+    </style>
+  </defs>
+  <rect width="720" height="1280" rx="42" fill="url(#bg)"/>
+  <text x="48" y="68" class="th gold" font-size="22" font-weight="700">ศูนย์ติดตามแบบอ่านอย่างเดียว</text>
+  <text x="48" y="118" class="th white" font-size="38" font-weight="700">DESKTOP-20QQMEU</text>
+  <circle cx="56" cy="158" r="7" fill="#45d89a"/>
+  <text x="76" y="165" class="th muted" font-size="18">สด · อัปเดตล่าสุด 07:30:15</text>
+  <text x="48" y="230" class="th gold" font-size="20" font-weight="700">ล่าสุด</text>
+  <text x="48" y="282" class="th white" font-size="38" font-weight="700">ไทม์ไลน์กิจกรรม</text>
+
+  <g transform="translate(40 330)">
+    <rect width="640" height="290" rx="28" fill="#101925" stroke="#27384b" stroke-width="2"/>
+    <rect x="26" y="26" width="148" height="56" rx="28" fill="#0d171c" stroke="#45d89a" stroke-width="2"/>
+    <circle cx="52" cy="54" r="8" fill="#45d89a"/>
+    <text x="72" y="62" class="th green" font-size="21" font-weight="700">เสร็จแล้ว</text>
+    <text x="518" y="62" class="th muted" font-size="20">07:30:15</text>
+    <text x="28" y="132" class="th white" font-size="27" font-weight="700">Finished finish goal</text>
+    <text x="28" y="205" class="th muted" font-size="23">goal=5432425a-f737-444f-8f1f-</text>
+    <text x="28" y="244" class="th muted" font-size="23">3065b0732b51</text>
+  </g>
+
+  <g transform="translate(40 646)">
+    <rect width="640" height="290" rx="28" fill="#101925" stroke="#27384b" stroke-width="2"/>
+    <rect x="26" y="26" width="172" height="56" rx="28" fill="#0d171c" stroke="#45d89a" stroke-width="2"/>
+    <circle cx="52" cy="54" r="8" fill="#45d89a"/>
+    <text x="72" y="62" class="th green" font-size="21" font-weight="700">กำลังทำงาน</text>
+    <text x="518" y="62" class="th muted" font-size="20">07:30:04</text>
+    <text x="28" y="132" class="th white" font-size="27" font-weight="700">Running shell</text>
+    <text x="28" y="205" class="th muted" font-size="23">shell:wait task=c68af1bc-d7bc-4ef8-</text>
+    <text x="28" y="244" class="th muted" font-size="23">b240-5c311956f381</text>
+  </g>
+
+  <rect x="0" y="1054" width="720" height="226" fill="#0b121d" stroke="#263445"/>
+  <g class="th" font-size="18" text-anchor="middle">
+    <text x="90" y="1165" class="gold">⌂</text><text x="90" y="1200" class="gold">ภาพรวม</text>
+    <text x="225" y="1165" class="muted">◔</text><text x="225" y="1200" class="muted">เป้าหมาย</text>
+    <text x="360" y="1165" class="muted">▣</text><text x="360" y="1200" class="muted">เอเจนต์</text>
+    <text x="495" y="1165" class="muted">⌁</text><text x="495" y="1200" class="muted">กิจกรรม</text>
+    <text x="630" y="1165" class="muted">⚙</text><text x="630" y="1200" class="muted">ตั้งค่า</text>
+  </g>
+</svg>

@@ -25,7 +25,7 @@
 </p>
 
 <h2 align="center">Download lnwjud Watcher</h2>
-<p align="center">One-click desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.0.</p>
+<p align="center">One-click desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.1.</p>
 
 <table align="center">
   <tr>
@@ -52,13 +52,35 @@
 
 <p align="center"><a href="docs/INSTALL.md"><strong>Easy install guide / คู่มือติดตั้งแบบง่าย →</strong></a> · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest"><strong>View all release files →</strong></a></p>
 
+## See lnwjud Watcher at a glance
+
+<table>
+  <tr>
+    <td width="50%" align="center"><strong>Mobile Activity</strong><br /><sub>Live observable work, status, timestamps, commands, and task IDs.</sub></td>
+    <td width="50%" align="center"><strong>Android home-screen widgets</strong><br /><sub>Status, Goal, and Agents without opening the app.</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="assets/screenshots/mobile-activity-preview.svg" width="360" alt="lnwjud Watcher mobile Activity UI" /></td>
+    <td align="center"><img src="assets/screenshots/android-widgets-preview.svg" width="560" alt="lnwjud Watcher Android Status, Goal, and Agents widgets" /></td>
+  </tr>
+</table>
+
+The widgets are designed for the quick question that matters most during long-running work: **what is it doing now, and how long ago did it last do anything?**
+
 ---
 
 ## Current version
 
-**lnwjud Watcher v0.2.0** is designed for **LNWJUD v5.6.1 or later**.
+**lnwjud Watcher v0.2.1** is designed for **LNWJUD v5.6.1 or later**.
 
-### What's new in v0.2.0
+### What's new in v0.2.1
+
+- **iQOO/narrow-screen Activity spacing:** status and timestamp now have an explicit 10 px content buffer in addition to the layout gap, so they cannot visually touch even when the WebView compresses the header.
+- **Polished Android widgets:** Status, Goal, and Agents layouts are tuned for launcher previews and practical home-screen sizes.
+- **In-app Android update:** Watcher downloads the trusted GitHub APK inside the app, then opens Android's installer only when the file is ready. Android still requires the normal install confirmation.
+- **Visual README:** the mobile Activity UI and Android widget family are now shown directly in the repository.
+
+### v0.2.0 highlights
 
 - **Parallel projects and goals:** one Watcher snapshot shows every Active Project and all active Durable Goals inside each project, so several jobs can run at the same time without the UI collapsing them into one “current goal”.
 - **Clearer runtime tracking:** Watcher distinguishes observable LNWJUD runtime work from ChatGPT thinking outside the runtime, shows active-operation count, and adds a live “last runtime work” age. Active goals with zero observable operations are shown as waiting, and agents/runtime are idle instead of falsely appearing to run.

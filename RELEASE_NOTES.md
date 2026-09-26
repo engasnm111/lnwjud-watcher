@@ -2,36 +2,33 @@
   <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
-# lnwjud Watcher v0.2.0
+# lnwjud Watcher v0.2.1
 
-v0.2.0 is the first feature update after the canonical v0.1.0 baseline. It focuses on mobile observability, Android home-screen widgets, and a normal signed APK upgrade path that can be tested directly from v0.1.0.
+v0.2.1 is a corrective mobile release for the v0.2.x line. It keeps the Android widgets introduced in v0.2.0, fixes the remaining narrow-screen Activity spacing issue, and ships the in-app Android updater polish already prepared on `dev`.
 
-### Android home-screen widgets
-- **Status widget:** shows whether lnwjud is working or idle, the current/last work summary, and how long ago the last observable work happened.
-- **Goal widget:** shows the active project, current Durable Goal/task, milestone progress, and last-work age.
-- **Agents widget:** shows the active-agent count, up to two current agent tasks, and how long ago Watcher last synchronized.
-- Widget state is cached locally by the native Android app. The Watcher Session token is never written into widget storage.
-- Widgets refresh immediately while the app receives snapshots and also receive the normal Android periodic widget refresh.
+### Mobile Activity spacing
+- The status pill and timestamp now keep an explicit **10 px content buffer** in addition to the flex column gap, preventing the two labels from visually touching on narrow Android displays such as iQOO-class devices.
+- Timestamp text is kept on one line while long commands, UUIDs, paths, and task identifiers continue to wrap safely inside their cards.
+- Activity remains progressive: 20 cards render at a time over the runtime's bounded 100-event recent history.
 
-### Mobile UI polish
-- Activity cards keep explicit horizontal and vertical spacing between status, timestamps, project chips, titles, details, and metadata.
-- Long shell commands, UUIDs, paths, and task identifiers wrap safely inside narrow cards instead of pushing the page outside the viewport.
-- Activity remains progressive: 20 cards render at a time with automatic near-viewport loading and a manual fallback, while the runtime snapshot remains bounded to 100 recent events.
+### Android widgets
+- **Status widget:** runtime state, current/last work, active counts, last-work age, and last-sync age.
+- **Goal widget:** active project, Durable Goal/task, milestone progress, and last-work age.
+- **Agents widget:** active-agent count, current agent tasks, and last-sync age.
+- Widget state is cached locally without storing the Watcher Session token.
+- Widget layouts were polished for launcher previews and multiple Android widget sizes.
 
-### APK update path
-- Public Android version is now **0.2.0**.
-- v0.2.0 uses the same persistent Android release-signing identity as v0.1.0.
-- Release CI assigns a monotonically increasing internal Android `versionCode`, so the signed v0.2.0 APK can install over the signed v0.1.0 APK.
-- Watcher checks GitHub Release on startup, every 30 minutes, and when returning to the foreground. v0.1.0 → v0.2.0 is detected as a normal semantic-version upgrade.
-- Android still requires the user to confirm installation. lnwjud Watcher cannot silently replace an APK.
+### Android update flow
+- Android can download the release APK **inside lnwjud Watcher** and opens the system installer only when the APK is ready.
+- The download path accepts only trusted HTTPS GitHub/GitHubusercontent URLs.
+- Android still requires the normal system install confirmation; Watcher does not silently replace an APK.
+- v0.2.1 keeps the same persistent release-signing identity and uses a higher CI-generated `versionCode`, so it can install over signed v0.2.0/v0.1.0 builds.
 
-### Existing observability
-- Multi-project and multi-goal monitoring, milestone progress, active operations, agents, blockers, Git state, pairing, and recent activity remain read-only.
-- Active goals with zero observable runtime operations are presented as waiting/idle instead of falsely appearing busy.
-- ISO-8601 timestamps with timezone offsets remain supported.
+### Documentation
+- README and README_TH now include visual previews of the mobile Activity UI and the three Android home-screen widgets so new users can understand the product before installing it.
 
 ### Runtime requirement
-The full v0.2.0 experience requires **lnwjud v5.6.1 or later**.
+The full v0.2.1 experience requires **LNWJUD v5.6.1 or later**.
 
 ### Release artifacts
 - `lnwjud-watcher-windows-x64.exe`
@@ -43,7 +40,7 @@ The full v0.2.0 experience requires **lnwjud v5.6.1 or later**.
 - `lnwjud-watcher-ios-simulator.zip`
 
 ### iOS note
-The repository still publishes an iOS **Simulator** artifact rather than a normally installable physical-device build. Native iOS Home Screen widgets therefore remain outside this v0.2.0 device release; Android widgets are fully included in the APK.
+The repository still publishes an iOS **Simulator** artifact rather than a normally installable physical-device build. Native iOS Home Screen widgets therefore remain outside this device release; Android widgets are included in the APK.
 
 ### Security boundary
 lnwjud Watcher remains intentionally read-only. It does not add shell, filesystem mutation, MCP mutation, approval, provider credentials, or hidden-reasoning access. Pairing remains local-only.

@@ -466,9 +466,15 @@ img{max-width:100%}
   column-gap:16px;
   row-gap:8px;
 }
+.timeline-card-head .status-pill{
+  flex:0 0 auto;
+  white-space:nowrap;
+}
 .timeline-card-head time{
   margin-left:auto;
+  padding-left:10px;
   flex:0 0 auto;
+  white-space:nowrap;
 }
 .timeline-card-body{
   min-width:0;
