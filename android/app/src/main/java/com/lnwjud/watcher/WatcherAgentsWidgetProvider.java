@@ -23,6 +23,10 @@ public class WatcherAgentsWidgetProvider extends BaseWatcherWidgetProvider {
         );
         bindAgent(views, R.id.widget_agent_1, state.agent1);
         bindAgent(views, R.id.widget_agent_2, state.agent2);
+        String currentWork = state.goalTask.isEmpty()
+                ? (state.lastActivity.isEmpty() ? context.getString(R.string.widget_no_work) : state.lastActivity)
+                : state.goalTask;
+        views.setTextViewText(R.id.widget_agents_work, context.getString(R.string.widget_current_work, currentWork));
         views.setTextViewText(
                 R.id.widget_agents_last,
                 context.getString(R.string.widget_last_sync, WatcherWidgetState.relativeTime(state.lastSyncAt))

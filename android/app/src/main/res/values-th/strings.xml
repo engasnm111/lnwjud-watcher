@@ -3,6 +3,8 @@
     <string name="widget_status_name">Watcher · สถานะ</string>
     <string name="widget_goal_name">Watcher · Goal</string>
     <string name="widget_agents_name">Watcher · เอเจนต์</string>
+    <string name="widget_status">สถานะ</string>
+    <string name="widget_goal">เป้าหมาย</string>
     <string name="widget_working">กำลังทำงาน</string>
     <string name="widget_idle">ว่าง</string>
     <string name="widget_offline">ออฟไลน์</string>
@@ -10,6 +12,8 @@
     <string name="widget_no_work">ไม่มีงานที่กำลังทำ</string>
     <string name="widget_last_work">ทำล่าสุด %1$s</string>
     <string name="widget_status_age">ทำ %1$s · ซิงก์ %2$s</string>
+    <string name="widget_status_metrics">เป้าหมาย %1$d · เอเจนต์ %2$d · งาน %3$d</string>
+    <string name="widget_current_work">งานปัจจุบัน · %1$s</string>
     <string name="widget_no_goal">ไม่มี Goal ที่กำลังทำ</string>
     <string name="widget_progress">ความคืบหน้า %1$s</string>
     <string name="widget_agents">เอเจนต์</string>

@@ -10,6 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
@@ -17,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Agents"
+            android:text="@string/widget_agents"
             android:textColor="#F4B93F"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -48,14 +49,25 @@
     <TextView
         android:id="@+id/widget_agent_2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="7dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:ellipsize="end"
         android:maxLines="2"
         android:text="Agent · Current task"
         android:textColor="#C9D1DB"
         android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/widget_agents_work"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="Current work —"
+        android:textColor="#C9D1DB"
+        android:textSize="11sp" />
 
     <TextView
         android:id="@+id/widget_agents_last"
