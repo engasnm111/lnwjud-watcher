@@ -7,6 +7,8 @@
     <string name="widget_status_name">Watcher · Status</string>
     <string name="widget_goal_name">Watcher · Goal</string>
     <string name="widget_agents_name">Watcher · Agents</string>
+    <string name="widget_status">Status</string>
+    <string name="widget_goal">Goal</string>
     <string name="widget_working">Working</string>
     <string name="widget_idle">Idle</string>
     <string name="widget_offline">Offline</string>
@@ -14,6 +16,8 @@
     <string name="widget_no_work">No active work</string>
     <string name="widget_last_work">Last work %1$s</string>
     <string name="widget_status_age">Work %1$s · Sync %2$s</string>
+    <string name="widget_status_metrics">Goals %1$d · Agents %2$d · Ops %3$d</string>
+    <string name="widget_current_work">Current work · %1$s</string>
     <string name="widget_no_goal">No active goal</string>
     <string name="widget_progress">Progress %1$s</string>
     <string name="widget_agents">Agents</string>

@@ -1,5 +1,5 @@
 import { Browser } from '@capacitor/browser';
-import { Capacitor } from '@capacitor/core';
+import { Capacitor, registerPlugin } from '@capacitor/core';
 import packageInfo from '../../package.json';
 
 export type UpdatePlatform = 'web' | 'android' | 'ios' | 'windows' | 'macos' | 'linux';
@@ -8,6 +8,12 @@ export interface ReleaseAsset {
   name: string;
   browser_download_url: string;
 }
+
+interface NativeUpdaterPlugin {
+  downloadAndInstall(options: { url: string }): Promise<{ downloaded: boolean }>;
+}
+
+const NativeUpdater = registerPlugin<NativeUpdaterPlugin>('NativeUpdater');
 
 export interface AvailableUpdate {
   version: string;
@@ -175,6 +181,10 @@ export async function startUpdate(update: AvailableUpdate): Promise<void> {
 
   const url = update.downloadUrl ?? update.releaseUrl;
   if (Capacitor.isNativePlatform()) {
+    if (update.platform === 'android' && update.downloadUrl) {
+      await NativeUpdater.downloadAndInstall({ url: update.downloadUrl });
+      return;
+    }
     await Browser.open({ url });
     return;
   }

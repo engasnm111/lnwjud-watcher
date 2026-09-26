@@ -5,25 +5,22 @@
     android:layout_height="match_parent"
     android:background="@drawable/widget_background"
     android:orientation="vertical"
-    android:gravity="center_vertical"
     android:padding="14dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/widget_title"
+            android:id="@+id/widget_section"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="lnwjud Watcher"
-            android:textColor="#F5F2E9"
-            android:textSize="14sp"
+            android:text="@string/widget_status"
+            android:textColor="#F4B93F"
+            android:textSize="12sp"
             android:textStyle="bold" />
 
         <TextView
@@ -38,25 +35,49 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/widget_primary"
+        android:id="@+id/widget_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:ellipsize="end"
-        android:maxLines="2"
-        android:text="No active work"
+        android:maxLines="1"
+        android:text="lnwjud Watcher"
         android:textColor="#F5F2E9"
-        android:textSize="14sp"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/widget_primary"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="No active work"
+        android:textColor="#C9D1DB"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/widget_metrics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Goals 0 · Agents 0 · Ops 0"
+        android:textColor="#F5F2E9"
+        android:textSize="11sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/widget_secondary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="Last work —"
+        android:text="Work — · Sync —"
         android:textColor="#96A4B5"
         android:textSize="11sp" />
 </LinearLayout>

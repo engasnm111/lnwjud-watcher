@@ -30,9 +30,19 @@ public class WatcherStatusWidgetProvider extends BaseWatcherWidgetProvider {
                 WatcherWidgetState.relativeTime(state.lastSyncAt)
         );
 
+        views.setTextViewText(R.id.widget_section, context.getString(R.string.widget_status));
         views.setTextViewText(R.id.widget_title, state.instanceName);
         views.setTextViewText(R.id.widget_status, status);
         views.setTextViewText(R.id.widget_primary, work);
+        views.setTextViewText(
+                R.id.widget_metrics,
+                context.getString(
+                        R.string.widget_status_metrics,
+                        state.activeGoalCount,
+                        state.activeAgentCount,
+                        state.activeOperations
+                )
+        );
         views.setTextViewText(R.id.widget_secondary, last);
     }
 }
