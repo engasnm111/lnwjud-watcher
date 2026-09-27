@@ -5,6 +5,7 @@ import GoalStatusPill from '../../shared/GoalStatusPill';
 import { formatTime, goalProgress, snapshotGoals, snapshotWorkspaces, workspaceName } from '../../shared/format';
 import { goalNeedsFinalization } from '../../shared/goalState';
 import { useI18n } from '../../i18n/I18nContext';
+import { Link } from 'react-router-dom';
 
 export default function OverviewPage() {
   const { snapshot, state } = useWatcher();
@@ -56,7 +57,7 @@ export default function OverviewPage() {
       <div className="workspace-grid">{workspaces.map((workspace) =>
         <article className={'workspace-card' + (workspace.selected ? ' workspace-card-selected' : '')} key={workspace.id}>
           <div className="workspace-card-head">
-            <div><span className="eyebrow">{t('overview.project')}</span><strong className="break-anywhere">{workspace.name}</strong></div>
+            <div><span className="eyebrow">{t('overview.project')}</span><Link className="workspace-detail-link break-anywhere" to={`/projects/${encodeURIComponent(workspace.id)}`}>{workspace.name}</Link></div>
             {workspace.selected && <span className="project-chip">{t('overview.selectedProject')}</span>}
           </div>
           <div className="workspace-metrics">

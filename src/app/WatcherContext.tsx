@@ -2,9 +2,12 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import type { PropsWithChildren } from 'react';
 import type { ActivityEvent, ConnectionProfile, ConnectionState, WatcherSnapshot } from '../domain/models';
+import { deriveAlerts, type WatcherAlert } from '../domain/alerts';
+import { loadAlertPreferences, loadReadAlerts, saveAlertPreferences, saveReadAlerts, type AlertPreferences } from '../data/alertPreferences';
 import { DemoWatcherTransport } from '../data/demo';
 import { HttpWatcherTransport, type WatcherTransport } from '../data/transport';
 import { syncNativeWidgets } from '../data/widget';
+import { disableNativeAlertMonitor, syncNativeAlertMonitor } from '../data/nativeAlerts';
 import {
   loadOnboardingComplete,
   loadProfile,
@@ -39,6 +42,12 @@ interface WatcherContextValue {
   fallbackPolling: boolean;
   refreshing: boolean;
   onboardingComplete: boolean;
+  alerts: WatcherAlert[];
+  unreadAlertCount: number;
+  readAlertIds: string[];
+  alertPreferences: AlertPreferences;
+  markAlertRead(id: string): void;
+  updateAlertPreferences(preferences: AlertPreferences): void;
   configure(profile: ConnectionProfile, token: string): void;
   completeOnboarding(value?: boolean): void;
   refresh(): Promise<void>;
@@ -55,6 +64,9 @@ export function WatcherProvider({ children }: PropsWithChildren) {
   const [lastSyncAt, setLastSyncAt] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
   const [onboardingComplete, setOnboardingComplete] = useState(() => loadOnboardingComplete());
+  const [alertPreferences, setAlertPreferences] = useState(loadAlertPreferences);
+  const [readAlertIds, setReadAlertIds] = useState(loadReadAlerts);
+  const [alertNow, setAlertNow] = useState(() => Date.now());
   const refreshInFlight = useRef<Promise<void> | null>(null);
   const refreshQueued = useRef(false);
 
@@ -116,8 +128,37 @@ export function WatcherProvider({ children }: PropsWithChildren) {
   const fallbackPolling = shouldUseFallbackPolling(profile.mode, state);
 
   useEffect(() => {
+    const timer = window.setInterval(() => setAlertNow(Date.now()), 30_000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const alerts = useMemo(() => deriveAlerts({
+    snapshot, state, mode: profile.mode, lastSyncAt, now: alertNow,
+    inactivityMinutes: alertPreferences.inactivityMinutes,
+  }), [snapshot, state, profile.mode, lastSyncAt, alertNow, alertPreferences.inactivityMinutes]);
+  const unreadAlertCount = alerts.filter((alert) => !readAlertIds.includes(alert.id)).length;
+
+  const markAlertRead = (id: string) => {
+    setReadAlertIds((current) => {
+      if (current.includes(id)) return current;
+      const next = [...current, id].slice(-100);
+      saveReadAlerts(next);
+      return next;
+    });
+  };
+
+  const updateAlertPreferences = (preferences: AlertPreferences) => {
+    saveAlertPreferences(preferences);
+    setAlertPreferences(preferences);
+  };
+
+  useEffect(() => {
     void syncNativeWidgets(snapshot, state, lastSyncAt);
   }, [lastSyncAt, snapshot, state]);
+
+  useEffect(() => {
+    void syncNativeAlertMonitor(snapshot, state, profile, token, alertPreferences);
+  }, [snapshot, state, profile, token, alertPreferences]);
 
   useEffect(() => {
     if (!fallbackPolling) return;
@@ -135,6 +176,7 @@ export function WatcherProvider({ children }: PropsWithChildren) {
   }, [fallbackPolling, refresh]);
 
   const configure = (nextProfile: ConnectionProfile, nextToken: string) => {
+    void disableNativeAlertMonitor();
     saveProfile(nextProfile);
     saveSessionToken(nextToken);
     setProfile(nextProfile);
@@ -156,6 +198,12 @@ export function WatcherProvider({ children }: PropsWithChildren) {
     fallbackPolling,
     refreshing,
     onboardingComplete,
+    alerts,
+    unreadAlertCount,
+    readAlertIds,
+    alertPreferences,
+    markAlertRead,
+    updateAlertPreferences,
     configure,
     completeOnboarding,
     refresh

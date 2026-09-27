@@ -5,7 +5,7 @@ const now = () => new Date().toISOString();
 
 const runtimeGoal: Goal = {
   id: 'demo-runtime-goal',
-  key: 'lnwjud-v5.6.1',
+  key: 'lnwjud-v5.6.6',
   status: 'running',
   currentTask: 'Harden Watcher multi-workspace snapshots and validate the release.',
   blockers: [],
@@ -20,7 +20,7 @@ const runtimeGoal: Goal = {
 
 const watcherGoal: Goal = {
   id: 'demo-watcher-goal',
-  key: 'lnwjud-watcher-v0.2.4',
+  key: 'lnwjud-watcher-v0.2.5',
   status: 'running',
   currentTask: 'Render every active project and durable goal without hiding parallel work.',
   blockers: [],
@@ -50,9 +50,13 @@ const watcherDocsGoal: Goal = {
 export const demoSnapshot: WatcherSnapshot = {
   protocolVersion: 1,
   serverTime: now(),
-  runtime: { version: '5.6.1 demo', status: 'running', activeOperations: 3 },
+  runtime: { version: '5.6.6 demo', status: 'running', activeOperations: 3 },
   instance: { id: 'demo-office-pc', name: 'OFFICE-PC', platform: 'windows' },
   goal: runtimeGoal,
+  plugins: [
+    { name: 'My Research Tools', provider: 'mcp', enabled: true, connected: true, excluded: false, lifecycle: 'connected' },
+    { name: 'Local Documents', provider: 'mcp', enabled: true, connected: false, excluded: false, lifecycle: 'disconnected' }
+  ],
   workspaces: [
     {
       id: 'demo-lnwjud',

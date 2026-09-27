@@ -9,6 +9,7 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(WatcherWidgetPlugin.class);
         registerPlugin(NativeUpdaterPlugin.class);
+        registerPlugin(WatcherAlertMonitorPlugin.class);
         super.onCreate(savedInstanceState);
     }
 }

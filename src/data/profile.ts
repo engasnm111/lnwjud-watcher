@@ -59,6 +59,14 @@ export function loadSessionToken(): string {
   return legacySessionToken;
 }
 
+export function loadSessionTokenExpiresAt(): number | null {
+  try {
+    const stored = JSON.parse(localStorage.getItem(TOKEN_KEY) ?? 'null') as { version?: unknown; expiresAt?: unknown } | null;
+    return stored?.version === 3 && typeof stored.expiresAt === 'number' && stored.expiresAt > Date.now()
+      ? stored.expiresAt : null;
+  } catch { return null; }
+}
+
 export function saveSessionToken(token: string): void {
   const normalized = token.trim();
   sessionStorage.removeItem(TOKEN_KEY);

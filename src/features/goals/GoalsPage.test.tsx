@@ -25,7 +25,7 @@ describe('active goal with completed milestones', () => {
     render(<I18nProvider><GoalsPage/></I18nProvider>);
 
     expect(screen.getByText('Ready to finish')).toBeVisible();
-    expect(screen.getByText(/LNWJUD still reports this goal as active/)).toBeVisible();
+    expect(screen.getByText(/durable goal remains open/)).toBeVisible();
     expect(screen.getByText('100%')).toBeVisible();
     expect(screen.queryByText('Done')).toBeNull();
   });

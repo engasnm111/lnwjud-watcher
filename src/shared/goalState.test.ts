@@ -19,4 +19,9 @@ describe('goal finalization state', () => {
     expect(goalNeedsFinalization({ ...goal, milestones: [] })).toBe(false);
     expect(goalNeedsFinalization({ ...goal, milestones: [{ id: 'step-1', title: 'Verify', status: 'pending' }] })).toBe(false);
   });
+
+  it('uses the runtime completion readiness when acceptance criteria are still pending', () => {
+    expect(goalNeedsFinalization({ ...goal, lifecycle: 'active', completionReady: false })).toBe(false);
+    expect(goalNeedsFinalization({ ...goal, lifecycle: 'active', completionReady: true })).toBe(true);
+  });
 });

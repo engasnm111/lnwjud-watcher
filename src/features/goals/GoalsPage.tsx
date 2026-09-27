@@ -42,6 +42,9 @@ export default function GoalsPage() {
                 <span className={'milestone-mark milestone-' + item.status}/>
                 <div><strong>{item.title}</strong><small>{t(('milestone.' + item.status) as MessageKey)}</small></div>
               </div>)}</div>
+            {goal.acceptanceCriteria && goal.acceptanceCriteria.length > 0 && <div className="acceptance-list"><strong>{t('projects.acceptance')}</strong>{goal.acceptanceCriteria.map((criterion) =>
+              <p key={criterion.id}><span className={'milestone-mark milestone-' + criterion.status}/>{criterion.title}</p>)}</div>}
+            {(goal.activeTaskCount ?? 0) > 0 && <p className="muted">{t('goal.activeTasks', { count: goal.activeTaskCount ?? 0 })}</p>}
             {goal.blockers.length > 0 && <div className="goal-blockers">
               <strong>{t('goal.blockers')}</strong>
               {goal.blockers.map((blocker) => <p key={blocker}>{blocker}</p>)}

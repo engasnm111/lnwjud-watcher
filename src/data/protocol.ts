@@ -12,7 +12,16 @@ const goalSchema = z.object({
   blockers: z.array(z.string()),
   milestones: z.array(milestoneSchema),
   workspaceId: z.string().optional(),
-  workspaceName: z.string().optional()
+  workspaceName: z.string().optional(),
+  lifecycle: z.literal('active').optional(),
+  completionReady: z.boolean().optional(),
+  objective: z.string().max(1_000).optional(),
+  currentPhase: z.string().max(256).optional(),
+  acceptanceCriteria: z.array(z.object({ id: z.string(), title: z.string(), status: z.enum(['pending', 'completed', 'blocked']) })).optional(),
+  activeTaskCount: z.number().int().nonnegative().optional(),
+  createdAt: isoDateTimeSchema.optional(),
+  updatedAt: isoDateTimeSchema.optional(),
+  lastCheckpointAt: isoDateTimeSchema.optional()
 });
 const agentSchema = z.object({
   id: z.string(),
@@ -21,7 +30,18 @@ const agentSchema = z.object({
   status: statusSchema,
   task: z.string().optional(),
   workspaceId: z.string().optional(),
-  workspaceName: z.string().optional()
+  workspaceName: z.string().optional(),
+  provider: z.enum(['lnwjud', 'codex']).optional(),
+  toolName: z.string().optional(),
+  startedAt: isoDateTimeSchema.optional()
+});
+const pluginSchema = z.object({
+  name: z.string().min(1).max(128),
+  provider: z.literal('mcp'),
+  enabled: z.boolean(),
+  connected: z.boolean(),
+  excluded: z.boolean(),
+  lifecycle: z.enum(['disconnected', 'connected', 'termination_unverified'])
 });
 export const activityEventSchema = z.object({
   id: z.string(),
@@ -57,6 +77,7 @@ export const snapshotSchema = z.object({
   goal: goalSchema.nullable(),
   workspaces: z.array(workspaceSchema).default([]),
   agents: z.array(agentSchema),
+  plugins: z.array(pluginSchema).default([]),
   activity: z.array(activityEventSchema),
   git: gitSchema
 });

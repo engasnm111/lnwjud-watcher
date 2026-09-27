@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { ExternalLink, Languages, ShieldCheck } from 'lucide-react';
+import { Bell, ExternalLink, Languages, ShieldCheck } from 'lucide-react';
 import { useWatcher } from '../../app/WatcherContext';
 import { useI18n } from '../../i18n/I18nContext';
 import type { ConnectionProfile, RemoteProvider } from '../../domain/models';
 import type { MessageKey } from '../../i18n/messages';
 import { providerGuides } from '../../data/providers';
 import SessionTokenHelp from '../../shared/SessionTokenHelp';
+import { isAndroid, requestAndroidAlertPermission } from '../../data/nativeAlerts';
 
 const providers: RemoteProvider[] = [
   'local',
@@ -91,6 +92,24 @@ export default function SettingsPage() {
       <a className="secondary-button link-button" href={guide.docsUrl} target="_blank" rel="noreferrer">
         {t('settings.openDocs')}<ExternalLink size={16}/>
       </a>
+    </section>
+
+    <section className="card settings-card">
+      <span className="eyebrow">{t('alerts.kicker')}</span>
+      <h2><Bell size={20}/> {t('settings.alerts')}</h2>
+      <label>{t('settings.inactivityThreshold')}
+        <select value={watcher.alertPreferences.inactivityMinutes} onChange={(event) => watcher.updateAlertPreferences({ ...watcher.alertPreferences, inactivityMinutes: Number(event.target.value) as 5 | 10 })}>
+          <option value={10}>{t('settings.tenMinutes')}</option>
+          <option value={5}>{t('settings.fiveMinutes')}</option>
+        </select>
+      </label>
+      {isAndroid() && <label className="settings-checkbox"><input type="checkbox" checked={watcher.alertPreferences.androidNotifications} onChange={(event) => {
+        if (!event.target.checked) { watcher.updateAlertPreferences({ ...watcher.alertPreferences, androidNotifications: false }); return; }
+        void requestAndroidAlertPermission().then((granted) => {
+          watcher.updateAlertPreferences({ ...watcher.alertPreferences, androidNotifications: granted });
+        });
+      }}/>{t('settings.androidNotifications')}</label>}
+      <small className="muted">{t('settings.notificationHelp')}</small>
     </section>
 
     <section className="card settings-card">
