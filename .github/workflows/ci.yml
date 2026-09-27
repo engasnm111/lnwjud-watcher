@@ -75,6 +75,17 @@ jobs:
           CSC_FOR_PULL_REQUEST: "true"
       - run: bash scripts/verify-macos-package.sh "${{ matrix.arch }}"
 
+  desktop-macos-status:
+    name: desktop-macos
+    needs: desktop-macos
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require both macOS architectures to pass
+        env:
+          MACOS_RESULT: ${{ needs.desktop-macos.result }}
+        run: test "$MACOS_RESULT" = success
+
   desktop-linux:
     needs: quality
     runs-on: ubuntu-latest
