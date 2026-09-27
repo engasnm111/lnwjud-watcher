@@ -116,7 +116,8 @@ jobs:
           test -s release-desktop/lnwjud-watcher-linux-x64.AppImage
           test -s release-desktop/lnwjud-watcher-linux-x64.tar.gz
           chmod +x release-desktop/lnwjud-watcher-linux-x64.AppImage
-          result="$(APPIMAGE_EXTRACT_AND_RUN=1 ELECTRON_RUN_AS_NODE=1 release-desktop/lnwjud-watcher-linux-x64.AppImage -e 'process.stdout.write("watcher-runtime-ok")')"
+          release-desktop/lnwjud-watcher-linux-x64.AppImage --appimage-extract >/dev/null
+          result="$(ELECTRON_RUN_AS_NODE=1 ./squashfs-root/lnwjud-watcher -e 'process.stdout.write("watcher-runtime-ok")')"
           test "$result" = "watcher-runtime-ok"
       - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         with:
