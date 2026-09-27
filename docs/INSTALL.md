@@ -79,6 +79,14 @@ No terminal is required.
 
 Do not disable Gatekeeper globally.
 
+If **Open Anyway** is unavailable even though the downloaded DMG matches the release checksum, you can remove the download quarantine from this app only. After dragging the app to Applications, open Terminal and run:
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/lnwjud Watcher.app"
+```
+
+Then open lnwjud Watcher again. This is a per-app fallback for community builds without Apple notarization.
+
 ## 4. Linux
 
 1. Download **`lnwjud-watcher-linux-x64.AppImage`**.
@@ -190,6 +198,14 @@ Watcher v0.2.4 แบบติดตั้งจะเช็ก GitHub Release �
 8. กดปิดหน้าต่างแล้วแอปยังอยู่ที่เมนูบาร์/Tray; ถ้าจะปิดจริงให้เลือก **Quit**
 
 ไม่แนะนำให้ปิด Gatekeeper ทั้งระบบ
+
+หากตรวจ SHA-256 ของ DMG แล้วตรงกับ Release แต่ไม่มีปุ่ม **Open Anyway** ให้ลากแอปไป Applications ก่อน แล้วเปิด Terminal เพื่อลบเครื่องหมายไฟล์ที่ดาวน์โหลดมาเฉพาะแอปนี้:
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/lnwjud Watcher.app"
+```
+
+จากนั้นลองเปิด lnwjud Watcher อีกครั้ง วิธีนี้ใช้เฉพาะแอปนี้ ไม่ได้ปิด Gatekeeper ทั้งระบบ
 
 ## 4. Linux
 

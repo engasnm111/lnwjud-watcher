@@ -19,7 +19,7 @@ v0.2.4 corrects the Web/PWA update experience, clarifies active goals whose mile
 - Windows and Linux CI smoke test their packaged Electron runtimes. Linux adds a tar.gz package for systems where AppImage/FUSE cannot run.
 - All release downloads include a `SHA256SUMS.txt` manifest.
 
-macOS builds remain **without Apple Developer ID and notarization**. macOS may require first-launch approval in **System Settings → Privacy & Security → Open Anyway**. If it reports a damaged app, compare the DMG with the published SHA-256 and report a matching-checksum failure with the Mac model and macOS version. See the [install guide](docs/INSTALL.md) and [Apple's first-launch guidance](https://support.apple.com/en-gb/102445).
+macOS builds remain **without Apple Developer ID and notarization**. macOS may require first-launch approval in **System Settings → Privacy & Security → Open Anyway**. If it reports a damaged app, compare the DMG with the published SHA-256. For a matching checksum when **Open Anyway** is unavailable, the [install guide](docs/INSTALL.md) gives a per-app quarantine fallback. See also [Apple's first-launch guidance](https://support.apple.com/en-gb/102445).
 
 ### Compatibility and artifacts
 

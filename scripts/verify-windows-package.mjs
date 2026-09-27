@@ -1,6 +1,7 @@
 import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { spawnSync } from 'node:child_process'
+import process from 'node:process'
 
 const directory = join('release-desktop', 'win-unpacked')
 const executable = readdirSync(directory).find(
@@ -27,4 +28,4 @@ if (result.error || result.status !== 0 || result.stdout !== 'watcher-runtime-ok
   )
 }
 
-console.log(`Verified ${executable}: packaged Electron runtime started`)
+process.stdout.write(`Verified ${executable}: packaged Electron runtime started\n`)
