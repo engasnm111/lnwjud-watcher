@@ -11,14 +11,14 @@ body:
     id: watcher-version
     attributes:
       label: Watcher version
-      placeholder: v0.2.4
+      placeholder: v0.2.5
     validations:
       required: true
   - type: input
     id: lnwjud-version
     attributes:
       label: LNWJUD version
-      placeholder: v5.6.1
+      placeholder: v5.6.6
     validations:
       required: true
   - type: dropdown

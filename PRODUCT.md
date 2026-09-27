@@ -37,7 +37,7 @@ One shared React/TypeScript application ships as:
 
 ## Product boundary
 
-The current v0.2.4 release is monitoring only.
+The current v0.2.5 release is monitoring only.
 
 Watcher does not:
 

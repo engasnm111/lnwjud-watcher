@@ -6,7 +6,7 @@
 
 ## สำหรับผู้ใช้ทั่วไป / For users
 
-ผู้ใช้ทั่วไปไม่ต้องเรียก API เอง: เปิด LNWJUD v5.6.1+, ใช้ local pairing endpoint เพื่อรับ Watcher endpoint/token แล้วกรอกในแอป Watcher. รายละเอียดการเชื่อมต่ออยู่ใน [README](../README.md).
+ผู้ใช้ทั่วไปไม่ต้องเรียก API เอง: เปิด LNWJUD v5.6.1+ (แนะนำ v5.6.6 เพื่อข้อมูล Goal และปลั๊กอินครบ), ใช้ local pairing endpoint เพื่อรับ Watcher endpoint/token แล้วกรอกในแอป Watcher. รายละเอียดการเชื่อมต่ออยู่ใน [README](../README.md).
 
 Base URL: `https://<runtime-host>/api/v1`
 
@@ -25,6 +25,15 @@ Required top-level fields:
 - `git`: selected/primary-project sanitized Git compatibility view
 
 `workspaces` is an additive Protocol v1 field. LNWJUD v5.6.1 keeps top-level `goal` and `git` so clients written for the original v1 shape can continue to render the selected project. New clients should use `workspaces[]` for parallel-project and multi-goal views.
+
+LNWJUD v5.6.6 adds these optional Protocol v1 fields while retaining compatibility with older clients:
+
+- `plugins[]`: each user-configured MCP server's display name, provider (`mcp`), enabled/connected/excluded flags, and lifecycle. Commands, paths, credentials, and server configuration are omitted. External agent hosts that do not expose plugin identity cannot supply their own plugin names.
+- Every active Goal includes `lifecycle: "active"`, `completionReady`, `objective`, `currentPhase`, `acceptanceCriteria[]` with id/title/status, `activeTaskCount`, `createdAt`, `updatedAt`, and `lastCheckpointAt` when available. Text is bounded and sanitized.
+- `completionReady` means all plan steps and acceptance criteria are complete, with no blockers or active tasks. It does **not** mean the Goal is closed: LNWJUD still requires explicit `finish_goal` and its terminal checks.
+- Runtime and orchestrator `running` reflect observable work in progress. An open Goal with no active operation is waiting or idle, even if its checklist is complete.
+
+Watcher v0.2.5 uses the new fields for Goal readiness, project details, alerts, and plugin names. Older LNWJUD versions remain readable with less detail.
 
 ## Live events
 `WS /events` streams validated event envelopes after the initial snapshot. Clients reconnect with bounded exponential backoff, refresh the authoritative snapshot after reconnect, and re-sync the snapshot after live activity so Goal/Agent/Git state cannot remain stale while the socket stays healthy.

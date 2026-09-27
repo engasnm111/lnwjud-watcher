@@ -25,7 +25,7 @@
 </p>
 
 <h2 align="center">Download lnwjud Watcher</h2>
-<p align="center">Desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.4.</p>
+<p align="center">Desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.5.</p>
 
 <table align="center">
   <tr>
@@ -71,7 +71,15 @@ The widgets are designed for the quick question that matters most during long-ru
 
 ## Current version
 
-**lnwjud Watcher v0.2.4** is designed for **LNWJUD v5.6.1 or later**.
+**lnwjud Watcher v0.2.5** works with **LNWJUD v5.6.1 or later**. Goal readiness and configured MCP plugin names require **LNWJUD v5.6.6**.
+
+### What's new in v0.2.5
+
+- **Accurate Goal state:** completed milestones alone no longer imply a Goal can close. Watcher shows acceptance criteria and active task count from LNWJUD v5.6.6, then marks a Goal ready only when runtime checks agree.
+- **Four new views:** Alerts Center, Project Details, Connection Health, and filtered Activity help locate stalled work and connection issues.
+- **Android inactivity reminders:** opt in to one native notification after an open Goal has no observable progress for 5 or 10 minutes. A fresh authenticated snapshot is required before the notification; closed or ready Goals are removed and repeat alerts are suppressed. Android may delay background delivery.
+- **Plugin names:** the Agents screen lists user-configured MCP server names and connection state sent by LNWJUD v5.6.6. External hosts that do not expose plugin identity still appear under their provider name.
+- **Update fix:** an installed app no longer offers its own version again after startup.
 
 ### What's new in v0.2.4
 

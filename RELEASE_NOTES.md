@@ -2,28 +2,30 @@
   <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
-# lnwjud Watcher v0.2.4
+# lnwjud Watcher v0.2.5
 
-v0.2.4 corrects the Web/PWA update experience, clarifies active goals whose milestones are complete, and adds native package startup checks.
+v0.2.5 makes Goal state more accurate, adds monitoring views and Android reminders, and fixes repeated update prompts.
 
 ### What changed
 
-- Web/PWA updates through its service worker. The website no longer blocks use with a GitHub Release download prompt.
-- Goals with all milestones complete but still reported active by LNWJUD show **Ready to finish** instead of a generic waiting label. Overview counts these goals separately. Watcher does not claim that the runtime has closed them.
-- The connection endpoint and Watcher Session token remain on this device for up to one year. Older valid tokens migrate to this expiry. Authentication, endpoint, and network errors show a Settings link with specific guidance.
-- Agent names continue to come from LNWJUD. The current Watcher Protocol v1 reports delegated work as Codex and does not provide user-configured plugin names.
+- A completed checklist no longer implies a Goal is finished. With LNWJUD v5.6.6, Watcher shows acceptance criteria, active tasks, and the runtime's `completionReady` decision. The Goal stays open until `finish_goal` succeeds.
+- Alerts Center, Project Details, Connection Health, and Activity filters add direct paths to stalled work and connection diagnostics.
+- Android users can opt in to an inactivity notification after 5 or 10 minutes without observed Goal work. The native monitor checks a fresh authenticated snapshot before posting, suppresses repeats for one inactivity episode, and removes notifications when a Goal closes or becomes ready. Android may delay background checks.
+- The Agents screen lists user-configured MCP server names and connection state received from LNWJUD v5.6.6. Names from external hosts remain unavailable when the host does not expose them.
+- Native apps offer an update only when its release version is newer than the installed version. Web/PWA continues to update through its service worker.
+- Watcher continues to remember the endpoint and Session token on this device for up to one year and guides users to Settings after authentication or network errors.
 
 ### Desktop packages
 
-- macOS community DMGs use an ad-hoc signature with the Electron entitlements needed to launch. CI mounts and verifies each DMG, checks its signature, and starts the packaged runtime on native Apple silicon and Intel runners.
-- Windows and Linux CI smoke test their packaged Electron runtimes. Linux adds a tar.gz package for systems where AppImage/FUSE cannot run.
+- macOS community DMGs use an ad-hoc signature with the Electron entitlements needed to launch. CI checks packaged startup on native Apple silicon and Intel runners.
+- Windows and Linux CI check packaged startup. Linux includes a tar.gz package for systems where AppImage/FUSE cannot run.
 - All release downloads include a `SHA256SUMS.txt` manifest.
 
 macOS builds remain **without Apple Developer ID and notarization**. macOS may require first-launch approval in **System Settings → Privacy & Security → Open Anyway**. If it reports a damaged app, compare the DMG with the published SHA-256. For a matching checksum when **Open Anyway** is unavailable, the [install guide](docs/INSTALL.md) gives a per-app quarantine fallback. See also [Apple's first-launch guidance](https://support.apple.com/en-gb/102445).
 
 ### Compatibility and artifacts
 
-The full experience requires **LNWJUD v5.6.1 or later** and Watcher Protocol v1.
+The full experience requires **LNWJUD v5.6.6 or later** and Watcher Protocol v1. Basic monitoring remains compatible with LNWJUD v5.6.1+.
 
 - `lnwjud-watcher-windows-x64.exe`
 - `lnwjud-watcher-macos-arm64.dmg`

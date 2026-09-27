@@ -21,5 +21,14 @@ export default function AgentsPage() {
         <p>{agent.task ?? t('overview.noDelegatedTask')}</p>
       </article>;
     }) ?? <div className="empty-card">{t('agents.waiting')}</div>}</div>
+    <section>
+      <div className="section-heading"><div><span className="eyebrow">MCP</span><h2>{t('agents.plugins')}</h2></div></div>
+      <p className="section-help">{t('agents.pluginsHelp')}</p>
+      {!snapshot?.plugins.length ? <div className="empty-card">{t('agents.noPlugins')}</div> : <div className="agent-grid">{snapshot.plugins.map((plugin) =>
+        <article className="agent-card" key={plugin.name}>
+          <div className="agent-head"><div className="agent-name"><span className="avatar">{plugin.name.slice(0, 1)}</span><div><strong>{plugin.name}</strong><span>{t('agents.plugin')}</span></div></div><span className={'connection-chip connection-' + (plugin.connected ? 'connected' : 'offline')}>{plugin.connected ? t('connection.connected') : t('connection.offline')}</span></div>
+          <p>{plugin.excluded ? t('agents.excluded') : plugin.lifecycle === 'termination_unverified' ? t('agents.unverified') : plugin.enabled ? t('agents.enabled') : t('agents.disabled')}</p>
+        </article>)}</div>}
+    </section>
   </div>;
 }

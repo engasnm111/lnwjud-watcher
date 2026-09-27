@@ -4,6 +4,14 @@
 
 # Changelog
 
+## 0.2.5 - 2026-09-27
+
+- Rendered Goal readiness from LNWJUD v5.6.6 acceptance criteria and active tasks, and separated open Goals from observable runtime work.
+- Added Alerts Center, Project Details, Connection Health, and Activity filters.
+- Added opt-in Android inactivity reminders that verify a fresh authenticated snapshot, cancel after Goal closure, and suppress repeated notifications for the same inactivity episode.
+- Displayed configured MCP plugin names and lifecycle from the additive Watcher Protocol v1 fields.
+- Prevented installed apps from offering an update to their already installed version.
+
 ## 0.2.4 - 2026-09-27
 
 - Kept the hosted Web/PWA usable by removing native GitHub Release gating; service-worker updates remain automatic.

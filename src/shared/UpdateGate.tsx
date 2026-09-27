@@ -18,9 +18,7 @@ export default function UpdateGate({ children }: PropsWithChildren) {
     const controller = new AbortController();
     const check = () => {
       void checkForUpdate(CURRENT_VERSION, undefined, controller.signal)
-        .then((available) => {
-          if (available) setUpdate(available);
-        })
+        .then((available) => setUpdate(available))
         .catch(() => undefined);
     };
     const checkWhenVisible = () => {

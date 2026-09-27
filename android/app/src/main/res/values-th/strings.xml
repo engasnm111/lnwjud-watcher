@@ -22,4 +22,8 @@
         <item quantity="one">%d active</item>
         <item quantity="other">%d active</item>
     </plurals>
+    <string name="alert_channel_name">กิจกรรม Goal</string>
+    <string name="alert_channel_description">เตือนเมื่อ Goal ที่ยังเปิดอยู่ไม่มีงานที่สังเกตได้</string>
+    <string name="alert_stalled_title">Watcher · โปรดตรวจ Goal</string>
+    <string name="alert_stalled_body">%1$s · %2$s ไม่พบงานใหม่ เปิด Watcher เพื่อตรวจสอบ</string>
 </resources>
