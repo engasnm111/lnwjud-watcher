@@ -2,11 +2,11 @@
   <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
-# lnwjud Watcher v0.2.5
+# lnwjud Watcher v0.2.6
 
-v0.2.5 makes Goal state more accurate, adds monitoring views and Android reminders, and fixes repeated update prompts.
+v0.2.6 replaces the Android notification checkbox with a gold switch matching LNWJUD's toggle style. The permission request and saved notification setting continue to work the same way.
 
-### What changed
+### Included monitoring features
 
 - A completed checklist no longer implies a Goal is finished. With LNWJUD v5.6.6, Watcher shows acceptance criteria, active tasks, and the runtime's `completionReady` decision. The Goal stays open until `finish_goal` succeeds.
 - Alerts Center, Project Details, Connection Health, and Activity filters add direct paths to stalled work and connection diagnostics.

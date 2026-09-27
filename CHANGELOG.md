@@ -4,6 +4,11 @@
 
 # Changelog
 
+## 0.2.6 - 2026-09-28
+
+- Replaced the Android notification checkbox with an accessible gold toggle matching LNWJUD's switch style.
+- Kept the existing notification permission request and saved on/off preference behavior.
+
 ## 0.2.5 - 2026-09-27
 
 - Rendered Goal readiness from LNWJUD v5.6.6 acceptance criteria and active tasks, and separated open Goals from observable runtime work.

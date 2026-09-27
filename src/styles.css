@@ -363,8 +363,6 @@ img{max-width:100%}
 .health-details dl{display:grid;grid-template-columns:minmax(90px,1fr) 3fr;gap:12px}
 .health-details dt{color:var(--text-muted)}
 .health-details dd{margin:0}
-.settings-checkbox{display:flex!important;align-items:center;gap:10px}
-.settings-checkbox input{width:18px!important;height:18px}
 .project-chip{
   display:inline-flex;
   align-items:center;
@@ -642,6 +640,39 @@ img{max-width:100%}
 }
 .settings-card input:disabled,.settings-card select:disabled{color:#667281;background:#0b1016}
 .settings-card small{color:#778493;font-weight:400}
+.settings-card .settings-toggle-row{display:flex;align-items:center;gap:10px;cursor:pointer}
+.settings-card .settings-toggle-input{
+  position:absolute;
+  width:1px;
+  height:1px;
+  min-height:0;
+  padding:0;
+  margin:0;
+  opacity:0;
+}
+.settings-toggle-track{
+  width:40px;
+  height:22px;
+  flex:0 0 40px;
+  padding:2px;
+  border:1px solid #56606c;
+  border-radius:999px;
+  background:#303843;
+  transition:background .16s ease,border-color .16s ease;
+}
+.settings-toggle-track::after{
+  content:"";
+  display:block;
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 1px 3px #0006;
+  transition:transform .16s ease;
+}
+.settings-toggle-input:checked + .settings-toggle-track{background:#d6a62e;border-color:#f4c753}
+.settings-toggle-input:checked + .settings-toggle-track::after{transform:translateX(18px)}
+.settings-toggle-input:focus-visible + .settings-toggle-track{outline:2px solid var(--gold);outline-offset:3px}
 .session-token-help{
   display:grid;
   gap:10px;

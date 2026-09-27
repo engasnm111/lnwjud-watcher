@@ -103,12 +103,12 @@ export default function SettingsPage() {
           <option value={5}>{t('settings.fiveMinutes')}</option>
         </select>
       </label>
-      {isAndroid() && <label className="settings-checkbox"><input type="checkbox" checked={watcher.alertPreferences.androidNotifications} onChange={(event) => {
+      {isAndroid() && <label className="settings-toggle-row"><input className="settings-toggle-input" type="checkbox" role="switch" checked={watcher.alertPreferences.androidNotifications} onChange={(event) => {
         if (!event.target.checked) { watcher.updateAlertPreferences({ ...watcher.alertPreferences, androidNotifications: false }); return; }
         void requestAndroidAlertPermission().then((granted) => {
           watcher.updateAlertPreferences({ ...watcher.alertPreferences, androidNotifications: granted });
         });
-      }}/>{t('settings.androidNotifications')}</label>}
+      }}/><span className="settings-toggle-track" aria-hidden="true"/><span>{t('settings.androidNotifications')}</span></label>}
       <small className="muted">{t('settings.notificationHelp')}</small>
     </section>
 
