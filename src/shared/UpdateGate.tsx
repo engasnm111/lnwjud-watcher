@@ -16,17 +16,22 @@ export default function UpdateGate({ children }: PropsWithChildren) {
     // The hosted site updates through its service worker, independent of native release assets.
     if (detectUpdatePlatform() === 'web') return;
     const controller = new AbortController();
-    const check = () => {
+    let latestCheck = 0;
+    const check = (resetPendingUpdate = false) => {
+      const checkId = ++latestCheck;
+      if (resetPendingUpdate) setUpdate(null);
       void checkForUpdate(CURRENT_VERSION, undefined, controller.signal)
-        .then((available) => setUpdate(available))
+        .then((available) => {
+          if (!controller.signal.aborted && checkId === latestCheck) setUpdate(available);
+        })
         .catch(() => undefined);
     };
     const checkWhenVisible = () => {
-      if (document.visibilityState === 'visible') check();
+      if (document.visibilityState === 'visible') check(true);
     };
 
     check();
-    const timer = window.setInterval(check, UPDATE_CHECK_MS);
+    const timer = window.setInterval(() => check(), UPDATE_CHECK_MS);
     document.addEventListener('visibilitychange', checkWhenVisible);
     return () => {
       controller.abort();

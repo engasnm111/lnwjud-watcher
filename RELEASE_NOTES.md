@@ -2,9 +2,9 @@
   <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
-# lnwjud Watcher v0.2.6
+# lnwjud Watcher v0.2.7
 
-v0.2.6 replaces the Android notification checkbox with a gold switch matching LNWJUD's toggle style. The permission request and saved notification setting continue to work the same way.
+v0.2.7 fixes the update notice that briefly appeared again after an Android APK upgrade. The Android app hides the old notice while retiring a previously installed Web/PWA service worker, and native apps no longer register that worker. On returning to the app, Watcher clears the previous update result while checking again and ignores older checks that finish late. The hosted Web/PWA still updates through its service worker. Saved endpoints and Session tokens are not cleared.
 
 ### Included monitoring features
 
