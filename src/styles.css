@@ -651,27 +651,33 @@ img{max-width:100%}
   opacity:0;
 }
 .settings-toggle-track{
+  position:relative;
   width:40px;
   height:22px;
   flex:0 0 40px;
-  padding:2px;
-  border:1px solid #56606c;
+  border:1px solid rgba(255,255,255,.13);
   border-radius:999px;
-  background:#303843;
-  transition:background .16s ease,border-color .16s ease;
+  background:rgba(255,255,255,.08);
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.22);
+  transition:background .18s ease,border-color .18s ease;
 }
 .settings-toggle-track::after{
   content:"";
-  display:block;
-  width:16px;
-  height:16px;
+  position:absolute;
+  top:3px;
+  left:3px;
+  width:14px;
+  height:14px;
   border-radius:50%;
-  background:#fff;
-  box-shadow:0 1px 3px #0006;
-  transition:transform .16s ease;
+  background:rgba(255,255,255,.72);
+  box-shadow:0 2px 6px rgba(0,0,0,.32);
+  transition:transform .18s ease,background .18s ease;
 }
-.settings-toggle-input:checked + .settings-toggle-track{background:#d6a62e;border-color:#f4c753}
-.settings-toggle-input:checked + .settings-toggle-track::after{transform:translateX(18px)}
+.settings-toggle-input:checked + .settings-toggle-track{
+  border-color:rgba(230,184,74,.55);
+  background:linear-gradient(135deg,#c99728,#e9bd54);
+}
+.settings-toggle-input:checked + .settings-toggle-track::after{background:#fff;transform:translateX(18px)}
 .settings-toggle-input:focus-visible + .settings-toggle-track{outline:2px solid var(--gold);outline-offset:3px}
 .session-token-help{
   display:grid;
