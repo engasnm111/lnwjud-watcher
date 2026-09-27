@@ -565,6 +565,7 @@ img{max-width:100%}
 .status-blocked,.status-error,.dot-error,.dot-offline{color:var(--red)}
 
 .milestone-list{display:grid;gap:10px;margin-top:20px}
+.goal-finalization-note{padding:12px 14px;border-left:3px solid var(--amber);background:#14150f;border-radius:0 10px 10px 0;color:var(--text-muted)}
 .milestone{
   display:flex;
   gap:12px;
@@ -703,6 +704,7 @@ img{max-width:100%}
   font-size:.86rem;
 }
 .error-banner{background:#2a1114;border:1px solid #6b292f;color:#ffb2b8}
+.error-banner a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .degraded-banner{background:#271e0d;border:1px solid #6a4b1d;color:#f2c36f}
 
 .update-overlay{

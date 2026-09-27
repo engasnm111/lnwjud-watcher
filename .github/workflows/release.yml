@@ -9,7 +9,25 @@ permissions:
   contents: read
 
 jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npm audit --audit-level=high
+
   web:
+    needs: quality
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -28,6 +46,7 @@ jobs:
           path: lnwjud-watcher-web.zip
 
   desktop-windows:
+    needs: quality
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -41,13 +60,24 @@ jobs:
       - run: npm run desktop:pack:windows
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
+      - name: Smoke test packaged Windows runtime
+        run: node scripts/verify-windows-package.mjs
       - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         with:
           name: desktop-windows
           path: release-desktop/lnwjud-watcher-windows-x64.exe
 
   desktop-macos:
-    runs-on: macos-latest
+    needs: quality
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-latest
+            arch: arm64
+          - runner: macos-15-intel
+            arch: x64
+    runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -57,15 +87,17 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run desktop:pack:mac
+      - run: npm run desktop:pack:mac:${{ matrix.arch }}
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
+      - run: bash scripts/verify-macos-package.sh "${{ matrix.arch }}"
       - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         with:
-          name: desktop-macos
-          path: release-desktop/lnwjud-watcher-macos-*.dmg
+          name: desktop-macos-${{ matrix.arch }}
+          path: release-desktop/lnwjud-watcher-macos-${{ matrix.arch }}.dmg
 
   desktop-linux:
+    needs: quality
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -79,12 +111,22 @@ jobs:
       - run: npm run desktop:pack:linux
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
+      - name: Smoke test packaged Linux runtime
+        run: |
+          test -s release-desktop/lnwjud-watcher-linux-x64.AppImage
+          test -s release-desktop/lnwjud-watcher-linux-x64.tar.gz
+          chmod +x release-desktop/lnwjud-watcher-linux-x64.AppImage
+          result="$(APPIMAGE_EXTRACT_AND_RUN=1 ELECTRON_RUN_AS_NODE=1 release-desktop/lnwjud-watcher-linux-x64.AppImage -e 'process.stdout.write("watcher-runtime-ok")')"
+          test "$result" = "watcher-runtime-ok"
       - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         with:
           name: desktop-linux
-          path: release-desktop/lnwjud-watcher-linux-x64.AppImage
+          path: |
+            release-desktop/lnwjud-watcher-linux-x64.AppImage
+            release-desktop/lnwjud-watcher-linux-x64.tar.gz
 
   android:
+    needs: quality
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -129,6 +171,7 @@ jobs:
           path: lnwjud-watcher-android.apk
 
   ios:
+    needs: quality
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -161,6 +204,14 @@ jobs:
         with:
           path: release-assets
           merge-multiple: true
+      - name: Verify release version and write checksums
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          test "$TAG_NAME" = "v$(node -p "require('./package.json').version")"
+          cd release-assets
+          sha256sum lnwjud-watcher-* > SHA256SUMS.txt
+          sha256sum -c SHA256SUMS.txt
       - name: Publish GitHub release
         env:
           GH_TOKEN: ${{ github.token }}

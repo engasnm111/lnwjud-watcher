@@ -20,7 +20,7 @@ const runtimeGoal: Goal = {
 
 const watcherGoal: Goal = {
   id: 'demo-watcher-goal',
-  key: 'lnwjud-watcher-v0.2.3',
+  key: 'lnwjud-watcher-v0.2.4',
   status: 'running',
   currentTask: 'Render every active project and durable goal without hiding parallel work.',
   blockers: [],

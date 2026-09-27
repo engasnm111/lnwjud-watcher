@@ -1,6 +1,6 @@
 {
   "name": "lnwjud-watcher",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Read-only LNWJUD monitoring client for Desktop/Web/PWA, Android, and iOS.",
   "license": "MIT",
   "type": "module",
@@ -19,7 +19,9 @@
     "desktop": "npm run build && electron .",
     "desktop:pack:windows": "npm run build && electron-builder --win portable --x64 --publish never",
     "desktop:pack:mac": "npm run build && electron-builder --mac dmg --arm64 --x64 --publish never",
-    "desktop:pack:linux": "npm run build && electron-builder --linux AppImage --x64 --publish never",
+    "desktop:pack:mac:arm64": "npm run build && electron-builder --mac dmg --arm64 --publish never",
+    "desktop:pack:mac:x64": "npm run build && electron-builder --mac dmg --x64 --publish never",
+    "desktop:pack:linux": "npm run build && electron-builder --linux AppImage tar.gz --x64 --publish never",
     "cap:sync": "cap sync",
     "cap:android": "cap open android",
     "cap:ios": "cap open ios"
@@ -84,6 +86,10 @@
       "artifactName": "lnwjud-watcher-windows-x64.exe"
     },
     "mac": {
+      "identity": "-",
+      "hardenedRuntime": true,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
       "target": [
         {
           "target": "dmg",
@@ -107,7 +113,7 @@
         }
       ],
       "icon": "public/icon-512.png",
-      "artifactName": "lnwjud-watcher-linux-x64.AppImage",
+      "artifactName": "lnwjud-watcher-linux-x64.${ext}",
       "category": "Utility"
     }
   }

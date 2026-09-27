@@ -2,7 +2,7 @@ import { useEffect, useState, type PropsWithChildren } from 'react';
 import { Download, RefreshCw, ShieldAlert } from 'lucide-react';
 import { useI18n } from '../i18n/I18nContext';
 import type { MessageKey } from '../i18n/messages';
-import { checkForUpdate, CURRENT_VERSION, startUpdate, type AvailableUpdate } from '../data/update';
+import { checkForUpdate, CURRENT_VERSION, detectUpdatePlatform, startUpdate, type AvailableUpdate } from '../data/update';
 
 const UPDATE_CHECK_MS = 30 * 60 * 1_000;
 
@@ -13,6 +13,8 @@ export default function UpdateGate({ children }: PropsWithChildren) {
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
+    // The hosted site updates through its service worker, independent of native release assets.
+    if (detectUpdatePlatform() === 'web') return;
     const controller = new AbortController();
     const check = () => {
       void checkForUpdate(CURRENT_VERSION, undefined, controller.signal)

@@ -1,7 +1,9 @@
 import { useWatcher } from '../../app/WatcherContext';
 import StatusMeta from '../../shared/StatusMeta';
 import StatusPill from '../../shared/StatusPill';
+import GoalStatusPill from '../../shared/GoalStatusPill';
 import { formatTime, goalProgress, snapshotGoals, snapshotWorkspaces, workspaceName } from '../../shared/format';
+import { goalNeedsFinalization } from '../../shared/goalState';
 import { useI18n } from '../../i18n/I18nContext';
 
 export default function OverviewPage() {
@@ -15,6 +17,7 @@ export default function OverviewPage() {
   const activeProjects = workspaces.filter((workspace) => workspace.goals.length > 0 || workspace.activeOperations > 0).length;
   const activeAgents = snapshot.agents.filter((agent) => !['idle','waiting','done'].includes(agent.status)).length;
   const blockers = goals.reduce((count, goal) => count + goal.blockers.length, 0);
+  const readyToFinish = goals.filter(goalNeedsFinalization).length;
 
   return <div className="page-stack">
     <section className="hero-card live-card">
@@ -44,6 +47,7 @@ export default function OverviewPage() {
         <div><span>{t('overview.activeAgents')}</span><strong>{activeAgents}</strong></div>
         <div><span>{t('overview.activeOperations')}</span><strong>{snapshot.runtime.activeOperations}</strong></div>
         <div><span>{t('overview.blockers')}</span><strong>{blockers}</strong></div>
+        <div><span>{t('overview.readyToFinish')}</span><strong>{readyToFinish}</strong></div>
       </div>
     </section>
 
@@ -69,7 +73,7 @@ export default function OverviewPage() {
           {workspace.goals.length > 0
             ? <div className="workspace-goal-preview">{workspace.goals.slice(0, 3).map((goal) =>
                 <div className="workspace-goal-row" key={goal.id}>
-                  <div><StatusPill status={goal.status}/><strong className="break-anywhere">{goal.key}</strong></div>
+                  <div><GoalStatusPill goal={goal}/><strong className="break-anywhere">{goal.key}</strong></div>
                   <div className="workspace-progress"><span style={{ width: String(goalProgress(goal)) + '%' }}/></div>
                   {goal.currentTask && <small>{goal.currentTask}</small>}
                 </div>)}
