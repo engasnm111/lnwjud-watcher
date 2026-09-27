@@ -4,6 +4,15 @@
 
 # Changelog
 
+## 0.2.4 - 2026-09-27
+
+- Kept the hosted Web/PWA usable by removing native GitHub Release gating; service-worker updates remain automatic.
+- Added a Ready to finish goal state and Overview count when all milestones are complete but the runtime still reports the goal active.
+- Stored the Watcher Session token for up to one year across platforms, migrated valid older values, and added targeted connection-error guidance linking to Settings.
+- Added native macOS Apple silicon/Intel DMG signature and runtime smoke checks, plus packaged Windows/Linux runtime checks.
+- Added a Linux tar.gz fallback and release SHA-256 manifest.
+- Clarified that custom plugin agent names are unavailable until LNWJUD exposes them in Watcher Protocol.
+
 ## 0.2.3 - 2026-09-26
 
 Shared activity metadata and release consistency update.

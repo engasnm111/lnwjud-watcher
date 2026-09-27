@@ -1,6 +1,7 @@
 import { useWatcher } from '../../app/WatcherContext';
-import StatusPill from '../../shared/StatusPill';
+import GoalStatusPill from '../../shared/GoalStatusPill';
 import { goalProgress, snapshotWorkspaces } from '../../shared/format';
+import { goalNeedsFinalization } from '../../shared/goalState';
 import { useI18n } from '../../i18n/I18nContext';
 import type { MessageKey } from '../../i18n/messages';
 
@@ -29,12 +30,13 @@ export default function GoalsPage() {
           const progress = goalProgress(goal);
           return <article className="goal-card multi-goal-card" key={goal.id}>
             <div className="goal-heading">
-              <StatusPill status={goal.status}/>
+              <GoalStatusPill goal={goal}/>
               <div className="progress-ring" style={{ '--progress': progress } as React.CSSProperties}>{progress}%</div>
             </div>
             <span className="eyebrow">{t('goal.durable')}</span>
             <h2 className="break-anywhere">{goal.key}</h2>
             <p>{goal.currentTask || t('overview.noDelegatedTask')}</p>
+            {goalNeedsFinalization(goal) && <p className="goal-finalization-note">{t('goal.finalizationHelp')}</p>}
             <div className="milestone-list">{goal.milestones.map((item) =>
               <div className="milestone" key={item.id}>
                 <span className={'milestone-mark milestone-' + item.status}/>

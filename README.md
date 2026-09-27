@@ -25,7 +25,7 @@
 </p>
 
 <h2 align="center">Download lnwjud Watcher</h2>
-<p align="center">One-click desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.3.</p>
+<p align="center">Desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.4.</p>
 
 <table align="center">
   <tr>
@@ -33,7 +33,7 @@
       <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-windows-x64.exe">
         <img src="assets/download/download-desktop.svg" width="300" alt="Download lnwjud Watcher Desktop" />
       </a><br />
-      <sub>Windows portable EXE · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-macos-arm64.dmg">macOS Apple silicon</a> · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-macos-x64.dmg">macOS Intel</a> · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-linux-x64.AppImage">Linux</a></sub>
+      <sub>Windows portable EXE · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-macos-arm64.dmg">macOS Apple silicon</a> · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-macos-x64.dmg">macOS Intel</a> · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-linux-x64.AppImage">Linux AppImage</a> / <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-linux-x64.tar.gz">tar.gz</a></sub>
     </td>
     <td align="center" width="33%">
       <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-android.apk">
@@ -71,9 +71,17 @@ The widgets are designed for the quick question that matters most during long-ru
 
 ## Current version
 
-**lnwjud Watcher v0.2.3** is designed for **LNWJUD v5.6.1 or later**.
+**lnwjud Watcher v0.2.4** is designed for **LNWJUD v5.6.1 or later**.
 
-### What's new in v0.2.3
+### What's new in v0.2.4
+
+- **Web/PWA updates:** the website stays usable and updates through its service worker. Native GitHub download prompts no longer cover the site.
+- **Goal finalization view:** a 100% milestone goal still reported active by LNWJUD now says "Ready to finish" and explains why it remains in the active list. Overview counts these goals separately.
+- **Desktop package checks:** macOS DMGs use a consistent ad-hoc signature and are smoke tested on native Apple silicon and Intel runners. Windows and Linux packaged runtimes are smoke tested too.
+- **Linux fallback:** a tar.gz package is available when AppImage/FUSE is unavailable. Release files include SHA-256 checksums.
+- **Remembered connection:** Watcher keeps the Session token on this device for up to one year and guides you to Settings when authentication or the endpoint fails.
+
+### v0.2.3 highlights
 
 - **Shared status metadata UI:** live activity and timeline cards now use one `StatusMeta` component for status + timestamp, so spacing, typography, and color cannot drift between screens.
 - **Consistent mobile spacing:** Overview and Activity now render the same status/time layout on narrow Android WebViews.
@@ -91,16 +99,16 @@ The widgets are designed for the quick question that matters most during long-ru
 - **Clearer runtime tracking:** Watcher distinguishes observable LNWJUD runtime work from ChatGPT thinking outside the runtime, shows active-operation count, and adds a live “last runtime work” age. Active goals with zero observable operations are shown as waiting, and agents/runtime are idle instead of falsely appearing to run.
 - **Richer Git status:** branch, current commit, clean/dirty state, changed-file count, latest commit subject, and latest commit time are shown on Overview.
 - **Copy-friendly pairing:** LNWJUD v5.6.1 turns `127.0.0.1:17891/api/v1/pair` into a local-only UI with one-click Session token copy while preserving JSON mode.
-- **Remembered pairing:** Web/PWA keeps the Session token for 60 days in browser-local storage. Packaged Desktop and mobile apps keep it on the device across restarts until you clear it in Settings.
+- **Pairing:** enter the Watcher Session token from the LNWJUD computer. Since v0.2.4 it expires after one year on this device.
 - **Android home-screen widgets:** v0.2.0 adds three launcher widgets — Status, Goal, and Agents — showing current work, active counts, the latest activity, and how long ago the last work/sync happened without exposing the Watcher token.
 - **Cleaner mobile Activity cards:** status/time and project/title blocks keep explicit spacing and long commands/IDs wrap safely on narrow screens.
-- **Mandatory update prompt:** Watcher checks the latest GitHub Release on startup, every 30 minutes, and when the app becomes visible. v0.1.0 → v0.2.0 is a normal semantic-version upgrade path, so users can directly test the signed APK update flow.
+- **Native update prompt:** packaged apps check the latest GitHub Release; Web/PWA uses its service worker instead.
 - **Web/PWA update:** service-worker updates are refreshed automatically.
 - **Stable Android upgrade identity:** v0.2.0 keeps the same persistent signing identity and a higher internal Android `versionCode`, so it can install over the signed v0.1.0 APK. Android still requires the normal user install confirmation; Watcher cannot silently replace an APK.
 - **Progressive Activity feed:** Activity renders 20 cards at a time and automatically loads the next batch near the bottom (with a manual fallback button), while the runtime snapshot remains capped at 100 recent events.
 - **Desktop/Linux/macOS/iOS handoff:** the forced update modal opens the matching GitHub asset or release page. Platform security still requires the normal OS confirmation/signing flow; Watcher does not silently execute downloaded binaries.
 
-- **One-click desktop:** Windows portable EXE, macOS DMGs, and Linux AppImage run the production Watcher UI without Node.js/npm.
+- **Desktop packages:** Windows portable EXE, macOS DMGs, and Linux AppImage/tar.gz run the production Watcher UI without Node.js/npm. Community macOS builds still require a first-launch approval in macOS.
 - **Tray background mode:** closing the desktop window hides Watcher to the tray/menu bar; the tray menu can show/hide or fully quit.
 - **Hosted Web/PWA:** normal users can open the GitHub Pages build directly instead of running a dev server.
 - **Practical iPhone path:** Safari → Add to Home Screen is documented as the normal physical-device path; the native release artifact remains Simulator-only until Apple signing is available.
@@ -194,7 +202,7 @@ Watcher does **not** expose hidden model reasoning.
 - Pairing stays loopback-only on port 17891.
 - Remote Watcher traffic uses HTTPS/WSS.
 - The dedicated Watcher token is separate from MCP/tunnel/provider credentials.
-- The client keeps the bearer token session-only.
+- The client stores the dedicated Watcher Session token on this device for up to one year, never in widget state, URLs, or logs.
 - Protocol v1 exposes no shell, file mutation, MCP mutation, or approval surface.
 
 See [Protocol v1](docs/PROTOCOL.md) and [Architecture](docs/ARCHITECTURE.md).

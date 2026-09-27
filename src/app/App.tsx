@@ -12,6 +12,7 @@ import OnboardingPage from '../features/onboarding/OnboardingPage';
 import { formatRelativeTime, formatTime } from '../shared/format';
 import type { MessageKey } from '../i18n/messages';
 import UpdateGate from '../shared/UpdateGate';
+import { connectionHelpKey } from '../shared/connectionHelp';
 
 const nav = [
   { to: '/overview', key: 'nav.overview' as const, icon: Home },
@@ -83,7 +84,11 @@ function Shell() {
       </header>
 
       {watcher.fallbackPolling && <div className="degraded-banner">{t('connection.autoRefresh')}</div>}
-      {watcher.error && <div className="error-banner">{watcher.error}</div>}
+      {watcher.error && <div className="error-banner" role="alert">
+        <strong>{t('connection.problem')}</strong>{' '}
+        <span>{t(connectionHelpKey(watcher.error))}</span>{' '}
+        <NavLink to="/settings">{t('connection.openSettings')}</NavLink>
+      </div>}
 
       <Routes>
         <Route path="/overview" element={<OverviewPage/>}/>

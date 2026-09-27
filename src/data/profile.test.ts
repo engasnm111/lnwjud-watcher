@@ -1,6 +1,6 @@
 import { Capacitor } from '@capacitor/core';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { loadSessionToken, saveSessionToken, WEB_SESSION_TOKEN_TTL_MS } from './profile';
+import { loadSessionToken, saveSessionToken, SESSION_TOKEN_TTL_MS } from './profile';
 
 const TOKEN_KEY = 'lnwjud-watcher.session-token';
 
@@ -11,74 +11,38 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe('Session token persistence', () => {
-  it('remembers a Web/PWA token for 60 days and removes it after expiry', () => {
+describe('Session token storage', () => {
+  it('remembers a Web/PWA token for one year and removes it at expiry', () => {
     const start = 1_800_000_000_000;
     const now = vi.spyOn(Date, 'now').mockReturnValue(start);
-
     saveSessionToken('  web-token  ');
-
-    const stored = JSON.parse(localStorage.getItem(TOKEN_KEY) ?? '{}') as {
-      token?: string;
-      storage?: string;
-      expiresAt?: number | null;
-    };
-    expect(stored.token).toBe('web-token');
-    expect(stored.storage).toBe('web');
-    expect(stored.expiresAt).toBe(start + WEB_SESSION_TOKEN_TTL_MS);
-
-    now.mockReturnValue(start + WEB_SESSION_TOKEN_TTL_MS - 1);
+    expect(JSON.parse(localStorage.getItem(TOKEN_KEY) ?? '{}')).toMatchObject({
+      version: 3, token: 'web-token', expiresAt: start + SESSION_TOKEN_TTL_MS
+    });
+    expect(sessionStorage.getItem(TOKEN_KEY)).toBeNull();
+    now.mockReturnValue(start + SESSION_TOKEN_TTL_MS - 1);
     expect(loadSessionToken()).toBe('web-token');
-
-    now.mockReturnValue(start + WEB_SESSION_TOKEN_TTL_MS);
+    now.mockReturnValue(start + SESSION_TOKEN_TTL_MS);
     expect(loadSessionToken()).toBe('');
     expect(localStorage.getItem(TOKEN_KEY)).toBeNull();
   });
 
-  it('keeps the token on a packaged Electron device without the browser TTL', () => {
+  it('uses the same one-year expiry for packaged Electron and Capacitor apps', () => {
+    const start = 1_800_000_000_000;
+    vi.spyOn(Date, 'now').mockReturnValue(start);
     vi.stubGlobal('navigator', { userAgent: 'Mozilla/5.0 lnwjud Watcher Electron/44.4.5' });
-    const now = vi.spyOn(Date, 'now').mockReturnValue(1_800_000_000_000);
-
     saveSessionToken('desktop-token');
-
-    const stored = JSON.parse(localStorage.getItem(TOKEN_KEY) ?? '{}') as {
-      storage?: string;
-      expiresAt?: number | null;
-    };
-    expect(stored.storage).toBe('device');
-    expect(stored.expiresAt).toBeNull();
-
-    now.mockReturnValue(9_000_000_000_000);
-    expect(loadSessionToken()).toBe('desktop-token');
-  });
-
-  it('keeps the token on a Capacitor mobile device across restarts without the browser TTL', () => {
-    vi.spyOn(Capacitor, 'isNativePlatform').mockReturnValue(true);
-    vi.spyOn(Date, 'now').mockReturnValue(1_800_000_000_000);
-
-    saveSessionToken('mobile-token');
-
     expect(JSON.parse(localStorage.getItem(TOKEN_KEY) ?? '{}')).toMatchObject({
-      version: 2,
-      token: 'mobile-token',
-      storage: 'device',
-      expiresAt: null
+      token: 'desktop-token', expiresAt: start + SESSION_TOKEN_TTL_MS
     });
+    vi.spyOn(Capacitor, 'isNativePlatform').mockReturnValue(true);
+    saveSessionToken('mobile-token');
     expect(loadSessionToken()).toBe('mobile-token');
   });
 
-  it('migrates the old session-only token into persistent storage once', () => {
-    sessionStorage.setItem(TOKEN_KEY, 'legacy-token');
-
-    expect(loadSessionToken()).toBe('legacy-token');
-    expect(sessionStorage.getItem(TOKEN_KEY)).toBeNull();
-    expect(JSON.parse(localStorage.getItem(TOKEN_KEY) ?? '{}')).toMatchObject({
-      version: 2,
-      token: 'legacy-token'
-    });
-  });
-
-  it('clears persistent and legacy token storage when the token is removed', () => {
+  it('extends a valid older stored token to the new one-year policy', () => {
+    const start = 1_800_000_000_000;
+    vi.spyOn(Date, 'now').mockReturnValue(start);
     localStorage.setItem(TOKEN_KEY, JSON.stringify({
       version: 2,
       token: 'stored-token',
@@ -86,11 +50,26 @@ describe('Session token persistence', () => {
       savedAt: 1,
       expiresAt: 9_000_000_000_000
     }));
+    expect(loadSessionToken()).toBe('stored-token');
+    expect(JSON.parse(localStorage.getItem(TOKEN_KEY) ?? '{}')).toMatchObject({
+      version: 3, token: 'stored-token', expiresAt: start + SESSION_TOKEN_TTL_MS
+    });
+  });
+
+  it('migrates a legacy session token into one-year storage', () => {
     sessionStorage.setItem(TOKEN_KEY, 'legacy-token');
-
-    saveSessionToken('');
-
-    expect(localStorage.getItem(TOKEN_KEY)).toBeNull();
+    expect(loadSessionToken()).toBe('legacy-token');
     expect(sessionStorage.getItem(TOKEN_KEY)).toBeNull();
+    expect(JSON.parse(localStorage.getItem(TOKEN_KEY) ?? '{}')).toMatchObject({
+      version: 3, token: 'legacy-token'
+    });
+  });
+
+  it('clears both stores when the token is removed', () => {
+    sessionStorage.setItem(TOKEN_KEY, 'session-token');
+    localStorage.setItem(TOKEN_KEY, 'old-token');
+    saveSessionToken('');
+    expect(sessionStorage.getItem(TOKEN_KEY)).toBeNull();
+    expect(localStorage.getItem(TOKEN_KEY)).toBeNull();
   });
 });
