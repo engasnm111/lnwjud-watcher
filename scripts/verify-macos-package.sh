@@ -46,7 +46,7 @@ fi
 
 open -n -a "$app"
 for _ in {1..15}; do
-  launched_pid="$(pgrep -f "$binary" | head -n 1 || true)"
+  launched_pid="$(pgrep -x "$binary_name" | head -n 1 || true)"
   [[ -n "$launched_pid" ]] && break
   sleep 1
 done
