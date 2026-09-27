@@ -14,7 +14,7 @@ This guide is written for normal end users. You do **not** need Node.js, npm, Po
 | --- | --- |
 | Windows PC | **Portable EXE** — double-click, no installer |
 | macOS | **DMG** — drag lnwjud Watcher to Applications |
-| Linux | **AppImage** — make executable once, then double-click |
+| Linux | **AppImage**, or **tar.gz** if FUSE is unavailable |
 | Android | **APK** from GitHub Releases |
 | iPhone / iPad | **Web/PWA** in Safari → Add to Home Screen |
 | Any browser | **Hosted Web/PWA** — open the URL, no install |
@@ -47,11 +47,11 @@ Keep that page private. Copy the **Watcher access token**.
 
 Never publish port **17891**.
 
-On LNWJUD v5.6.1+, that pairing URL opens a local UI with buttons to copy the Session token and local endpoint. Integrations can still request JSON with `?format=json`. Watcher Web/PWA remembers the token for 60 days in that browser; packaged Windows/macOS/Linux and Android/iOS builds keep it on that device across restarts until you clear the token in Settings.
+On LNWJUD v5.6.1+, that pairing URL opens a local UI with buttons to copy the Session token and local endpoint. Integrations can still request JSON with `?format=json`. Watcher remembers the endpoint and Session token on this device for up to one year. A valid token stored by an older release is migrated to the one-year expiry. If the runtime rotates or rejects the token, Watcher shows a connection notice with a link to Settings.
 
-Watcher v0.2.3 checks the latest stable GitHub Release at startup, every 30 minutes, and when the app returns to the foreground. Android downloads the trusted GitHub APK inside Watcher first, then opens Android's installer only after the file is ready. v0.2.3 keeps the same signing identity and publishes a higher internal `versionCode`, so Android can install it over signed v0.2.1/v0.2.0/v0.1.0 builds after the normal user confirmation. Web/PWA refreshes to the newest service-worker build.
+Packaged Watcher v0.2.4 apps check the latest stable GitHub Release at startup, every 30 minutes, and when returning to the foreground. Android downloads the trusted GitHub APK inside Watcher first, then opens Android's installer only after the file is ready. v0.2.4 keeps the same Android signing identity and publishes a higher internal `versionCode`. The Web/PWA site updates through its service worker and does not block the page with an APK or desktop download prompt.
 
-**Update test:** install a signed older release, open it while v0.2.3 is the latest GitHub Release, and Watcher should show the required update prompt and download the trusted GitHub APK inside Watcher before Android asks you to confirm installation. Silent APK replacement is not allowed.
+**Android update test:** install a signed older release, open it while v0.2.4 is the latest GitHub Release, and Watcher should show the update prompt and download the trusted GitHub APK inside Watcher before Android asks you to confirm installation. Silent APK replacement is not allowed.
 
 ## 2. Windows — easiest desktop option
 
@@ -71,12 +71,21 @@ No terminal is required.
    - Apple silicon (M1/M2/M3/M4…): **`lnwjud-watcher-macos-arm64.dmg`**
    - Intel Mac: **`lnwjud-watcher-macos-x64.dmg`**
 2. Open the DMG and drag **lnwjud Watcher** to Applications.
-3. Because the community build is not Apple-notarized, macOS may block the first launch.
-4. Use **Control-click → Open**. If macOS still blocks it, open **System Settings → Privacy & Security** and choose **Open Anyway** for lnwjud Watcher.
-5. Enter the Watcher endpoint and token.
-6. Closing the window keeps the app available from the menu-bar/tray icon. Choose **Quit** from its tray menu to exit.
+3. v0.2.4 uses an ad-hoc code signature checked on both Apple silicon and Intel CI runners. It has no Apple Developer ID or notarization, so macOS may require first-launch approval.
+4. Try **Control-click → Open**. If macOS still blocks it, open **System Settings → Privacy & Security** and choose **Open Anyway** for lnwjud Watcher. See [Apple's instructions](https://support.apple.com/en-gb/102445).
+5. If macOS says the app is **damaged**, re-download the DMG and compare its SHA-256 with `SHA256SUMS.txt` in the same release. A failed checksum means the downloaded file is incomplete or altered; report a matching-checksum failure with your Mac model and macOS version.
+6. Enter the Watcher endpoint and token.
+7. Closing the window keeps the app available from the menu-bar/tray icon. Choose **Quit** from its tray menu to exit.
 
 Do not disable Gatekeeper globally.
+
+If **Open Anyway** is unavailable even though the downloaded DMG matches the release checksum, you can remove the download quarantine from this app only. After dragging the app to Applications, open Terminal and run:
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/lnwjud Watcher.app"
+```
+
+Then open lnwjud Watcher again. This is a per-app fallback for community builds without Apple notarization.
 
 ## 4. Linux
 
@@ -91,7 +100,7 @@ chmod +x lnwjud-watcher-linux-x64.AppImage
 4. Enter the Watcher endpoint and token.
 5. Closing the window keeps Watcher in the tray when the desktop environment supports tray icons.
 
-If your distribution reports an AppImage/FUSE error, use your distribution's current AppImage/FUSE package instructions.
+If your distribution reports an AppImage/FUSE error, download `lnwjud-watcher-linux-x64.tar.gz` from the same release, extract it, and run the `lnwjud-watcher` executable inside. This package does not require AppImage/FUSE.
 
 ## 5. Android
 
@@ -103,7 +112,7 @@ If your distribution reports an AppImage/FUSE error, use your distribution's cur
 6. Because a phone cannot reach the PC through `127.0.0.1`, use a remote **HTTPS** provider URL plus the Watcher token.
 7. To add a home-screen widget: long-press the launcher → **Widgets** → **lnwjud Watcher** → choose **Status**, **Goal**, or **Agents**. Open Watcher at least once after installation so the widget has a cached snapshot.
 
-The current v0.2.3 APK is a GitHub release-signed build (not a Play Store package) and uses the same persistent signing identity as earlier signed releases with a higher internal versionCode. v0.2.3 exposes three Android home-screen widgets: Status, Goal, and Agents, and can download the next trusted GitHub APK inside the app before Android shows its installer confirmation.
+The current v0.2.4 APK is a GitHub release-signed build (not a Play Store package) and uses the same signing identity as earlier signed releases with a higher internal versionCode. v0.2.4 exposes three Android home-screen widgets: Status, Goal, and Agents, and can download the next trusted GitHub APK inside the app before Android shows its installer confirmation.
 
 **About Android download/install warnings:** because this APK is sideloaded from GitHub instead of installed through Google Play, Chrome/Android/Play Protect may show an “unknown app” or potentially harmful-file warning. That warning is controlled by Android/the browser and cannot be removed by app code or by ordinary APK signing. Release signing proves update identity; it does not turn a GitHub download into a trusted store install. GitHub distribution remains free, but users may still need to approve **Install unknown apps**. Avoid disabling Play Protect globally. If you want a free path with no APK sideload prompt, use the hosted **Web/PWA** and add it to the Home Screen instead.
 
@@ -161,9 +170,9 @@ http://127.0.0.1:17891/api/v1/pair
 
 **ห้ามเปิด port 17891 ออกอินเทอร์เน็ต**
 
-ตั้งแต่ LNWJUD v5.6.1 ลิงก์ Pairing นี้จะแสดงหน้า UI บนเครื่องให้กดคัดลอก Session token และ local endpoint ได้ง่ายขึ้น ส่วน integration ยังขอ JSON ได้ด้วย `?format=json` โดย Web/PWA จะจำ token ไว้ใน browser 60 วัน ส่วน Windows/macOS/Linux และ Android/iOS แบบแอปจะเก็บไว้ในเครื่องข้ามการปิดเปิด จนกว่าผู้ใช้จะล้าง token ใน Settings
+ตั้งแต่ LNWJUD v5.6.1 ลิงก์ Pairing นี้จะแสดงหน้า UI บนเครื่องให้กดคัดลอก Session token และ local endpoint ได้ง่ายขึ้น ส่วน integration ยังขอ JSON ได้ด้วย `?format=json` Watcher จำ endpoint และ Session token ในอุปกรณ์นี้ได้สูงสุด 1 ปี โดยย้าย token ที่รุ่นเก่าเคยบันทึกไว้ไปใช้นโยบายอายุใหม่ หาก Runtime เปลี่ยนหรือปฏิเสธ token จะมีข้อความพร้อมลิงก์ไปหน้าตั้งค่า
 
-Watcher v0.2.3 จะเช็ก GitHub Release รุ่นล่าสุดตอนเปิดแอป ทุก 30 นาที และเมื่อกลับมาเปิดแอปอีกครั้ง ฝั่ง Android จะดาวน์โหลด APK ที่มาจาก GitHub ที่เชื่อถือได้ภายใน Watcher ก่อน แล้วค่อยเปิดหน้าติดตั้งของ Android เมื่อไฟล์พร้อม โดย v0.2.3 ใช้ signing identity เดิมและ versionCode สูงกว่ารุ่นก่อน จึงติดตั้งทับได้เมื่อผู้ใช้กดยืนยัน
+Watcher v0.2.4 แบบติดตั้งจะเช็ก GitHub Release รุ่นล่าสุดตอนเปิดแอป ทุก 30 นาที และเมื่อกลับมาเปิดแอปอีกครั้ง ฝั่ง Android จะดาวน์โหลด APK ที่มาจาก GitHub ที่เชื่อถือได้ภายใน Watcher ก่อน แล้วค่อยเปิดหน้าติดตั้งของ Android เมื่อไฟล์พร้อม โดยใช้ signing identity เดิมและ versionCode สูงกว่ารุ่นก่อน ส่วน Web/PWA อัปเดตผ่าน service worker และไม่แสดงหน้าบังคับดาวน์โหลด APK
 
 ## 2. Windows — ง่ายที่สุด
 
@@ -182,12 +191,21 @@ Watcher v0.2.3 จะเช็ก GitHub Release รุ่นล่าสุด�
 1. Mac ชิป Apple Silicon ให้โหลด **`lnwjud-watcher-macos-arm64.dmg`**
 2. Mac Intel ให้โหลด **`lnwjud-watcher-macos-x64.dmg`**
 3. เปิด DMG แล้วลาก lnwjud Watcher ไป Applications
-4. community build ยังไม่ได้ Apple notarize จึงอาจโดน macOS บล็อกครั้งแรก
-5. ให้ Control-click ที่แอป → **Open** หรือไป **System Settings → Privacy & Security → Open Anyway**
-6. ใส่ endpoint + token
-7. กดปิดหน้าต่างแล้วแอปยังอยู่ที่เมนูบาร์/Tray; ถ้าจะปิดจริงให้เลือก **Quit**
+4. รุ่น 0.2.4 มีลายเซ็น ad-hoc และตรวจการเริ่มรันบน CI ทั้ง Apple silicon กับ Intel แต่ยังไม่มี Apple Developer ID/notarization จึงอาจโดน macOS บล็อกครั้งแรก
+5. ให้ Control-click ที่แอป → **Open** หรือไป **System Settings → Privacy & Security → Open Anyway** ตาม [คู่มือ Apple](https://support.apple.com/en-gb/102445)
+6. ถ้าขึ้นว่าแอป **เสียหาย** ให้ดาวน์โหลด DMG ใหม่และเทียบ SHA-256 กับ `SHA256SUMS.txt` ใน Release เดียวกัน ถ้าค่าตรงแต่ยังเปิดไม่ได้ ให้แจ้งรุ่น Mac และ macOS พร้อมข้อความผิดพลาด
+7. ใส่ endpoint + token
+8. กดปิดหน้าต่างแล้วแอปยังอยู่ที่เมนูบาร์/Tray; ถ้าจะปิดจริงให้เลือก **Quit**
 
 ไม่แนะนำให้ปิด Gatekeeper ทั้งระบบ
+
+หากตรวจ SHA-256 ของ DMG แล้วตรงกับ Release แต่ไม่มีปุ่ม **Open Anyway** ให้ลากแอปไป Applications ก่อน แล้วเปิด Terminal เพื่อลบเครื่องหมายไฟล์ที่ดาวน์โหลดมาเฉพาะแอปนี้:
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/lnwjud Watcher.app"
+```
+
+จากนั้นลองเปิด lnwjud Watcher อีกครั้ง วิธีนี้ใช้เฉพาะแอปนี้ ไม่ได้ปิด Gatekeeper ทั้งระบบ
 
 ## 4. Linux
 
@@ -201,7 +219,7 @@ chmod +x lnwjud-watcher-linux-x64.AppImage
 3. ดับเบิลคลิกเปิด
 4. ใส่ endpoint + token
 
-ถ้าขึ้น FUSE/AppImage error ให้ติดตั้งแพ็กเกจ AppImage/FUSE ตามคู่มือของ Linux distro ที่ใช้อยู่
+ถ้าขึ้น FUSE/AppImage error ให้โหลด `lnwjud-watcher-linux-x64.tar.gz` จาก Release เดียวกัน แตกไฟล์แล้วรัน `lnwjud-watcher` ภายใน โดยไม่ต้องใช้ AppImage/FUSE
 
 ## 5. Android
 
@@ -213,7 +231,7 @@ chmod +x lnwjud-watcher-linux-x64.AppImage
 6. มือถือใช้ `127.0.0.1` ของคอมไม่ได้ ต้องใช้ HTTPS URL จาก Cloudflare/zrok/Tailscale/ngrok แล้วใส่ Watcher token
 7. ถ้าจะเพิ่ม Widget: กดค้างที่หน้า Home → **วิดเจ็ต / Widgets** → **lnwjud Watcher** → เลือก **สถานะ**, **Goal** หรือ **เอเจนต์** และควรเปิด Watcher อย่างน้อย 1 ครั้งหลังติดตั้งเพื่อให้มี snapshot ล่าสุดสำหรับ widget
 
-APK v0.2.3 เป็น GitHub release-signed build (ยังไม่ใช่ Play Store package) ใช้ signing key เดิมกับรุ่นก่อนและมี internal versionCode สูงกว่า จึงติดตั้งทับรุ่นก่อนหน้าได้เมื่อผู้ใช้กดยืนยัน นอกจากนี้ v0.2.3 มี Home Screen Widget 3 แบบ: สถานะ, Goal และ Agents และสามารถดาวน์โหลด APK อัปเดตจาก GitHub ภายในแอปก่อนเปิดหน้าติดตั้งของ Android
+APK v0.2.4 เป็น GitHub release-signed build (ยังไม่ใช่ Play Store package) ใช้ signing key เดิมกับรุ่นก่อนและมี internal versionCode สูงกว่า จึงติดตั้งทับรุ่นก่อนหน้าได้เมื่อผู้ใช้กดยืนยัน นอกจากนี้มี Home Screen Widget 3 แบบ: สถานะ, Goal และ Agents และสามารถดาวน์โหลด APK อัปเดตจาก GitHub ภายในแอปก่อนเปิดหน้าติดตั้งของ Android
 
 **เรื่องคำเตือนตอนดาวน์โหลด/ติดตั้ง Android:** เพราะ APK นี้เป็นการ sideload จาก GitHub ไม่ได้ติดตั้งผ่าน Google Play เบราว์เซอร์/Android/Play Protect อาจขึ้นคำเตือนว่าเป็นแอปจากแหล่งที่ไม่รู้จักหรือไฟล์อาจเป็นอันตราย คำเตือนนี้เป็นนโยบายของ Android/เบราว์เซอร์ จึงเอาออกด้วยโค้ดแอปหรือการเซ็น APK ปกติไม่ได้ การเซ็น Release ช่วยยืนยันตัวตนสำหรับการอัปเดต แต่ไม่ได้ทำให้ไฟล์ GitHub กลายเป็นแอปจาก Store การแจกผ่าน GitHub ยังใช้ฟรีได้ แต่ผู้ใช้ยังอาจต้องอนุญาต **Install unknown apps** และไม่ควรปิด Play Protect ทั้งระบบ ถ้าต้องการทางเลือกฟรีที่ไม่มีขั้นตอน sideload APK ให้ใช้ **Web/PWA** บน GitHub Pages แล้ว Add to Home Screen แทน
 

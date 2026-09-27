@@ -2,40 +2,39 @@
   <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
-# lnwjud Watcher v0.2.3
+# lnwjud Watcher v0.2.4
 
-v0.2.3 consolidates repeated status/timestamp UI into one shared component so Live Activity and timeline cards render the same spacing, typography, and color across Desktop, Web/PWA, Android, and iOS.
+v0.2.4 corrects the Web/PWA update experience, clarifies active goals whose milestones are complete, and adds native package startup checks.
 
-### Shared activity metadata UI
-- Added shared `StatusMeta` for the repeated status + timestamp pattern.
-- Overview Live Activity, Overview Activity Timeline, and the Activity page now use the same component and CSS path.
-- This removes the previous screen-specific markup/style drift that could make timestamp spacing and font treatment differ on narrow Android WebViews.
+### What changed
 
-### Android widgets
-- **Status widget:** runtime state, current/last work, active counts, last-work age, and last-sync age.
-- **Goal widget:** active project, Durable Goal/task, milestone progress, and last-work age.
-- **Agents widget:** active-agent count, current agent tasks, and last-sync age.
-- Widget state is cached locally without storing the Watcher Session token.
+- Web/PWA updates through its service worker. The website no longer blocks use with a GitHub Release download prompt.
+- Goals with all milestones complete but still reported active by LNWJUD show **Ready to finish** instead of a generic waiting label. Overview counts these goals separately. Watcher does not claim that the runtime has closed them.
+- The connection endpoint and Watcher Session token remain on this device for up to one year. Older valid tokens migrate to this expiry. Authentication, endpoint, and network errors show a Settings link with specific guidance.
+- Agent names continue to come from LNWJUD. The current Watcher Protocol v1 reports delegated work as Codex and does not provide user-configured plugin names.
 
-### Android update flow
-- Android downloads the trusted GitHub release APK **inside lnwjud Watcher** and opens the system installer only after the APK is ready.
-- The download path accepts only trusted HTTPS GitHub/GitHubusercontent URLs.
-- Android still requires the normal system install confirmation; Watcher does not silently replace an APK.
+### Desktop packages
 
-### Runtime requirement
-The full v0.2.3 experience requires **LNWJUD v5.6.1 or later**.
+- macOS community DMGs use an ad-hoc signature with the Electron entitlements needed to launch. CI mounts and verifies each DMG, checks its signature, and starts the packaged runtime on native Apple silicon and Intel runners.
+- Windows and Linux CI smoke test their packaged Electron runtimes. Linux adds a tar.gz package for systems where AppImage/FUSE cannot run.
+- All release downloads include a `SHA256SUMS.txt` manifest.
 
-### Release artifacts
+macOS builds remain **without Apple Developer ID and notarization**. macOS may require first-launch approval in **System Settings → Privacy & Security → Open Anyway**. If it reports a damaged app, compare the DMG with the published SHA-256. For a matching checksum when **Open Anyway** is unavailable, the [install guide](docs/INSTALL.md) gives a per-app quarantine fallback. See also [Apple's first-launch guidance](https://support.apple.com/en-gb/102445).
+
+### Compatibility and artifacts
+
+The full experience requires **LNWJUD v5.6.1 or later** and Watcher Protocol v1.
+
 - `lnwjud-watcher-windows-x64.exe`
 - `lnwjud-watcher-macos-arm64.dmg`
 - `lnwjud-watcher-macos-x64.dmg`
 - `lnwjud-watcher-linux-x64.AppImage`
+- `lnwjud-watcher-linux-x64.tar.gz`
 - `lnwjud-watcher-web.zip`
 - `lnwjud-watcher-android.apk`
 - `lnwjud-watcher-ios-simulator.zip`
+- `SHA256SUMS.txt`
 
-### iOS note
-The repository still publishes an iOS **Simulator** artifact rather than a normally installable physical-device build. Native iOS Home Screen widgets therefore remain outside this device release; Android widgets are included in the APK.
+The iOS archive is for Simulator only; physical iPhone and iPad users should use the hosted Web/PWA.
 
-### Security boundary
-Watcher remains read-only. It does not expose shell execution, file mutation, approvals, pause/resume controls, or hidden model reasoning.
+Watcher remains a read-only client. It does not expose shell execution, file mutation, approvals, pause/resume controls, or hidden model reasoning.

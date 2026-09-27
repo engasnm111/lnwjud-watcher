@@ -31,7 +31,7 @@ Watcher does not start tunnels and does not expose MCP. Remote access providers 
 - **domain**: stable monitoring entities and status vocabulary.
 - **data/protocol**: Zod schemas and protocol-version validation.
 - **data/transport**: HTTP snapshot and reconnecting WebSocket client.
-- **data/connections**: non-secret connection profiles; session-only access token handling.
+- **data/connections**: non-secret connection profiles; dedicated Watcher Session token storage with a one-year expiry and legacy migration.
 - **features**: Overview, Goals, Agents, Activity, Settings.
 - **shared**: layout, status components, formatting, and platform-neutral utilities.
 - **Android widgets**: a tiny Capacitor bridge stores only sanitized display state in private SharedPreferences; AppWidget providers read that cache. The Watcher Session token is never copied into widget state.
@@ -47,4 +47,4 @@ Watcher does not start tunnels and does not expose MCP. Remote access providers 
 ## Release model
 - `main`: released/integrated history.
 - `dev`: active integration branch.
-- Current public release: `v0.2.3`; 1.0 is reserved for a stable protocol and signed mobile distribution path.
+- Current public release: `v0.2.4`; 1.0 is reserved for a stable protocol and signed mobile distribution path.

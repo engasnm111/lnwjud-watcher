@@ -1,20 +1,16 @@
-import { Capacitor } from '@capacitor/core';
 import type { ConnectionProfile } from '../domain/models';
 
 const PROFILE_KEY = 'lnwjud-watcher.profile.v1';
 const TOKEN_KEY = 'lnwjud-watcher.session-token';
 const ONBOARDING_KEY = 'lnwjud-watcher.onboarding.v1';
 
-export const WEB_SESSION_TOKEN_TTL_MS = 60 * 24 * 60 * 60 * 1_000;
-
-type TokenStorageKind = 'web' | 'device';
+export const SESSION_TOKEN_TTL_MS = 365 * 24 * 60 * 60 * 1_000;
 
 interface StoredSessionToken {
-  readonly version: 2;
+  readonly version: 3;
   readonly token: string;
-  readonly storage: TokenStorageKind;
   readonly savedAt: number;
-  readonly expiresAt: number | null;
+  readonly expiresAt: number;
 }
 
 export const defaultProfile: ConnectionProfile = {
@@ -33,59 +29,49 @@ export function saveProfile(profile: ConnectionProfile): void {
   localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
 }
 
-function tokenStorageKind(): TokenStorageKind {
-  if (Capacitor.isNativePlatform()) return 'device';
-  if (typeof navigator !== 'undefined' && /(?:^|\s)Electron\/\d/i.test(navigator.userAgent)) return 'device';
-  return 'web';
-}
-
-function parseStoredSessionToken(raw: string, now: number): string {
+function parseStoredSessionToken(raw: string, now: number): { token: string; legacy: boolean } | null {
   try {
-    const stored = JSON.parse(raw) as Partial<StoredSessionToken>;
-    if (stored.version !== 2 || typeof stored.token !== 'string') return '';
-    if (stored.expiresAt !== null && (typeof stored.expiresAt !== 'number' || stored.expiresAt <= now)) return '';
-    return stored.token;
+    const stored = JSON.parse(raw) as { version?: unknown; token?: unknown; expiresAt?: unknown };
+    if ((stored.version !== 2 && stored.version !== 3) || typeof stored.token !== 'string' || !stored.token.trim()) return null;
+    if (stored.expiresAt !== null && (typeof stored.expiresAt !== 'number' || stored.expiresAt <= now)) return null;
+    if (stored.version === 3 && stored.expiresAt === null) return null;
+    return { token: stored.token.trim(), legacy: stored.version === 2 };
   } catch {
-    return '';
+    return null;
   }
 }
 
 export function loadSessionToken(): string {
-  const now = Date.now();
   const stored = localStorage.getItem(TOKEN_KEY);
   if (stored !== null) {
-    const token = parseStoredSessionToken(stored, now);
-    if (token) return token;
+    const parsed = parseStoredSessionToken(stored, Date.now());
+    if (parsed && !parsed.legacy) return parsed.token;
     localStorage.removeItem(TOKEN_KEY);
-  }
-
-  // Earlier builds kept the token only for the browser tab/session.
-  // Migrate it once so an update does not force the user to pair again.
-  const legacySessionToken = sessionStorage.getItem(TOKEN_KEY) ?? '';
-  if (legacySessionToken) {
-    saveSessionToken(legacySessionToken);
+    if (parsed) {
+      saveSessionToken(parsed.token);
+      return parsed.token;
+    }
     sessionStorage.removeItem(TOKEN_KEY);
+    return '';
   }
+  const legacySessionToken = sessionStorage.getItem(TOKEN_KEY) ?? '';
+  if (legacySessionToken) saveSessionToken(legacySessionToken);
   return legacySessionToken;
 }
 
 export function saveSessionToken(token: string): void {
   const normalized = token.trim();
   sessionStorage.removeItem(TOKEN_KEY);
-
   if (!normalized) {
     localStorage.removeItem(TOKEN_KEY);
     return;
   }
-
-  const storage = tokenStorageKind();
   const savedAt = Date.now();
   const stored: StoredSessionToken = {
-    version: 2,
+    version: 3,
     token: normalized,
-    storage,
     savedAt,
-    expiresAt: storage === 'web' ? savedAt + WEB_SESSION_TOKEN_TTL_MS : null
+    expiresAt: savedAt + SESSION_TOKEN_TTL_MS,
   };
   localStorage.setItem(TOKEN_KEY, JSON.stringify(stored));
 }
