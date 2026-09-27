@@ -25,7 +25,7 @@
 </p>
 
 <h2 align="center">Download lnwjud Watcher</h2>
-<p align="center">Desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.6.</p>
+<p align="center">Desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.7.</p>
 
 <table align="center">
   <tr>
@@ -71,7 +71,12 @@ The widgets are designed for the quick question that matters most during long-ru
 
 ## Current version
 
-**lnwjud Watcher v0.2.6** works with **LNWJUD v5.6.1 or later**. Goal readiness and configured MCP plugin names require **LNWJUD v5.6.6**.
+**lnwjud Watcher v0.2.7** works with **LNWJUD v5.6.1 or later**. Goal readiness and configured MCP plugin names require **LNWJUD v5.6.6**.
+
+### What's new in v0.2.7
+
+- **Update prompt fix:** Android suppresses the stale prompt during the first launch after an APK upgrade and retires the old Web/PWA service worker. Native apps no longer register that worker; Web/PWA automatic updates remain available.
+- **Fresh foreground checks:** Watcher clears an old update result when returning to the app and ignores late responses from older checks.
 
 ### What's new in v0.2.6
 

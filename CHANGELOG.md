@@ -4,6 +4,12 @@
 
 # Changelog
 
+## 0.2.7 - 2026-09-28
+
+- Prevented a stale update prompt from flashing after an Android APK upgrade while the previous service worker is being retired.
+- Stopped native apps from registering the Web/PWA service worker; the hosted Web/PWA keeps automatic updates.
+- Cleared an old update result immediately on foreground recheck and ignored responses from superseded checks.
+
 ## 0.2.6 - 2026-09-28
 
 - Replaced the Android notification checkbox with an accessible gold toggle matching LNWJUD's switch style.
