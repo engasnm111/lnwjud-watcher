@@ -25,7 +25,7 @@
 </p>
 
 <h2 align="center">Download lnwjud Watcher</h2>
-<p align="center">Desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.7.</p>
+<p align="center">Desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.8.</p>
 
 <table align="center">
   <tr>
@@ -71,7 +71,11 @@ The widgets are designed for the quick question that matters most during long-ru
 
 ## Current version
 
-**lnwjud Watcher v0.2.7** works with **LNWJUD v5.6.1 or later**. Goal readiness and configured MCP plugin names require **LNWJUD v5.6.6**.
+**lnwjud Watcher v0.2.8** works with **LNWJUD v5.6.1 or later**. Goal readiness and configured MCP plugin names require **LNWJUD v5.6.6**.
+
+### What's new in v0.2.8
+
+- **Clearer Goal progress:** percentages now count completed milestones only. Acceptance criteria remain visible final completion checks and still determine whether a Goal is ready to close, without being counted again in the percentage.
 
 ### What's new in v0.2.7
 

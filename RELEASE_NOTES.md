@@ -2,9 +2,9 @@
   <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
-# lnwjud Watcher v0.2.7
+# lnwjud Watcher v0.2.8
 
-v0.2.7 fixes the update notice that briefly appeared again after an Android APK upgrade. The Android app hides the old notice while retiring a previously installed Web/PWA service worker, and native apps no longer register that worker. On returning to the app, Watcher clears the previous update result while checking again and ignores older checks that finish late. The hosted Web/PWA still updates through its service worker. Saved endpoints and Session tokens are not cleared.
+v0.2.8 makes Goal progress percentages reflect completed milestones only. Acceptance criteria still appear as final completion checks and continue to govern whether a Goal can be closed, but they no longer dilute or double-count the numeric progress percentage.
 
 ### Included monitoring features
 
