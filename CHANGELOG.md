@@ -4,6 +4,10 @@
 
 # Changelog
 
+## 0.2.8 - 2026-09-30
+
+- Goal progress percentages now count completed milestones only; acceptance criteria remain final completion checks and no longer dilute or double-count the numeric progress.
+
 ## 0.2.7 - 2026-09-28
 
 - Prevented a stale update prompt from flashing after an Android APK upgrade while the previous service worker is being retired.

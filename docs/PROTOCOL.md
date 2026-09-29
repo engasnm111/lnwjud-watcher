@@ -33,7 +33,7 @@ LNWJUD v5.6.6 adds these optional Protocol v1 fields while retaining compatibili
 - `completionReady` means all plan steps and acceptance criteria are complete, with no blockers or active tasks. It does **not** mean the Goal is closed: LNWJUD still requires explicit `finish_goal` and its terminal checks.
 - Runtime and orchestrator `running` reflect observable work in progress. An open Goal with no active operation is waiting or idle, even if its checklist is complete.
 
-Watcher v0.2.7 uses the new fields for Goal readiness, project details, alerts, and plugin names. Older LNWJUD versions remain readable with less detail.
+Watcher v0.2.8 uses the new fields for Goal readiness, project details, alerts, and plugin names. Older LNWJUD versions remain readable with less detail.
 
 ## Live events
 `WS /events` streams validated event envelopes after the initial snapshot. Clients reconnect with bounded exponential backoff, refresh the authoritative snapshot after reconnect, and re-sync the snapshot after live activity so Goal/Agent/Git state cannot remain stale while the socket stays healthy.

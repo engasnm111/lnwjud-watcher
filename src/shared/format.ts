@@ -1,13 +1,9 @@
 import type { Goal, WatcherSnapshot, WorkspaceSnapshot } from '../domain/models';
 
 export function goalProgress(goal: Goal | null): number {
-  if (!goal) return 0;
-  const criteria = goal.acceptanceCriteria ?? [];
-  const total = goal.milestones.length + criteria.length;
-  if (total === 0) return 0;
-  const done = goal.milestones.filter((milestone) => milestone.status === 'completed').length
-    + criteria.filter((criterion) => criterion.status === 'completed').length;
-  return Math.round((done / total) * 100);
+  if (!goal || goal.milestones.length === 0) return 0;
+  const done = goal.milestones.filter((milestone) => milestone.status === 'completed').length;
+  return Math.round((done / goal.milestones.length) * 100);
 }
 
 export function snapshotWorkspaces(snapshot: WatcherSnapshot): WorkspaceSnapshot[] {

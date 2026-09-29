@@ -52,11 +52,15 @@ Widget เน้นคำถามสำคัญเวลาปล่อยง�
 
 ## lnwjud Watcher คืออะไร
 
-**lnwjud Watcher v0.2.7** เป็นแอปดูสถานะ LNWJUD แบบ **read-only** สำหรับ Desktop, Web/PWA, Android และ iOS ใช้คู่กับ **LNWJUD v5.6.1 ขึ้นไป** ส่วนสถานะ Goal และชื่อปลั๊กอินแบบละเอียดต้องใช้ **LNWJUD v5.6.6**
+**lnwjud Watcher v0.2.8** เป็นแอปดูสถานะ LNWJUD แบบ **read-only** สำหรับ Desktop, Web/PWA, Android และ iOS ใช้คู่กับ **LNWJUD v5.6.1 ขึ้นไป** ส่วนสถานะ Goal และชื่อปลั๊กอินแบบละเอียดต้องใช้ **LNWJUD v5.6.6**
 
 ดูได้ว่า LNWJUD ยังทำงานอยู่ไหม มีโปรเจกต์ไหนและ Goal ไหนกำลังทำพร้อมกัน milestone ไปถึงไหน มี Agent/worker อะไรทำงาน มี blocker หรือไม่ Git ของแต่ละโปรเจกต์อยู่ branch ไหน และมี activity อะไรล่าสุด โดยไม่เปิดสิทธิ์สั่งงานกลับเข้า LNWJUD
 
 > **ติดตั้งไม่ต้องใช้ npm:** Windows มี Portable EXE, macOS มี DMG, Linux มี AppImage และ tar.gz, Android มี APK และ iPhone/iPad ใช้ Web/PWA แบบ Add to Home Screen ได้ ดู [คู่มือติดตั้งแบบง่าย](docs/INSTALL.md)
+
+## มีอะไรใหม่ใน v0.2.8
+
+- เปอร์เซ็นต์ Goal คิดจาก milestone ที่เสร็จแล้วเท่านั้น ส่วน Acceptance Criteria ยังคงแสดงและใช้เป็นเงื่อนไขปิด Goal แต่จะไม่ถูกนับซ้ำในเปอร์เซ็นต์อีก
 
 ## มีอะไรใหม่ใน v0.2.7
 
