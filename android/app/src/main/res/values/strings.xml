@@ -22,6 +22,10 @@
     <string name="widget_progress">Progress %1$s</string>
     <string name="widget_agents">Agents</string>
     <string name="widget_last_sync">Last sync %1$s</string>
+    <string name="alert_channel_name">Goal activity</string>
+    <string name="alert_channel_description">Reminders when an open goal has no observable work</string>
+    <string name="alert_stalled_title">Watcher · Goal needs attention</string>
+    <string name="alert_stalled_body">%1$s · %2$s has no observable work. Open Watcher to check.</string>
     <plurals name="widget_active_agents">
         <item quantity="one">%d active</item>
         <item quantity="other">%d active</item>

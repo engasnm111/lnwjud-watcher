@@ -18,7 +18,7 @@
 
 ## Security
 - Monitoring is read-only. Never expose or persist OAuth refresh tokens, API keys, tunnel credentials, environment secrets, raw command environments, or hidden model reasoning.
-- Endpoint metadata may persist locally. Bearer tokens are session-only unless a future native secure-storage design is explicitly implemented and reviewed.
+- Endpoint metadata and the dedicated Watcher Session token may persist locally for at most one year, as requested for one-time setup. Never copy the token into widgets, URLs, logs, diagnostics, or release artifacts; remove expired tokens and guide users to Settings when authentication fails. A future native secure-storage design still requires explicit review.
 - Treat all remote payloads as untrusted. Validate protocol data at runtime before rendering.
 - CI uses least-privilege `GITHUB_TOKEN` permissions and pinned action SHAs.
 

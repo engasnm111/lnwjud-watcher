@@ -1,6 +1,7 @@
 import { useWatcher } from '../../app/WatcherContext';
-import StatusPill from '../../shared/StatusPill';
+import GoalStatusPill from '../../shared/GoalStatusPill';
 import { goalProgress, snapshotWorkspaces } from '../../shared/format';
+import { goalNeedsFinalization } from '../../shared/goalState';
 import { useI18n } from '../../i18n/I18nContext';
 import type { MessageKey } from '../../i18n/messages';
 
@@ -29,17 +30,21 @@ export default function GoalsPage() {
           const progress = goalProgress(goal);
           return <article className="goal-card multi-goal-card" key={goal.id}>
             <div className="goal-heading">
-              <StatusPill status={goal.status}/>
+              <GoalStatusPill goal={goal}/>
               <div className="progress-ring" style={{ '--progress': progress } as React.CSSProperties}>{progress}%</div>
             </div>
             <span className="eyebrow">{t('goal.durable')}</span>
             <h2 className="break-anywhere">{goal.key}</h2>
             <p>{goal.currentTask || t('overview.noDelegatedTask')}</p>
+            {goalNeedsFinalization(goal) && <p className="goal-finalization-note">{t('goal.finalizationHelp')}</p>}
             <div className="milestone-list">{goal.milestones.map((item) =>
               <div className="milestone" key={item.id}>
                 <span className={'milestone-mark milestone-' + item.status}/>
                 <div><strong>{item.title}</strong><small>{t(('milestone.' + item.status) as MessageKey)}</small></div>
               </div>)}</div>
+            {goal.acceptanceCriteria && goal.acceptanceCriteria.length > 0 && <div className="acceptance-list"><strong>{t('projects.acceptance')}</strong>{goal.acceptanceCriteria.map((criterion) =>
+              <p key={criterion.id}><span className={'milestone-mark milestone-' + criterion.status}/>{criterion.title}</p>)}</div>}
+            {(goal.activeTaskCount ?? 0) > 0 && <p className="muted">{t('goal.activeTasks', { count: goal.activeTaskCount ?? 0 })}</p>}
             {goal.blockers.length > 0 && <div className="goal-blockers">
               <strong>{t('goal.blockers')}</strong>
               {goal.blockers.map((blocker) => <p key={blocker}>{blocker}</p>)}

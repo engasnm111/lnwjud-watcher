@@ -2,47 +2,41 @@
   <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
-# lnwjud Watcher v0.2.1
+# lnwjud Watcher v0.2.9
 
-v0.2.1 is a corrective mobile release for the v0.2.x line. It keeps the Android widgets introduced in v0.2.0, fixes the remaining narrow-screen Activity spacing issue, and ships the in-app Android updater polish already prepared on `dev`.
+v0.2.9 adds resilient endpoint normalization and client crash prevention. Entering endpoints without an explicit `http://` or `https://` prefix (such as `*.shares.zrok.io` or `localhost:17890`) is now automatically normalized to the correct protocol, preventing unhandled URL parsing exceptions and blank-screen lockouts. An application-level ErrorBoundary now provides immediate recovery options if unexpected errors occur. In addition, the Android native alert monitor has been updated to support schemeless endpoints when syncing background alerts.
 
-### Mobile Activity spacing
-- The status pill and timestamp now keep an explicit **10 px content buffer** in addition to the flex column gap, preventing the two labels from visually touching on narrow Android displays such as iQOO-class devices.
-- Timestamp text is kept on one line while long commands, UUIDs, paths, and task identifiers continue to wrap safely inside their cards.
-- Activity remains progressive: 20 cards render at a time over the runtime's bounded 100-event recent history.
+### Included monitoring features
 
-### Android widgets
-- **Status widget:** runtime state, current/last work, active counts, last-work age, and last-sync age.
-- **Goal widget:** active project, Durable Goal/task, milestone progress, and last-work age.
-- **Agents widget:** active-agent count, current agent tasks, and last-sync age.
-- Widget state is cached locally without storing the Watcher Session token.
-- Widget layouts were polished for launcher previews and multiple Android widget sizes.
+- A completed checklist no longer implies a Goal is finished. With LNWJUD v5.6.6, Watcher shows acceptance criteria, active tasks, and the runtime's `completionReady` decision. The Goal stays open until `finish_goal` succeeds.
+- Alerts Center, Project Details, Connection Health, and Activity filters add direct paths to stalled work and connection diagnostics.
+- Android users can opt in to an inactivity notification after 5 or 10 minutes without observed Goal work. The native monitor checks a fresh authenticated snapshot before posting, suppresses repeats for one inactivity episode, and removes notifications when a Goal closes or becomes ready. Android may delay background checks.
+- The Agents screen lists user-configured MCP server names and connection state received from LNWJUD v5.6.6. Names from external hosts remain unavailable when the host does not expose them.
+- Native apps offer an update only when its release version is newer than the installed version. Web/PWA continues to update through its service worker.
+- Watcher continues to remember the endpoint and Session token on this device for up to one year and guides users to Settings after authentication or network errors.
 
-### Android update flow
-- Android can download the release APK **inside lnwjud Watcher** and opens the system installer only when the APK is ready.
-- The download path accepts only trusted HTTPS GitHub/GitHubusercontent URLs.
-- Android still requires the normal system install confirmation; Watcher does not silently replace an APK.
-- v0.2.1 keeps the same persistent release-signing identity and uses a higher CI-generated `versionCode`, so it can install over signed v0.2.0/v0.1.0 builds.
+### Desktop packages
 
-### Documentation
-- README and README_TH now include visual previews of the mobile Activity UI and the three Android home-screen widgets so new users can understand the product before installing it.
+- macOS community DMGs use an ad-hoc signature with the Electron entitlements needed to launch. CI checks packaged startup on native Apple silicon and Intel runners.
+- Windows and Linux CI check packaged startup. Linux includes a tar.gz package for systems where AppImage/FUSE cannot run.
+- All release downloads include a `SHA256SUMS.txt` manifest.
 
-### Runtime requirement
-The full v0.2.1 experience requires **LNWJUD v5.6.1 or later**.
+macOS builds remain **without Apple Developer ID and notarization**. macOS may require first-launch approval in **System Settings → Privacy & Security → Open Anyway**. If it reports a damaged app, compare the DMG with the published SHA-256. For a matching checksum when **Open Anyway** is unavailable, the [install guide](docs/INSTALL.md) gives a per-app quarantine fallback. See also [Apple's first-launch guidance](https://support.apple.com/en-gb/102445).
 
-### Release artifacts
+### Compatibility and artifacts
+
+The full experience requires **LNWJUD v5.6.6 or later** and Watcher Protocol v1. Basic monitoring remains compatible with LNWJUD v5.6.1+.
+
 - `lnwjud-watcher-windows-x64.exe`
 - `lnwjud-watcher-macos-arm64.dmg`
 - `lnwjud-watcher-macos-x64.dmg`
 - `lnwjud-watcher-linux-x64.AppImage`
+- `lnwjud-watcher-linux-x64.tar.gz`
 - `lnwjud-watcher-web.zip`
 - `lnwjud-watcher-android.apk`
 - `lnwjud-watcher-ios-simulator.zip`
+- `SHA256SUMS.txt`
 
-### iOS note
-The repository still publishes an iOS **Simulator** artifact rather than a normally installable physical-device build. Native iOS Home Screen widgets therefore remain outside this device release; Android widgets are included in the APK.
+The iOS archive is for Simulator only; physical iPhone and iPad users should use the hosted Web/PWA.
 
-### Security boundary
-lnwjud Watcher remains intentionally read-only. It does not add shell, filesystem mutation, MCP mutation, approval, provider credentials, or hidden-reasoning access. Pairing remains local-only.
-
-Windows/macOS community artifacts are not claimed as Authenticode-signed / Apple-notarized unless release evidence explicitly says otherwise. See [Install & run](docs/INSTALL.md) for platform limitations.
+Watcher remains a read-only client. It does not expose shell execution, file mutation, approvals, pause/resume controls, or hidden model reasoning.

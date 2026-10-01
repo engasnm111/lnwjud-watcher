@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Activity, Bot, Gauge, Home, Languages, RefreshCw, Settings } from 'lucide-react';
+import { Activity, Bell, Bot, Gauge, HeartPulse, Home, Languages, RefreshCw, Settings } from 'lucide-react';
 import { HashRouter, NavLink, Navigate, Route, Routes } from 'react-router-dom';
 import { useWatcher } from './WatcherContext';
 import { useI18n } from '../i18n/I18nContext';
@@ -12,6 +12,10 @@ import OnboardingPage from '../features/onboarding/OnboardingPage';
 import { formatRelativeTime, formatTime } from '../shared/format';
 import type { MessageKey } from '../i18n/messages';
 import UpdateGate from '../shared/UpdateGate';
+import { connectionHelpKey } from '../shared/connectionHelp';
+import AlertsPage from '../features/alerts/AlertsPage';
+import ProjectDetailPage from '../features/projects/ProjectDetailPage';
+import ConnectionHealthPage from '../features/connection/ConnectionHealthPage';
 
 const nav = [
   { to: '/overview', key: 'nav.overview' as const, icon: Home },
@@ -73,6 +77,8 @@ function Shell() {
           </div>
         </div>
         <div className="topbar-actions">
+          <NavLink className="icon-button topbar-link" to="/connection" aria-label={t('health.title')}><HeartPulse size={19}/></NavLink>
+          <NavLink className="icon-button topbar-link notification-link" to="/alerts" aria-label={t('alerts.title')}><Bell size={19}/>{watcher.unreadAlertCount > 0 && <span className="notification-count">{watcher.unreadAlertCount}</span>}</NavLink>
           <button className="icon-button text-button" onClick={() => setLocale(locale === 'th' ? 'en' : 'th')} aria-label={t('settings.language')}>
             <Languages size={18}/><span>{locale === 'th' ? 'EN' : 'TH'}</span>
           </button>
@@ -83,13 +89,20 @@ function Shell() {
       </header>
 
       {watcher.fallbackPolling && <div className="degraded-banner">{t('connection.autoRefresh')}</div>}
-      {watcher.error && <div className="error-banner">{watcher.error}</div>}
+      {watcher.error && <div className="error-banner" role="alert">
+        <strong>{t('connection.problem')}</strong>{' '}
+        <span>{t(connectionHelpKey(watcher.error))}</span>{' '}
+        <NavLink to="/settings">{t('connection.openSettings')}</NavLink>
+      </div>}
 
       <Routes>
         <Route path="/overview" element={<OverviewPage/>}/>
         <Route path="/goals" element={<GoalsPage/>}/>
         <Route path="/agents" element={<AgentsPage/>}/>
         <Route path="/activity" element={<ActivityPage/>}/>
+        <Route path="/alerts" element={<AlertsPage/>}/>
+        <Route path="/connection" element={<ConnectionHealthPage/>}/>
+        <Route path="/projects/:workspaceId" element={<ProjectDetailPage/>}/>
         <Route path="/settings" element={<SettingsPage/>}/>
         <Route path="/onboarding" element={<Navigate to="/overview" replace/>}/>
         <Route path="*" element={<Navigate to="/overview" replace/>}/>

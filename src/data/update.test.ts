@@ -17,16 +17,15 @@ describe('GitHub update policy', () => {
   });
 
   it('detects the signed v0.1.0 to v0.2.0 release upgrade', () => {
-    expect(shouldOfferUpdate('v0.2.0', '0.1.0', null, 'old-build-sha')).toBe(true);
+    expect(shouldOfferUpdate('v0.2.0', '0.1.0')).toBe(true);
   });
 
-  it('detects a refreshed canonical build even when the public version remains v0.1.0', () => {
-    expect(shouldOfferUpdate('v0.1.0', '0.1.0', 'new-build-sha', 'old-build-sha')).toBe(true);
-    expect(shouldOfferUpdate('v0.1.0', '0.1.0', 'same-build-sha', 'same-build-sha')).toBe(false);
-    expect(shouldOfferUpdate('v0.1.0', '0.1.0', 'new-build-sha', 'unknown')).toBe(false);
+  it('never offers a same-version release even when its tag points to another commit', () => {
+    expect(shouldOfferUpdate('v0.1.0', '0.1.0')).toBe(false);
+    expect(shouldOfferUpdate('v0.0.9', '0.1.0')).toBe(false);
   });
 
-  it('resolves the release commit when the canonical version number is unchanged', async () => {
+  it('skips the release commit lookup when the installed version is current', async () => {
     const fetchMock = vi.fn()
       .mockResolvedValueOnce({
         ok: true,
@@ -35,15 +34,13 @@ describe('GitHub update policy', () => {
           html_url: 'https://github.com/engasnm111/lnwjud-watcher/releases/tag/v0.1.0',
           assets,
         }),
-      })
-      .mockResolvedValueOnce({ ok: true, json: async () => ({ sha: 'new-build-sha' }) });
+      });
     vi.stubGlobal('fetch', fetchMock);
 
-    const update = await checkForUpdate('0.1.0', 'android', undefined, 'old-build-sha');
+    const update = await checkForUpdate('0.1.0', 'android');
 
-    expect(fetchMock).toHaveBeenCalledTimes(2);
-    expect(update?.version).toBe('0.1.0');
-    expect(update?.downloadUrl).toContain('lnwjud-watcher-android.apk');
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(update).toBeNull();
   });
 
   it('selects the platform asset and rejects non-GitHub download URLs', () => {

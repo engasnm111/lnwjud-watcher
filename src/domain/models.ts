@@ -15,6 +15,15 @@ export interface Goal {
   milestones: Milestone[];
   workspaceId?: string;
   workspaceName?: string;
+  lifecycle?: 'active';
+  completionReady?: boolean;
+  objective?: string;
+  currentPhase?: string;
+  acceptanceCriteria?: Array<{ id: string; title: string; status: 'pending' | 'completed' | 'blocked' }>;
+  activeTaskCount?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  lastCheckpointAt?: string;
 }
 
 export interface Agent {
@@ -25,6 +34,18 @@ export interface Agent {
   task?: string;
   workspaceId?: string;
   workspaceName?: string;
+  provider?: 'lnwjud' | 'codex';
+  toolName?: string;
+  startedAt?: string;
+}
+
+export interface Plugin {
+  name: string;
+  provider: 'mcp';
+  enabled: boolean;
+  connected: boolean;
+  excluded: boolean;
+  lifecycle: 'disconnected' | 'connected' | 'termination_unverified';
 }
 
 export interface ActivityEvent {
@@ -64,6 +85,7 @@ export interface WatcherSnapshot {
   goal: Goal | null;
   workspaces: WorkspaceSnapshot[];
   agents: Agent[];
+  plugins: Plugin[];
   activity: ActivityEvent[];
   git: GitSnapshot;
 }

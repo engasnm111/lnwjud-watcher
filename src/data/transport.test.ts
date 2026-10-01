@@ -71,4 +71,19 @@ describe('HttpWatcherTransport realtime authentication', () => {
 
     unsubscribe();
   });
+
+  it('does not throw an uncaught error and reports error state when endpoint is unparseable', () => {
+    vi.stubGlobal('WebSocket', FakeWebSocket);
+    const states: string[] = [];
+    const transport = new HttpWatcherTransport('http://', 'session-token');
+
+    expect(() => {
+      transport.subscribe(
+        () => {},
+        (state) => states.push(state)
+      );
+    }).not.toThrow();
+
+    expect(states).toContain('error');
+  });
 });

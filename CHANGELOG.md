@@ -4,6 +4,54 @@
 
 # Changelog
 
+## 0.2.9 - 2026-10-01
+
+- Automatically normalizes schemeless Watcher endpoints (e.g., `*.shares.zrok.io` or `localhost:17890`) by inferring HTTPS for remote hosts and HTTP for loopback addresses, preventing unhandled URL parsing crashes.
+- Safely catches invalid endpoints in WebSocket transport and profile storage, surfacing clean connection error states instead of blank-screen lockouts.
+- Added a root ErrorBoundary with reload and reset options for robust failure recovery.
+- Updated Android alert monitor to safely normalize schemeless endpoints when syncing background inactivity notifications.
+
+## 0.2.8 - 2026-09-30
+
+- Goal progress percentages now count completed milestones only; acceptance criteria remain final completion checks and no longer dilute or double-count the numeric progress.
+
+## 0.2.7 - 2026-09-28
+
+- Prevented a stale update prompt from flashing after an Android APK upgrade while the previous service worker is being retired.
+- Stopped native apps from registering the Web/PWA service worker; the hosted Web/PWA keeps automatic updates.
+- Cleared an old update result immediately on foreground recheck and ignored responses from superseded checks.
+
+## 0.2.6 - 2026-09-28
+
+- Replaced the Android notification checkbox with an accessible gold toggle matching LNWJUD's switch style.
+- Kept the existing notification permission request and saved on/off preference behavior.
+
+## 0.2.5 - 2026-09-27
+
+- Rendered Goal readiness from LNWJUD v5.6.6 acceptance criteria and active tasks, and separated open Goals from observable runtime work.
+- Added Alerts Center, Project Details, Connection Health, and Activity filters.
+- Added opt-in Android inactivity reminders that verify a fresh authenticated snapshot, cancel after Goal closure, and suppress repeated notifications for the same inactivity episode.
+- Displayed configured MCP plugin names and lifecycle from the additive Watcher Protocol v1 fields.
+- Prevented installed apps from offering an update to their already installed version.
+
+## 0.2.4 - 2026-09-27
+
+- Kept the hosted Web/PWA usable by removing native GitHub Release gating; service-worker updates remain automatic.
+- Added a Ready to finish goal state and Overview count when all milestones are complete but the runtime still reports the goal active.
+- Stored the Watcher Session token for up to one year across platforms, migrated valid older values, and added targeted connection-error guidance linking to Settings.
+- Added native macOS Apple silicon/Intel DMG signature and runtime smoke checks, plus packaged Windows/Linux runtime checks.
+- Added a Linux tar.gz fallback and release SHA-256 manifest.
+- Clarified that custom plugin agent names are unavailable until LNWJUD exposes them in Watcher Protocol.
+
+## 0.2.3 - 2026-09-26
+
+Shared activity metadata and release consistency update.
+
+- Added shared `StatusMeta` so Live Activity, Overview timeline, and Activity timeline use the same status + timestamp component.
+- Unified status/time spacing, typography, and color across Desktop, Web/PWA, Android, and iOS.
+- Updated package, iOS marketing version, release notes, install docs, architecture/product docs, demo data, and issue template to v0.2.3.
+- Kept Android in-app update behavior: download the trusted GitHub APK inside Watcher, then hand off to Android for install confirmation.
+
 ## 0.2.1 - 2026-09-26
 
 Corrective Android/mobile release.

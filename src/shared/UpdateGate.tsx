@@ -2,7 +2,7 @@ import { useEffect, useState, type PropsWithChildren } from 'react';
 import { Download, RefreshCw, ShieldAlert } from 'lucide-react';
 import { useI18n } from '../i18n/I18nContext';
 import type { MessageKey } from '../i18n/messages';
-import { checkForUpdate, CURRENT_VERSION, startUpdate, type AvailableUpdate } from '../data/update';
+import { checkForUpdate, CURRENT_VERSION, detectUpdatePlatform, startUpdate, type AvailableUpdate } from '../data/update';
 
 const UPDATE_CHECK_MS = 30 * 60 * 1_000;
 
@@ -13,20 +13,25 @@ export default function UpdateGate({ children }: PropsWithChildren) {
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
+    // The hosted site updates through its service worker, independent of native release assets.
+    if (detectUpdatePlatform() === 'web') return;
     const controller = new AbortController();
-    const check = () => {
+    let latestCheck = 0;
+    const check = (resetPendingUpdate = false) => {
+      const checkId = ++latestCheck;
+      if (resetPendingUpdate) setUpdate(null);
       void checkForUpdate(CURRENT_VERSION, undefined, controller.signal)
         .then((available) => {
-          if (available) setUpdate(available);
+          if (!controller.signal.aborted && checkId === latestCheck) setUpdate(available);
         })
         .catch(() => undefined);
     };
     const checkWhenVisible = () => {
-      if (document.visibilityState === 'visible') check();
+      if (document.visibilityState === 'visible') check(true);
     };
 
     check();
-    const timer = window.setInterval(check, UPDATE_CHECK_MS);
+    const timer = window.setInterval(() => check(), UPDATE_CHECK_MS);
     document.addEventListener('visibilitychange', checkWhenVisible);
     return () => {
       controller.abort();

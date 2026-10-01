@@ -5,6 +5,7 @@ import { useWatcher } from '../../app/WatcherContext';
 import { useI18n } from '../../i18n/I18nContext';
 import type { ConnectionProfile, RemoteProvider } from '../../domain/models';
 import { defaultProfile } from '../../data/profile';
+import { normalizeEndpoint } from '../../data/transport';
 import type { MessageKey } from '../../i18n/messages';
 import SessionTokenHelp from '../../shared/SessionTokenHelp';
 
@@ -48,7 +49,13 @@ export default function OnboardingPage() {
   };
 
   const connect = () => {
-    watcher.configure(profile, token);
+    let endpoint = profile.endpoint.trim();
+    if (profile.mode === 'remote' && endpoint) {
+      try {
+        endpoint = normalizeEndpoint(endpoint);
+      } catch { /* retain raw input */ }
+    }
+    watcher.configure({ ...profile, endpoint }, token);
     watcher.completeOnboarding();
     navigate('/overview', { replace: true });
   };

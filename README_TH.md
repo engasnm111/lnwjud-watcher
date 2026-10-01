@@ -18,7 +18,7 @@
   <tr>
     <td align="center" width="33%">
       <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-windows-x64.exe"><img src="assets/download/download-desktop.svg" width="300" alt="Desktop / Web" /></a><br />
-      <sub>Windows Portable EXE · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-macos-arm64.dmg">macOS Apple silicon</a> · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-macos-x64.dmg">macOS Intel</a> · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-linux-x64.AppImage">Linux</a></sub>
+      <sub>Windows Portable EXE · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-macos-arm64.dmg">macOS Apple silicon</a> · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-macos-x64.dmg">macOS Intel</a> · <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-linux-x64.AppImage">Linux AppImage</a> / <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-linux-x64.tar.gz">tar.gz</a></sub>
     </td>
     <td align="center" width="33%">
       <a href="https://github.com/engasnm111/lnwjud-watcher/releases/latest/download/lnwjud-watcher-android.apk"><img src="assets/download/download-android.svg" width="300" alt="Android" /></a><br />
@@ -52,15 +52,55 @@ Widget เน้นคำถามสำคัญเวลาปล่อยง�
 
 ## lnwjud Watcher คืออะไร
 
-**lnwjud Watcher v0.2.1** เป็นแอปดูสถานะ LNWJUD แบบ **read-only** สำหรับ Desktop, Web/PWA, Android และ iOS ใช้คู่กับ **LNWJUD v5.6.1 ขึ้นไป**
+**lnwjud Watcher v0.2.9** เป็นแอปดูสถานะ LNWJUD แบบ **read-only** สำหรับ Desktop, Web/PWA, Android และ iOS ใช้คู่กับ **LNWJUD v5.6.1 ขึ้นไป** ส่วนสถานะ Goal และชื่อปลั๊กอินแบบละเอียดต้องใช้ **LNWJUD v5.6.6**
 
 ดูได้ว่า LNWJUD ยังทำงานอยู่ไหม มีโปรเจกต์ไหนและ Goal ไหนกำลังทำพร้อมกัน milestone ไปถึงไหน มี Agent/worker อะไรทำงาน มี blocker หรือไม่ Git ของแต่ละโปรเจกต์อยู่ branch ไหน และมี activity อะไรล่าสุด โดยไม่เปิดสิทธิ์สั่งงานกลับเข้า LNWJUD
 
-> **ติดตั้งไม่ต้องใช้ npm:** Windows มี Portable EXE, macOS มี DMG, Linux มี AppImage, Android มี APK และ iPhone/iPad ใช้ Web/PWA แบบ Add to Home Screen ได้ ดู [คู่มือติดตั้งแบบง่าย](docs/INSTALL.md)
+> **ติดตั้งไม่ต้องใช้ npm:** Windows มี Portable EXE, macOS มี DMG, Linux มี AppImage และ tar.gz, Android มี APK และ iPhone/iPad ใช้ Web/PWA แบบ Add to Home Screen ได้ ดู [คู่มือติดตั้งแบบง่าย](docs/INSTALL.md)
 
-## มีอะไรใหม่ใน v0.2.1
+## มีอะไรใหม่ใน v0.2.9
 
-- แก้ **Activity บนจอแคบ/iQOO** ให้สถานะกับเวลามีระยะห่างจริงเพิ่มอีก 10 px แม้ WebView จะบีบ layout ก็ไม่ชนกัน
+- **รองรับ Endpoint ที่ไม่มี `http://` หรือ `https://` อัตโนมัติ:** เมื่อพิมพ์หรือวาง URL เช่น `*.shares.zrok.io` หรือ `localhost:17890` ระบบจะเติมโปรโตคอล HTTPS หรือ HTTP ให้อัตโนมัติ ป้องกันปัญหา JavaScript พังจนจอขาว/จอดำ
+- **ระบบ ErrorBoundary ป้องกันจอค้างถาวร:** หากเกิดข้อผิดพลาดในการโหลด จะมีปุ่มโหลดใหม่ (Reload) และปุ่มกู้คืนล้างค่า (Reset Settings) ให้กดกลับมาใช้งานได้ทันที
+- **Android Alert Monitor:** อัปเดตตัวตรวจจับแจ้งเตือนเบื้องหลังของ Android ให้รองรับ URL ที่ไม่มีโปรโตคอลได้ปลอดภัยเช่นกัน
+
+## มีอะไรใหม่ใน v0.2.8
+
+- เปอร์เซ็นต์ Goal คิดจาก milestone ที่เสร็จแล้วเท่านั้น ส่วน Acceptance Criteria ยังคงแสดงและใช้เป็นเงื่อนไขปิด Goal แต่จะไม่ถูกนับซ้ำในเปอร์เซ็นต์อีก
+
+## มีอะไรใหม่ใน v0.2.7
+
+- Android ซ่อนแจ้งเตือนอัปเดตเก่าระหว่างเปิด APK ที่เพิ่งอัปเดต และถอน service worker เดิมก่อนแสดงแอปรุ่นใหม่ แอป native จะไม่ลงทะเบียน service worker ของ Web/PWA อีก ส่วน Web/PWA ยังอัปเดตอัตโนมัติ
+- เมื่อกลับเข้าแอป Watcher จะล้างผลตรวจอัปเดตเก่าทันที และไม่ให้คำตอบจากการตรวจครั้งก่อนกลับมาแสดงทับผลล่าสุด
+
+## ไฮไลต์จาก v0.2.6
+
+- ตัวเลือกแจ้งเตือนของระบบ Android ในหน้าตั้งค่าเปลี่ยนจาก checkbox เป็นสวิตช์สีทองแบบ LNWJUD โดยยังขอสิทธิ์แจ้งเตือนและจดจำค่าเปิด/ปิดเหมือนเดิม
+
+## ไฮไลต์จาก v0.2.5
+
+- แสดงสถานะ Goal ตามเกณฑ์จริงของ LNWJUD: milestone ครบอย่างเดียวไม่ถือว่าปิดงานได้ พร้อมแสดง acceptance criteria และจำนวน task ที่ยังทำอยู่
+- เพิ่มศูนย์แจ้งเตือน หน้ารายละเอียดโปรเจกต์ หน้าสุขภาพการเชื่อมต่อ และตัวกรอง Activity
+- Android เลือกรับการแจ้งเตือนเมื่อ Goal ยังเปิดและไม่มีความคืบหน้า 5 หรือ 10 นาทีได้ ระบบตรวจ snapshot ล่าสุดก่อนแจ้ง ปิดการแจ้งเมื่อ Goal ปิดหรือพร้อมปิด และไม่แจ้งซ้ำเรื่องเดิม การทำงานเบื้องหลังอาจล่าช้าตามข้อจำกัด Android
+- หน้า Agents แสดงชื่อ MCP plugin/server ที่ผู้ใช้ตั้งไว้และสถานะการเชื่อมต่อ เมื่อ LNWJUD ส่งข้อมูลมา
+- แอปที่อัปเดตแล้วไม่ถามให้อัปเดตเวอร์ชันเดิมซ้ำตอนเปิด
+
+## ไฮไลต์จาก v0.2.4
+
+- เว็บไซต์ Web/PWA ใช้งานต่อได้ทันทีและอัปเดตผ่าน service worker โดยไม่ขึ้นหน้าบังคับดาวน์โหลดแอปจาก GitHub
+- Goal ที่ milestone ครบ 100% แต่ LNWJUD ยังรายงานว่า active จะแสดงว่า **พร้อมปิด Goal** พร้อมคำอธิบาย และมีจำนวนแยกในภาพรวม
+- DMG macOS ใช้ลายเซ็น ad-hoc ที่สอดคล้องกัน และทดสอบการเริ่มรันบนเครื่อง CI แบบ Apple silicon กับ Intel; Windows/Linux ก็ตรวจการเริ่มรันแพ็กเกจ
+- Linux มี tar.gz สำรองเมื่อ AppImage/FUSE ใช้ไม่ได้ และ Release มีไฟล์ SHA-256 สำหรับตรวจสอบดาวน์โหลด
+- ตั้งค่า endpoint และ Session token ครั้งเดียว โดยเก็บไว้ในอุปกรณ์นี้ได้สูงสุด 1 ปี หาก token หรือการเชื่อมต่อผิดพลาดจะมีคำแนะนำให้ตรวจหน้าตั้งค่า
+
+## ไฮไลต์จาก v0.2.3
+
+- รวม UI **สถานะ + เวลา** ให้ใช้ shared component `StatusMeta` ตัวเดียวกันทั้ง Live Activity, Overview timeline และหน้า Activity เพื่อไม่ให้ spacing / font / color หลุดคนละแบบอีก
+- หน้า Overview และ Activity ใช้ layout สถานะ/เวลาเดียวกันบนจอ Android แคบ ๆ แล้ว
+- การแก้อยู่ใน shared React/CSS เดียว จึงใช้เหมือนกันทั้ง Desktop, Web/PWA, Android และ iOS
+
+## ไฮไลต์จาก v0.2.1
+
 - ปรับ Widget Android ทั้ง Status, Goal และ Agents ให้พอดีกับ launcher preview และขนาด widget ที่ใช้งานจริงมากขึ้น
 - Android อัปเดตแบบในแอป: Watcher ดาวน์โหลด APK จาก GitHub ที่ตรวจสอบ host แล้วก่อน จากนั้นค่อยเปิดหน้าติดตั้งของ Android เมื่อไฟล์พร้อม ผู้ใช้ยังต้องกดยืนยันติดตั้งตามระบบ
 - README แสดงหน้าตาโปรแกรมและ Widget โดยตรงแล้ว เพื่อให้ผู้ใช้เข้าใจว่า Watcher ใช้ดูอะไรได้บ้างก่อนติดตั้ง
@@ -71,10 +111,10 @@ Widget เน้นคำถามสำคัญเวลาปล่อยง�
 - แยกให้ชัดว่า **Agent ที่แสดงคือกิจกรรมที่ LNWJUD Runtime มองเห็นได้จริง** ไม่ใช่ช่วงที่ ChatGPT กำลังคิดอยู่ระหว่าง tool call และถ้า Goal ยัง active แต่ไม่มี operation ที่ Runtime มองเห็น จะขึ้นเป็นรอ/ว่างแทนการขึ้นว่ากำลังทำงาน
 - เพิ่มจำนวนงานที่กำลังรัน, เวลาทำงานล่าสุดแบบเทียบกับเวลาปัจจุบัน, Git branch/commit/dirty, จำนวนไฟล์ที่เปลี่ยน และ commit ล่าสุด
 - หน้า `127.0.0.1:17891/api/v1/pair` ของ LNWJUD v5.6.1 เป็น UI สำหรับกด Copy Session token ได้ง่ายขึ้น
-- Web/PWA จะจำ Session token ไว้ใน browser 60 วัน ส่วนแอป Desktop และมือถือจะเก็บไว้ในเครื่องข้ามการปิดเปิด จนกว่าผู้ใช้จะล้างใน Settings
+- ตั้งแต่ v0.2.4 Watcher กำหนดอายุ Session token ที่บันทึกไว้เป็น 1 ปี
 - เพิ่ม **Android Home Screen Widget 3 แบบ**: สถานะ, Goal และ Agents โดยแสดงงานที่กำลังทำ จำนวนงาน/เอเจนต์ ทำล่าสุดเมื่อไร และซิงก์ล่าสุดเมื่อไร โดยไม่เก็บ Watcher token ลง widget
 - ปรับ Activity บนมือถือให้มีระยะห่างชัดเจนระหว่างสถานะ/เวลาและ project/title พร้อม wrap command/UUID ยาว ๆ ไม่ให้ชนหรือล้นการ์ด
-- เพิ่ม **บังคับแจ้งอัปเดตจาก GitHub Release** ตอนเปิดแอป ทุก 30 นาที และเมื่อกลับมา foreground โดย v0.1.0 → v0.2.0 เป็นการอัปเดตข้ามเวอร์ชันปกติสำหรับทดสอบ APK update
+- แอปที่ติดตั้งจะเช็ก GitHub Release เพื่อแจ้งอัปเดต ส่วน Web/PWA อัปเดตผ่าน service worker
 - Android v0.2.0 ใช้ release signing key เดิมและ `versionCode` ที่สูงกว่า v0.1.0 จึงติดตั้งทับ APK v0.1.0 ที่เซ็นด้วย key เดิมได้ แต่ Android ยังต้องให้ผู้ใช้กดยืนยันติดตั้งเอง ไม่สามารถ silent update ได้
 - หน้า Activity แสดงทีละ 20 รายการและโหลดเพิ่มอัตโนมัติเมื่อเลื่อนใกล้ด้านล่าง (มีปุ่มโหลดเพิ่มสำรอง) ขณะที่ Runtime จำกัด snapshot ไว้ที่ 100 เหตุการณ์ล่าสุดเพื่อไม่ให้ DOM โตไม่สิ้นสุด
 
