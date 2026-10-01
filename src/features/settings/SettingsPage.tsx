@@ -5,6 +5,7 @@ import { useI18n } from '../../i18n/I18nContext';
 import type { ConnectionProfile, RemoteProvider } from '../../domain/models';
 import type { MessageKey } from '../../i18n/messages';
 import { providerGuides } from '../../data/providers';
+import { normalizeEndpoint } from '../../data/transport';
 import SessionTokenHelp from '../../shared/SessionTokenHelp';
 import { isAndroid, requestAndroidAlertPermission } from '../../data/nativeAlerts';
 
@@ -26,7 +27,17 @@ export default function SettingsPage() {
   const [copied, setCopied] = useState<'windows' | 'unix' | null>(null);
   const guide = providerGuides[draft.provider];
 
-  const save = () => watcher.configure(draft, token);
+  const save = () => {
+    let endpoint = draft.endpoint.trim();
+    if (draft.mode === 'remote' && endpoint) {
+      try {
+        endpoint = normalizeEndpoint(endpoint);
+      } catch { /* retain raw input for display */ }
+    }
+    const nextDraft = { ...draft, endpoint };
+    setDraft(nextDraft);
+    watcher.configure(nextDraft, token);
+  };
 
   const copy = async (kind: 'windows' | 'unix', command?: string) => {
     if (!command) return;

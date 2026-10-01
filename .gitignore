@@ -7,6 +7,7 @@ release-desktop/
 .env.*
 !.env.example
 .serena/
+.codegraph/
 .local-secrets/
 .DS_Store
 *.log

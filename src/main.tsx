@@ -10,14 +10,17 @@ import App from './app/App';
 import { removeNativeServiceWorkers, shouldRegisterServiceWorker } from './platform/runtime';
 import { WatcherProvider } from './app/WatcherContext';
 import { I18nProvider } from './i18n/I18nContext';
+import ErrorBoundary from './shared/ErrorBoundary';
 import './styles.css';
 
 function renderApp() {
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-      <I18nProvider>
-        <WatcherProvider><App /></WatcherProvider>
-      </I18nProvider>
+      <ErrorBoundary>
+        <I18nProvider>
+          <WatcherProvider><App /></WatcherProvider>
+        </I18nProvider>
+      </ErrorBoundary>
     </React.StrictMode>
   );
 }

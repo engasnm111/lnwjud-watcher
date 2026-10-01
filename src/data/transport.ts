@@ -7,7 +7,15 @@ export interface WatcherTransport {
 }
 
 export function normalizeEndpoint(endpoint: string): string {
-  const value = endpoint.trim().replace(/\/+$/, '');
+  let value = endpoint.trim().replace(/\/+$/, '');
+  if (!value) throw new Error('Watcher endpoint cannot be empty');
+  if (/^https?:$/i.test(value) || /^https?:\/\/$/i.test(endpoint.trim())) {
+    throw new Error('Watcher endpoint must include a host');
+  }
+  if (!/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(value)) {
+    const isLoopback = /^(localhost|127\.0\.0\.1|\[::1\]|::1)(:\d+)?(\/.*)?$/i.test(value);
+    value = (isLoopback ? 'http://' : 'https://') + value;
+  }
   const url = new URL(value);
   const local = ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname);
   if (!['http:', 'https:'].includes(url.protocol)) throw new Error('Watcher endpoint must use HTTP or HTTPS');
@@ -44,7 +52,12 @@ export class HttpWatcherTransport implements WatcherTransport {
     const connect = () => {
       if (stopped) return;
       onState(attempts === 0 ? 'connecting' : 'reconnecting');
-      socket = new WebSocket(toWebSocketUrl(this.endpoint));
+      try {
+        socket = new WebSocket(toWebSocketUrl(this.endpoint));
+      } catch {
+        onState('error');
+        return;
+      }
       socket.onopen = () => {
         if (this.token) socket?.send(JSON.stringify({ type: 'auth', token: this.token }));
       };

@@ -2,9 +2,9 @@
   <img src="public/brand/lnwjud-watcher-logo-transparent.png" width="160" alt="lnwjud Watcher" />
 </p>
 
-# lnwjud Watcher v0.2.8
+# lnwjud Watcher v0.2.9
 
-v0.2.8 makes Goal progress percentages reflect completed milestones only. Acceptance criteria still appear as final completion checks and continue to govern whether a Goal can be closed, but they no longer dilute or double-count the numeric progress percentage.
+v0.2.9 adds resilient endpoint normalization and client crash prevention. Entering endpoints without an explicit `http://` or `https://` prefix (such as `*.shares.zrok.io` or `localhost:17890`) is now automatically normalized to the correct protocol, preventing unhandled URL parsing exceptions and blank-screen lockouts. An application-level ErrorBoundary now provides immediate recovery options if unexpected errors occur. In addition, the Android native alert monitor has been updated to support schemeless endpoints when syncing background alerts.
 
 ### Included monitoring features
 

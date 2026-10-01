@@ -347,7 +347,13 @@ final class WatcherAlertMonitor {
     }
 
     private static String normalizeEndpoint(String endpoint) throws Exception {
-        URI uri = new URI(endpoint.trim());
+        String trimmed = endpoint == null ? "" : endpoint.trim();
+        if (trimmed.isEmpty()) throw new IllegalArgumentException("Invalid Watcher endpoint");
+        if (!trimmed.matches("^[a-zA-Z][a-zA-Z0-9+.-]*://.*")) {
+            boolean loopback = trimmed.startsWith("localhost") || trimmed.startsWith("127.0.0.1") || trimmed.startsWith("[::1]") || trimmed.startsWith("::1");
+            trimmed = (loopback ? "http://" : "https://") + trimmed;
+        }
+        URI uri = new URI(trimmed);
         String scheme = uri.getScheme();
         String host = uri.getHost();
         boolean loopback = "localhost".equalsIgnoreCase(host) || "127.0.0.1".equals(host) || "::1".equals(host);
