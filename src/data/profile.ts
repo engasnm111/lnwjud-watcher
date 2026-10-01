@@ -1,4 +1,5 @@
 import type { ConnectionProfile } from '../domain/models';
+import { normalizeEndpoint } from './transport';
 
 const PROFILE_KEY = 'lnwjud-watcher.profile.v1';
 const TOKEN_KEY = 'lnwjud-watcher.session-token';
@@ -21,12 +22,24 @@ export const defaultProfile: ConnectionProfile = {
 };
 
 export function loadProfile(): ConnectionProfile {
-  try { return { ...defaultProfile, ...JSON.parse(localStorage.getItem(PROFILE_KEY) ?? '{}') }; }
+  try {
+    const profile = { ...defaultProfile, ...JSON.parse(localStorage.getItem(PROFILE_KEY) ?? '{}') };
+    if (typeof profile.endpoint === 'string' && profile.endpoint.trim()) {
+      try { profile.endpoint = normalizeEndpoint(profile.endpoint); }
+      catch { /* preserve raw invalid input for error display */ }
+    }
+    return profile;
+  }
   catch { return defaultProfile; }
 }
 
 export function saveProfile(profile: ConnectionProfile): void {
-  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+  const toSave = { ...profile };
+  if (typeof toSave.endpoint === 'string' && toSave.endpoint.trim()) {
+    try { toSave.endpoint = normalizeEndpoint(toSave.endpoint); }
+    catch { /* preserve raw input */ }
+  }
+  localStorage.setItem(PROFILE_KEY, JSON.stringify(toSave));
 }
 
 function parseStoredSessionToken(raw: string, now: number): { token: string; legacy: boolean } | null {

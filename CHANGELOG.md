@@ -4,6 +4,13 @@
 
 # Changelog
 
+## 0.2.9 - 2026-10-01
+
+- Automatically normalizes schemeless Watcher endpoints (e.g., `*.shares.zrok.io` or `localhost:17890`) by inferring HTTPS for remote hosts and HTTP for loopback addresses, preventing unhandled URL parsing crashes.
+- Safely catches invalid endpoints in WebSocket transport and profile storage, surfacing clean connection error states instead of blank-screen lockouts.
+- Added a root ErrorBoundary with reload and reset options for robust failure recovery.
+- Updated Android alert monitor to safely normalize schemeless endpoints when syncing background inactivity notifications.
+
 ## 0.2.8 - 2026-09-30
 
 - Goal progress percentages now count completed milestones only; acceptance criteria remain final completion checks and no longer dilute or double-count the numeric progress.

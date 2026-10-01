@@ -73,4 +73,15 @@ describe('Watcher Protocol v1', () => {
     expect(() => normalizeEndpoint('http://watcher.example.test')).toThrow('HTTPS');
     expect(normalizeEndpoint('http://127.0.0.1:17890/')).toBe('http://127.0.0.1:17890');
   });
+
+  it('normalizes schemeless remote endpoints by prepending https', () => {
+    expect(normalizeEndpoint('kgfxmp7lgiyn.shares.zrok.io')).toBe('https://kgfxmp7lgiyn.shares.zrok.io');
+    expect(toWebSocketUrl('kgfxmp7lgiyn.shares.zrok.io')).toBe('wss://kgfxmp7lgiyn.shares.zrok.io/api/v1/events');
+  });
+
+  it('normalizes schemeless loopback endpoints by prepending http', () => {
+    expect(normalizeEndpoint('127.0.0.1:17890')).toBe('http://127.0.0.1:17890');
+    expect(normalizeEndpoint('localhost:17890')).toBe('http://localhost:17890');
+  });
 });
+

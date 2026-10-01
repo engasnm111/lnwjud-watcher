@@ -1,6 +1,6 @@
 import { Capacitor } from '@capacitor/core';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { loadSessionToken, saveSessionToken, SESSION_TOKEN_TTL_MS } from './profile';
+import { loadProfile, loadSessionToken, saveProfile, saveSessionToken, SESSION_TOKEN_TTL_MS } from './profile';
 
 const TOKEN_KEY = 'lnwjud-watcher.session-token';
 
@@ -71,5 +71,27 @@ describe('Session token storage', () => {
     saveSessionToken('');
     expect(sessionStorage.getItem(TOKEN_KEY)).toBeNull();
     expect(localStorage.getItem(TOKEN_KEY)).toBeNull();
+  });
+
+  it('normalizes a schemeless endpoint when loading the stored profile', () => {
+    localStorage.setItem('lnwjud-watcher.profile.v1', JSON.stringify({
+      mode: 'remote',
+      provider: 'zrok',
+      endpoint: 'kgfxmp7lgiyn.shares.zrok.io'
+    }));
+    const loaded = loadProfile();
+    expect(loaded.endpoint).toBe('https://kgfxmp7lgiyn.shares.zrok.io');
+  });
+
+  it('normalizes a schemeless endpoint when saving the profile', () => {
+    saveProfile({
+      mode: 'remote',
+      provider: 'zrok',
+      name: 'Custom',
+      endpoint: 'kgfxmp7lgiyn.shares.zrok.io'
+    });
+    expect(JSON.parse(localStorage.getItem('lnwjud-watcher.profile.v1') ?? '{}')).toMatchObject({
+      endpoint: 'https://kgfxmp7lgiyn.shares.zrok.io'
+    });
   });
 });

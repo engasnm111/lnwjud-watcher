@@ -25,7 +25,7 @@
 </p>
 
 <h2 align="center">Download lnwjud Watcher</h2>
-<p align="center">Desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.8.</p>
+<p align="center">Desktop, Android, iPhone/iPad PWA, or browser. Current release: v0.2.9.</p>
 
 <table align="center">
   <tr>
@@ -71,7 +71,13 @@ The widgets are designed for the quick question that matters most during long-ru
 
 ## Current version
 
-**lnwjud Watcher v0.2.8** works with **LNWJUD v5.6.1 or later**. Goal readiness and configured MCP plugin names require **LNWJUD v5.6.6**.
+**lnwjud Watcher v0.2.9** works with **LNWJUD v5.6.1 or later**. Goal readiness and configured MCP plugin names require **LNWJUD v5.6.6**.
+
+### What's new in v0.2.9
+
+- **Resilient endpoint normalization:** entering endpoints without an explicit `http://` or `https://` prefix (such as `*.shares.zrok.io` or `localhost:17890`) now automatically resolves to the proper protocol, preventing unhandled URL parsing crashes.
+- **Lockout recovery & ErrorBoundary:** client-side ErrorBoundary and safe profile hydration protect against blank-screen crashes and offer one-click settings recovery.
+- **Android alert monitor:** Android background alerts safely normalize schemeless endpoints when checking inactivity.
 
 ### What's new in v0.2.8
 
